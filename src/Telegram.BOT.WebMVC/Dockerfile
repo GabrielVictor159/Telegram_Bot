@@ -1,16 +1,18 @@
 #See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Telegram.BOT.WebMVC/Telegram.BOT.WebMVC.csproj", "Telegram.BOT.WebMVC/"]
 COPY ["Telegram.BOT.Application/Telegram.BOT.Application.csproj", "Telegram.BOT.Application/"]
 COPY ["Telegram.BOT.Domain/Telegram.BOT.Domain.csproj", "Telegram.BOT.Domain/"]
 COPY ["Telegram.BOT.Infrastructure/Telegram.BOT.Infrastructure.csproj", "Telegram.BOT.Infrastructure/"]
+RUN dotnet dev-certs https --clean
+RUN dotnet dev-certs https --trust
 RUN dotnet restore "Telegram.BOT.WebMVC/Telegram.BOT.WebMVC.csproj"
 COPY . .
 WORKDIR "/src/Telegram.BOT.WebMVC"
