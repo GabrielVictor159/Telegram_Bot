@@ -1,0 +1,7 @@
+{
+	"name": "C# (.NET) and PostgreSQL",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "telegram-bot",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"postCreateCommand": "dotnet tool install --global dotnet-ef"
+}

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceManifest Name="Telegram.BOT.TelegramJobPkg"
+                 Version="1.0.0"
+                 xmlns="http://schemas.microsoft.com/2011/01/fabric"
+                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ServiceTypes>
+    <!-- Este é o nome do seu ServiceType.
+         O atributo UseImplicitHost indica que ele é um serviço convidado. -->
+    <StatelessServiceType ServiceTypeName="Telegram.BOT.TelegramJobType" UseImplicitHost="true" />
+  </ServiceTypes>
+
+  <!-- O pacote de códigos é seu executável de serviço. -->
+  <CodePackage Name="Code" Version="1.0.0">
+    <EntryPoint>
+      <!-- Siga este link para obter mais informações sobre a implantação de contêineres do Windows no Service Fabric: https://aka.ms/sfguestcontainers -->
+      <ContainerHost>
+        <ImageName>telegram.bot.telegramjob:dev</ImageName>
+      </ContainerHost>
+    </EntryPoint>
+    <!-- Passe as variáveis de ambiente para seu contêiner: -->
+    <!--
+    <EnvironmentVariables>
+      <EnvironmentVariable Name="VariableName" Value="VariableValue"/>
+    </EnvironmentVariables>
+    -->
+  </CodePackage>
+
+  <!-- O pacote de configuração é o conteúdo do Diretório de configuração em PackageRoot que contém um 
+       conjunto com versão e atualizável independentemente de definições de configuração personalizadas para o serviço. -->
+  <ConfigPackage Name="Config" Version="1.0.0" />
+
+  <Resources>
+    <Endpoints>
+      <!-- Esse ponto de extremidade é usado pelo ouvinte de comunicação para obter a porta na qual 
+           escuta. Observe que, se o serviço estiver particionado, essa porta será compartilhada com 
+           réplicas de partições diferentes colocadas em seu código. -->
+      <Endpoint Name="Telegram.BOT.TelegramJobTypeEndpoint" />
+    </Endpoints>
+  </Resources>
+</ServiceManifest>

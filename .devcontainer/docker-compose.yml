@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  telegram-bot:
+    environment:
+      DBCONN: "Server=telegram-bot-db;Port=5432;Database=postgres;User Id=postgres;Password=postgres"
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    depends_on:
+      - telegram-bot-db
+    networks:
+      - telegram-bot
+
+  telegram-bot-db:
+    image: postgres:latest
+    restart: unless-stopped
+    ports:
+      - 5544:5432
+    networks:
+      - telegram-bot
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      
+networks:
+  telegram-bot:
+volumes:
+  postgres-data:
