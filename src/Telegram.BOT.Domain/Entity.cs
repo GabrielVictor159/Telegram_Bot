@@ -10,7 +10,6 @@ namespace Telegram.BOT.Domain
 {
     public abstract class Entity
     {
-        public Guid Id { get; protected set; }
         public bool IsValid { get; private set; }
         public ValidationResult? ValidationResult { get; private set; }
 
