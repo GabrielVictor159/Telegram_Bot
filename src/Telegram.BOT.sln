@@ -28,6 +28,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		nginx.conf = nginx.conf
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dockerfiles", "dockerfiles", "{22EDE04F-C131-44E8-84F1-113AAA81A2D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{E126B487-D10E-4E1E-A44B-848C2CA736FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "env", "env", "{0F8EA31A-F896-4D6F-9AA8-A556A988D194}"
+	ProjectSection(SolutionItems) = preProject
+		env\common.env = env\common.env
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +82,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C05599FD-9DAD-4ECE-8445-E46BF3704E6D} = {4BF1D699-9191-4B00-9BD8-92ACAB314446}
 		{DBF0CA07-F57A-47FC-92ED-6B0F23F45035} = {AEAB0BFA-994A-4049-897B-62339B0E62BA}
+		{E126B487-D10E-4E1E-A44B-848C2CA736FB} = {22EDE04F-C131-44E8-84F1-113AAA81A2D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F04649D-EFAA-4E92-B4DC-510BCFF36186}
