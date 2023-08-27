@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using Telegram.BOT.Infrastructure.Database;
 
 namespace Telegram.BOT.Infrastructure.Modules
 {
@@ -16,7 +19,26 @@ namespace Telegram.BOT.Infrastructure.Modules
             .AsImplementedInterfaces().AsSelf().InstancePerLifetimeScope();
 
             Mapper(builder);
+            DataAccess(builder);
             base.Load(builder);
+        }
+         private void DataAccess(ContainerBuilder builder)
+        {
+            var connection = Environment.GetEnvironmentVariable("DBCONN");
+
+            builder.RegisterAssemblyTypes(typeof(InfrastructureException).Assembly)
+                .Where(t => (t.Namespace ?? string.Empty).Contains("Database"))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            
+            if (!string.IsNullOrEmpty(connection))
+            {
+                using var context = new Context();                
+                context.Database.Migrate();               
+            }
+
         }
         private void Mapper(ContainerBuilder builder)
         {
