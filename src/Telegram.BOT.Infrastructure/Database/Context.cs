@@ -5,12 +5,16 @@ using System.Threading.Tasks;
 using Telegram.BOT.Infrastructure.Database.Map;
 using Microsoft.EntityFrameworkCore;
 using Telegram.BOT.Infrastructure.Database.Entities;
+using Telegram.BOT.Infrastructure.Database.Map.Products;
+using Telegram.BOT.Infrastructure.Database.Entities.Products;
 
 namespace Telegram.BOT.Infrastructure.Database
 {
     public class Context : DbContext
     {
-        public DbSet<Order> Orders => Set<Order>();
+        public DbSet<Groups> Groups => Set<Groups>();
+        public DbSet<Product> Products => Set<Product>();
+        public DbSet<ProductGroups> productGroups => Set<ProductGroups>();
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString = Environment.GetEnvironmentVariable("DBCONN");
@@ -19,7 +23,7 @@ namespace Telegram.BOT.Infrastructure.Database
             {
                 optionsBuilder.UseNpgsql(connectionString, options =>
                 {
-                    options.MigrationsHistoryTable("_MigrationHistory", "Ecommerce");
+                    options.MigrationsHistoryTable("_MigrationHistory", "public");
                     AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
                 });
             }
@@ -32,7 +36,9 @@ namespace Telegram.BOT.Infrastructure.Database
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new OrderMap());
+            modelBuilder.ApplyConfiguration(new GroupsMap());
+            modelBuilder.ApplyConfiguration(new ProductMap());
+            modelBuilder.ApplyConfiguration(new ProductGroupsMap());
             base.OnModelCreating(modelBuilder);
         }
 

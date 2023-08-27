@@ -8,6 +8,7 @@ namespace Telegram.BOT.Domain.Order
 {
     public class Order : Entity
     {
+        public Guid Id { get; protected set; }
         public DateTime OrderDate { get; private set; }
         public decimal TotalOrder { get; private set; }
 

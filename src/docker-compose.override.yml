@@ -8,12 +8,13 @@ services:
       dockerfile: Telegram.BOT.WebApi/Dockerfile
     env_file:
       - env/common.env
+      - env/databases.env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "5849:80"
-      - "5848:443"
+      - "80"
+      - "443"
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
@@ -27,6 +28,9 @@ services:
     build:
       context: .
       dockerfile: Telegram.BOT.TelegramJob/Dockerfile
+    env_file:
+      - env/common.env
+      - env/databases.env
     networks:
       - telegram-bot
 
@@ -51,12 +55,13 @@ services:
       dockerfile: Telegram.BOT.WebMVC/Dockerfile
     env_file:
       - env/common.env
+      - env/databases.env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "5847:80"
-      - "5846:443"
+      - "80"
+      - "443"
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
