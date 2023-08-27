@@ -7,7 +7,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-
+    ports:
+      - "7095"
+      - "5006"
+      - "7031"
+      - "5206"
     volumes:
       - ../..:/workspaces:cached
     command: sleep infinity
@@ -15,7 +19,6 @@ services:
       - telegram-bot-db
     networks:
       - telegram-bot
-
   telegram-bot-db:
     image: postgres:latest
     restart: unless-stopped
