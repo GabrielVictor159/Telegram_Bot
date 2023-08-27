@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Telegram.BOT.WebApi.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +19,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
-
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "../dockerfiles/Images")),
+    RequestPath = "/images" 
+});
 app.MapControllers();
 
 app.Run();
