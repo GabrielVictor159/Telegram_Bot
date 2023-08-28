@@ -15,9 +15,9 @@ namespace Telegram.BOT.Domain.Products
         public string Image { get; private set; }
         public string Tags { get; private set; }
         public DateTime CreateDate { get; private set; }
-        public List<Groups> Group75 { get; set; }
-        public List<Groups> Group50 { get; set; }
-        public List<Groups> Group25 { get; set; }
+        public List<ProductGroups> Group75 { get; set; } = new();
+        public List<ProductGroups> Group50 { get; set; } = new();
+        public List<ProductGroups> Group25 { get; set; } = new();
 
         public Product(Guid id, string name, string description, string image, string tags, DateTime createDate)
         {
