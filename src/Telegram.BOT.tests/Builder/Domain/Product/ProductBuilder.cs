@@ -10,17 +10,22 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
     private string image = "dasdasdasdas.png";
     private string tags = "Bonito Barato Caro Teste Promoção produto";
     private DateTime createDate = DateTime.Now;
-    private List<BOT.Domain.Products.Groups> group75 = new List<BOT.Domain.Products.Groups>();
-    private List<BOT.Domain.Products.Groups> group50 = new List<BOT.Domain.Products.Groups>();
-    private List<BOT.Domain.Products.Groups> group25 = new List<BOT.Domain.Products.Groups>();
-        public static ProductBuilder New(){ return new ProductBuilder(); }
-    public BOT.Domain.Products.Product Build() =>
-      new(id, name, description, image, tags, createDate) 
-      { 
-          Group75 = group75, 
-          Group50 = group50, 
-          Group25 = group25
-      };
+    private List<ProductGroups> group75 = new List<ProductGroups>();
+    private List<ProductGroups> group50 = new List<ProductGroups>();
+    private List<ProductGroups> group25 = new List<ProductGroups>();
+    private Groups? _group = GroupsBuilder.New().Build();
+        public static ProductBuilder New()
+        { 
+           return new ProductBuilder(); 
+        }
+    public BOT.Domain.Products.Product Build()
+    {
+     BOT.Domain.Products.Product produt = new(id, name, description, image, tags, createDate);
+      produt.Group75.Add(ProductGroupsBuilder.New(produt, _group!).Build());
+      produt.Group50.Add(ProductGroupsBuilder.New(produt, _group!).Build());
+      produt.Group25.Add(ProductGroupsBuilder.New(produt, _group!).Build());
+     return produt;
+    }
 
     public ProductBuilder WithId(Guid value)
     {
@@ -58,21 +63,26 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
       return this;
     }
 
-    public ProductBuilder WithGroup75(List<BOT.Domain.Products.Groups> value)
+    public ProductBuilder WithGroup75(List<ProductGroups> value)
     {
       group75 = value;
       return this;
     }
 
-    public ProductBuilder WithGroup50(List<BOT.Domain.Products.Groups> value)
+    public ProductBuilder WithGroup50(List<ProductGroups> value)
     {
       group50 = value;
       return this;
     }
 
-    public ProductBuilder WithGroup25(List<BOT.Domain.Products.Groups> value)
+    public ProductBuilder WithGroup25(List<ProductGroups> value)
     {
       group25 = value;
+      return this;
+    }
+    public ProductBuilder WithGroup(Groups value)
+    {
+      _group = value;
       return this;
     }
   }
