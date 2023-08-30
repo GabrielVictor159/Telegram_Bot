@@ -22,6 +22,7 @@ jobs:
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
         run: |
           echo "$DOCKER_HUB_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+          cd src/
           ls
           docker-compose -f docker-compose.yml -f docker-compose.override.yml build
           docker-compose -f docker-compose.yml -f docker-compose.override.yml push
