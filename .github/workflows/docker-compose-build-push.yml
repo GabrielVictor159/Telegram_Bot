@@ -25,7 +25,10 @@ jobs:
           cd src/
           export DOCKER_REGISTRY="${DOCKER_HUB_USERNAME}/"
           docker-compose -f docker-compose.yml -f docker-compose.override.yml build
-          IFS=', ' read -r -a image_ids <<< "${{ secrets.IMAGES_BUILD }}"
+
+          # Define the image IDs directly in the workflow
+          image_ids=("telegrambotwebapi" "telegrambottelegramjob" "telegrambotwebmvc")  # Add your image IDs here
+
           for image_id in "${image_ids[@]}"; do
             image_name_tag="${DOCKER_REGISTRY}${image_id}:latest"
             docker push $image_name_tag
