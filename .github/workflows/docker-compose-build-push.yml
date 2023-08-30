@@ -25,4 +25,9 @@ jobs:
           cd src/
           export DOCKER_REGISTRY="${{secrets.DOCKER_HUB_USERNAME}}/"
           docker-compose -f docker-compose.yml -f docker-compose.override.yml build
-          docker-compose -f docker-compose.yml -f docker-compose.override.yml push
+          images=$(docker images -q)
+          for image_id in $images; do
+            image_name_tag=$(docker inspect --format='{{index .RepoTags 0}}' $image_id)
+            docker push $image_name_tag
+            sleep 30 
+          done
