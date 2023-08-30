@@ -1,0 +1,27 @@
+name: Build and Push Docker Images
+on:
+  push:
+    branches:
+      - master  # Adjust as needed
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and Push Docker Compose Services
+        env:
+          DOCKER_BUILDKIT: 1
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+        run: |
+          echo "$DOCKER_HUB_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+          cd ../src/  # Navigate to the directory containing docker-compose.yml and docker-compose.override.yml
+          docker-compose -f docker-compose.yml -f docker-compose.override.yml build
+          docker-compose -f docker-compose.yml -f docker-compose.override.yml push
