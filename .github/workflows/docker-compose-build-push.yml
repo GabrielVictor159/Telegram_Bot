@@ -23,11 +23,11 @@ jobs:
         run: |
           echo "$DOCKER_HUB_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
           cd src/
-          export DOCKER_REGISTRY="${{secrets.DOCKER_HUB_USERNAME}}/"
+          export DOCKER_REGISTRY="${DOCKER_HUB_USERNAME}/"
           docker-compose -f docker-compose.yml -f docker-compose.override.yml build
           IFS=', ' read -r -a image_ids <<< "${{ secrets.IMAGES_BUILD }}"
           for image_id in "${image_ids[@]}"; do
-            image_name_tag="${DOCKER_REGISTRY}/${image_id}:latest"
+            image_name_tag="${DOCKER_REGISTRY}${image_id}:latest"
             docker push $image_name_tag
             sleep 30  # Adjust the delay time (in seconds) as needed
           done
