@@ -26,6 +26,22 @@ jobs:
         env:
           DOCKER_BUILDKIT: 1
         run: |
+          echo "Logging into Azure Container Registry..."
+          echo "Server: ${{ secrets.ACR_SERVER_NAME }}"
+          echo "Username: ${{ secrets.ACR_USERNAME }}"
+          echo "Password: ********"
+          
           cd src/
+          echo "Current directory: $(pwd)"
+          
+          echo "Building Docker Compose services..."
           docker-compose -f docker-compose.override.yml build
+          
+          echo "List of images built:"
+          docker images
+          
+          echo "Pushing Docker Compose services..."
           docker-compose -f docker-compose.override.yml push
+          
+          echo "List of images pushed:"
+          docker images
