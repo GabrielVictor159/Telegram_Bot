@@ -2,20 +2,20 @@ version: '3.4'
 
 services:
   telegram.bot.webapi:
-    image: ${DOCKER_REGISTRY-}telegrambotwebapi
+    image: ${DOCKER_REGISTRY}telegrambotwebapi
     build:
       context: .
       dockerfile: Telegram.BOT.WebApi/Dockerfile
 
   telegram.bot.webmvc:
-    image: ${DOCKER_REGISTRY-}telegrambotwebmvc
+    image: ${DOCKER_REGISTRY}telegrambotwebmvc
     build:
       context: .
       dockerfile: Telegram.BOT.WebMVC/Dockerfile
 
 
   telegram.bot.telegramjob:
-    image: ${DOCKER_REGISTRY-}telegrambottelegramjob
+    image: ${DOCKER_REGISTRY}telegrambottelegramjob
     build:
       context: .
       dockerfile: Telegram.BOT.TelegramJob/Dockerfile
