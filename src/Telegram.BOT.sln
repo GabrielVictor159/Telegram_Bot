@@ -38,6 +38,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "env", "env", "{0F8EA31A-F89
 		env\databases.env = env\databases.env
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Charts", "Charts", "{F23C5468-D2A9-4C30-9048-FE60A5D9E049}"
+	ProjectSection(SolutionItems) = preProject
+		configmap-common-env.yaml = configmap-common-env.yaml
+		configmap-databases-env.yaml = configmap-databases-env.yaml
+		configmap-nginx-config.yam = configmap-nginx-config.yam
+		deployment-nginx.yaml = deployment-nginx.yaml
+		deployment-telegramjob.yaml = deployment-telegramjob.yaml
+		deployment-webapi.yaml = deployment-webapi.yaml
+		deployment-webmvc.yaml = deployment-webmvc.yaml
+		namespaces.yaml = namespaces.yaml
+		pvc-postgres-data.yaml = pvc-postgres-data.yaml
+		pvc-shared-images.yaml = pvc-shared-images.yaml
+		secret-aspnet-https.yaml = secret-aspnet-https.yaml
+		secret-user-secrets.yaml = secret-user-secrets.yaml
+		service-nginx.yaml = service-nginx.yaml
+		service-webapi.yaml = service-webapi.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

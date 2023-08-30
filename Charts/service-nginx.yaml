@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: telegram-bot-nginx
+spec:
+  selector:
+    app: telegram-bot-nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

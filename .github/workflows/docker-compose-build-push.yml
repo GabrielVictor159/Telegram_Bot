@@ -2,7 +2,7 @@ name: Build and Push Docker Images
 on:
   push:
     branches:
-      - master  # Adjust as needed
+      - master  
 
 jobs:
   build-and-push:
@@ -25,12 +25,9 @@ jobs:
           cd src/
           export DOCKER_REGISTRY="${DOCKER_HUB_USERNAME}/"
           docker-compose -f docker-compose.yml -f docker-compose.override.yml build
-
-          # Define the image IDs directly in the workflow
-          image_ids=("telegrambotwebapi" "telegrambottelegramjob" "telegrambotwebmvc")  # Add your image IDs here
-
+          image_ids=("telegrambotwebapi" "telegrambottelegramjob" "telegrambotwebmvc")  
           for image_id in "${image_ids[@]}"; do
             image_name_tag="${DOCKER_REGISTRY}${image_id}:latest"
             docker push $image_name_tag
-            sleep 30  # Adjust the delay time (in seconds) as needed
+            sleep 30  
           done
