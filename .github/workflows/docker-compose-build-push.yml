@@ -27,7 +27,7 @@ jobs:
           docker-compose -f docker-compose.yml -f docker-compose.override.yml build
           IFS=', ' read -r -a image_ids <<< "${{ secrets.IMAGES_BUILD }}"
           for image_id in "${image_ids[@]}"; do
-            image_name_tag="${ACR_USERNAME}/${image_id}:latest"
+            image_name_tag="${  secrets.DOCKER_HUB_USERNAME }/${image_id}:latest"
             docker push $image_name_tag
             sleep 30  # Adjust the delay time (in seconds) as needed
           done
