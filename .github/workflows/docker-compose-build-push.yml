@@ -15,18 +15,19 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Login to Azure Container Registry
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ secrets.ACR_SERVER_NAME }}
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-
       - name: Build and Push Docker Compose Services
         env:
           DOCKER_BUILDKIT: 1
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
         run: |
+          echo "$DOCKER_HUB_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
           cd src/
-          export DOCKER_REGISTRY="${{ secrets.ACR_USERNAME }}/"
-          docker-compose -f docker-compose.override.yml build
-          docker-compose -f docker-compose.override.yml push
+          export DOCKER_REGISTRY="${{secrets.DOCKER_HUB_USERNAME}}/"
+          docker-compose -f docker-compose.yml -f docker-compose.override.yml build
+          IFS=', ' read -r -a image_ids <<< "${{ secrets.IMAGES_BUILD }}"
+          for image_id in "${image_ids[@]}"; do
+            image_name_tag="${ACR_USERNAME}/${image_id}:latest"
+            docker push $image_name_tag
+            sleep 30  # Adjust the delay time (in seconds) as needed
+          done
