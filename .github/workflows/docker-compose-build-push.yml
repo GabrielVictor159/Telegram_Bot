@@ -23,6 +23,7 @@ jobs:
         run: |
           echo "$DOCKER_HUB_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
           cd src/
-          ls
+          echo $DOCKER_HUB_TOKEN
+          echo $DOCKER_HUB_USERNAME
           docker-compose -f docker-compose.override.yml build
           docker-compose -f docker-compose.override.yml push
