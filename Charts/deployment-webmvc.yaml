@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegram-bot-webmvc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telegram-bot-webmvc
+  template:
+    metadata:
+      labels:
+        app: telegram-bot-webmvc
+    spec:
+      containers:
+        - name: telegram-bot-webmvc
+          image: <DOCKER_REGISTRY>/telegrambotwebmvc
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          envFrom:
+            - configMapRef:
+                name: common-env
+            - configMapRef:
+                name: databases-env
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+            - name: user-secrets
+              mountPath: /root/.microsoft/usersecrets
+              readOnly: true
+            - name: aspnet-https
+              mountPath: /root/.aspnet/https
+              readOnly: true
+            - name: shared-images
+              mountPath: /dockerfiles/Images/
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-data
+        - name: user-secrets
+          secret:
+            secretName: user-secrets
+        - name: aspnet-https
+          secret:
+            secretName: aspnet-https
+        - name: shared-images
+          persistentVolumeClaim:
+            claimName: shared-images

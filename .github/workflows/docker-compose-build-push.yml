@@ -2,7 +2,7 @@ name: Build and Push Docker Images
 on:
   push:
     branches:
-      - master  # Adjust as needed
+      - master  
 
 jobs:
   build-and-push:
@@ -22,6 +22,12 @@ jobs:
           DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
         run: |
           echo "$DOCKER_HUB_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
-          cd ../src/  # Navigate to the directory containing docker-compose.yml and docker-compose.override.yml
+          cd src/
+          export DOCKER_REGISTRY="${DOCKER_HUB_USERNAME}/"
           docker-compose -f docker-compose.yml -f docker-compose.override.yml build
-          docker-compose -f docker-compose.yml -f docker-compose.override.yml push
+          image_ids=("telegrambotwebapi" "telegrambottelegramjob" "telegrambotwebmvc")  
+          for image_id in "${image_ids[@]}"; do
+            image_name_tag="${DOCKER_REGISTRY}${image_id}:latest"
+            docker push $image_name_tag
+            sleep 30  
+          done
