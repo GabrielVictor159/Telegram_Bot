@@ -14,6 +14,9 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Products
         public string Image { get; set; } = "";
         public string Tags { get; set; } = "";
         public DateTime CreateDate { get;  set; }
+        public double Price { get; set; } = 0;
+        public Marc? Marc {get; set;}
+        public Guid IdMarc {get;set;}
         public List<ProductGroups> Group75 { get; set; } = new List<ProductGroups>();
         public List<ProductGroups> Group50 { get; set; } = new List<ProductGroups>();
         public List<ProductGroups> Group25 { get; set; } = new List<ProductGroups>();

@@ -14,7 +14,9 @@ namespace Telegram.BOT.Infrastructure.Database
     {
         public DbSet<Groups> Groups => Set<Groups>();
         public DbSet<Product> Products => Set<Product>();
-        public DbSet<ProductGroups> productGroups => Set<ProductGroups>();
+        public DbSet<ProductGroups> ProductGroups => Set<ProductGroups>();
+        public DbSet<Marc> Marcs => Set<Marc>();
+        public DbSet<Category> Categories => Set<Category>();
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString = Environment.GetEnvironmentVariable("DBCONN");
@@ -39,6 +41,8 @@ namespace Telegram.BOT.Infrastructure.Database
             modelBuilder.ApplyConfiguration(new GroupsMap());
             modelBuilder.ApplyConfiguration(new ProductMap());
             modelBuilder.ApplyConfiguration(new ProductGroupsMap());
+            modelBuilder.ApplyConfiguration(new MarcMap());
+            modelBuilder.ApplyConfiguration(new CategoryMap());
             base.OnModelCreating(modelBuilder);
         }
 

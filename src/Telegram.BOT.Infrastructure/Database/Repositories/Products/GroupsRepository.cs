@@ -54,8 +54,8 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
             {
                 return false;
             }
-            var productGroup = context.productGroups.Where(pg => pg.GroupId == id).ToList();
-            context.productGroups.RemoveRange(productGroup);
+            var productGroup = context.ProductGroups.Where(pg => pg.GroupId == id).ToList();
+            context.ProductGroups.RemoveRange(productGroup);
             context.Groups.Remove(entity);
             return context.SaveChanges() > 0;
         }

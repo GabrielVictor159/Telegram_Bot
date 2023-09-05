@@ -20,6 +20,9 @@ namespace Telegram.BOT.Infrastructure.Database.Map.Products
             builder.Property(p => p.Image);
             builder.Property(p => p.Tags).IsRequired();
             builder.Property(p => p.CreateDate).IsRequired();
+            builder.HasOne(P=>P.Marc)
+                .WithMany(P=>P.products)
+                .HasForeignKey(p=>p.IdMarc);
             builder.HasMany(p => p.Group75)
                .WithOne(pg => pg.Product75)
                .HasForeignKey(pg => pg.Product75Id);

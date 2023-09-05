@@ -42,9 +42,9 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
         }
         public int Update(Domain.Products.Product product)
         {
-            var productGroups = context.productGroups
+            var ProductGroups = context.ProductGroups
                 .Where(pg => pg.Product25Id == product.Id || pg.Product50Id == product.Id || pg.Product75Id == product.Id);
-            context.productGroups.RemoveRange(productGroups);
+            context.ProductGroups.RemoveRange(ProductGroups);
             context.Products.Update(mapper.Map<Product>(product));
             return context.SaveChanges();
         }
@@ -55,8 +55,8 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
             {
                 return false;
             }
-            var productGroups = context.productGroups.Where(pg=>pg.Product25Id==id||pg.Product50Id==id||pg.Product75Id==id);
-            context.productGroups.RemoveRange(productGroups);
+            var ProductGroups = context.ProductGroups.Where(pg=>pg.Product25Id==id||pg.Product50Id==id||pg.Product75Id==id);
+            context.ProductGroups.RemoveRange(ProductGroups);
             context.SaveChanges();
             return true;
         }
