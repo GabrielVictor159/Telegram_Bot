@@ -76,7 +76,7 @@ services:
       - shared-images:/usr/share/nginx/html/
       - static-files:/usr/share/nginx/html/
     ports:
-      - "191.249.100.67:80:80"
+      - "80:80"
     environment:
       - NGINX_HOST=localhost
       - NGINX_PORT=80

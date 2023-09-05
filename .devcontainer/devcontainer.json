@@ -28,7 +28,8 @@
 				"ms-dotnettools.csdevkit",
 				"kreativ-software.csharpextensions",
 				"fullstackspider.visual-nuget",
-				"fernandoescolar.vscode-solution-explorer"
+				"fernandoescolar.vscode-solution-explorer",
+				"frasercrosbie.csharp-model-to-builder"
 			]
 		}
 	}

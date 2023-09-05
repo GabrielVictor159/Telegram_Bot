@@ -8,6 +8,7 @@ namespace Telegram.BOT.Application.Interfaces.Services
 {
     public interface IProbabilityOperations
     {
-        double CalculateJaccardSimilarity(string tagsA, string tagsB);
+        int CalculateLevenshteinDistance(string s1, string s2);
+        double CalculateNormalizedLevenshteinDistance(string s1, string s2);
     }
 }
