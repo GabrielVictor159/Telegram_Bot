@@ -20,7 +20,7 @@ namespace Telegram.BOT.tests
         public ConfigureTestFramework(IMessageSink diagnosticMessageSink)
            : base(diagnosticMessageSink)
         {
-            Environment.SetEnvironmentVariable("USEINMEMORY", true.ToString());
+            Environment.SetEnvironmentVariable("DBCONN", null);
         }
         protected override void ConfigureContainer(ContainerBuilder builder)
         {

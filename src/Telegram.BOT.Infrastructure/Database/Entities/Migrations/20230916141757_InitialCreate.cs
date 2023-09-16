@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Telegram.BOT.Infrastructure.Database.Migrations
+namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -12,7 +12,23 @@ namespace Telegram.BOT.Infrastructure.Database.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
+                name: "Chats");
+
+            migrationBuilder.EnsureSchema(
                 name: "Products");
+
+            migrationBuilder.CreateTable(
+                name: "Chat",
+                schema: "Chats",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chat", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Group",
@@ -35,14 +51,36 @@ namespace Telegram.BOT.Infrastructure.Database.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    Image = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Image = table.Column<string>(type: "text", nullable: true),
                     Tags = table.Column<string>(type: "text", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    CreateDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Price = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Product", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Message",
+                schema: "Chats",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Messaging = table.Column<string>(type: "text", nullable: false),
+                    ChatId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Message", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Message_Chat_ChatId",
+                        column: x => x.ChatId,
+                        principalSchema: "Chats",
+                        principalTable: "Chat",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,6 +128,12 @@ namespace Telegram.BOT.Infrastructure.Database.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Message_ChatId",
+                schema: "Chats",
+                table: "Message",
+                column: "ChatId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductGroups_GroupId",
                 schema: "Products",
                 table: "ProductGroups",
@@ -118,8 +162,16 @@ namespace Telegram.BOT.Infrastructure.Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Message",
+                schema: "Chats");
+
+            migrationBuilder.DropTable(
                 name: "ProductGroups",
                 schema: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Chat",
+                schema: "Chats");
 
             migrationBuilder.DropTable(
                 name: "Group",

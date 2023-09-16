@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Telegram.BOT.Infrastructure.Database.Entities;
 using Telegram.BOT.Infrastructure.Database.Map.Products;
 using Telegram.BOT.Infrastructure.Database.Entities.Products;
+using Telegram.BOT.Infrastructure.Database.Entities.Chat;
+using Telegram.BOT.Infrastructure.Database.Map.Chat;
 
 namespace Telegram.BOT.Infrastructure.Database
 {
@@ -15,23 +17,18 @@ namespace Telegram.BOT.Infrastructure.Database
         public DbSet<Groups> Groups => Set<Groups>();
         public DbSet<Product> Products => Set<Product>();
         public DbSet<ProductGroups> productGroups => Set<ProductGroups>();
+        public DbSet<Chat> chats => Set<Chat>();
+        public DbSet<Message> messages => Set<Message>();
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = Environment.GetEnvironmentVariable("DBCONN");
-            var inMemory = Environment.GetEnvironmentVariable("USEINMEMORY");
-            if (connectionString != null && inMemory == null)
-            {
-                optionsBuilder.UseNpgsql(connectionString, options =>
+            if (Environment.GetEnvironmentVariable("DBCONN") != null)
+                optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("DBCONN"), options =>
                 {
-                    options.MigrationsHistoryTable("_MigrationHistory", "public");
-                    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+                    options.EnableRetryOnFailure(2, TimeSpan.FromSeconds(5), new List<string>());
+                    options.MigrationsHistoryTable("_MigrationHistory", "TelegramBot");
                 });
-            }
             else
-            {
-                optionsBuilder.UseInMemoryDatabase("EcommerceInMemory");
-            }
-            base.OnConfiguring(optionsBuilder);
+                optionsBuilder.UseInMemoryDatabase("TelegramBotInMemory");
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,7 +36,8 @@ namespace Telegram.BOT.Infrastructure.Database
             modelBuilder.ApplyConfiguration(new GroupsMap());
             modelBuilder.ApplyConfiguration(new ProductMap());
             modelBuilder.ApplyConfiguration(new ProductGroupsMap());
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new ChatMap());
+            modelBuilder.ApplyConfiguration(new MessageMap());
         }
 
 

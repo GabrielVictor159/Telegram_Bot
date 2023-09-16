@@ -42,10 +42,8 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
         }
         public int Update(Domain.Products.Product product)
         {
-            var productGroups = context.productGroups
-                .Where(pg => pg.Product25Id == product.Id || pg.Product50Id == product.Id || pg.Product75Id == product.Id);
-            context.productGroups.RemoveRange(productGroups);
-            context.Products.Update(mapper.Map<Product>(product));
+            var entity = context.Products.Find(product.Id);
+            mapper.Map(product,entity);
             return context.SaveChanges();
         }
         public bool Delete(Guid id)
