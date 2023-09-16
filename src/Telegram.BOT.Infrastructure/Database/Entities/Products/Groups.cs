@@ -11,5 +11,6 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Products
         public Guid Id { get; set; }
         public string Tags { get; set; } = "";
         public DateTime CreateDate { get; set; }
+        public List<ProductGroups> Group { get; set; } = new List<ProductGroups>();
     }
 }

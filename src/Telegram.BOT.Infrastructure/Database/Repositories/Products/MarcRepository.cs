@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Telegram.BOT.Application.Interfaces.Repositories;
 using Telegram.BOT.Infrastructure.Database.Entities.Products;
 
@@ -13,10 +14,12 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
     {
         private readonly Context context;
         private readonly IMapper mapper;
-        public MarcRepository(Context context, IMapper mapper)
+        private IProductRepository productRepository;
+        public MarcRepository(Context context, IMapper mapper, IProductRepository productRepository)
         {
             this.context = context;
             this.mapper = mapper;
+            this.productRepository = productRepository;
         }
          public Domain.Products.Marc Add(Domain.Products.Marc marc)
         {
@@ -30,26 +33,31 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
             var predicate = mapper.Map<Expression<Func<Marc, bool>>>(expression);
             var entities = context.Marcs
                 .Where(predicate)
+                .Include(p=>p.Category)
+                .Include(p=>p.products)
                 .ToList();
             return mapper.Map<List<Domain.Products.Marc>>(entities);
         }
         public int Update(Domain.Products.Marc marc)
         {
-            var ProductGroups = context.ProductGroups
-                .Where(pg => pg.Product25Id == marc.Id || pg.Product50Id == marc.Id || pg.Product75Id == marc.Id);
-            context.ProductGroups.RemoveRange(ProductGroups);
-            context.Marcs.Update(mapper.Map<Marc>(marc));
-            return context.SaveChanges();
+             var existingProduct = context.Marcs.Find(marc.Id);
+            if (existingProduct != null)
+            {
+                context.Entry(existingProduct).CurrentValues.SetValues(marc);
+                return context.SaveChanges();
+            }
+            return 0; 
         }
         public bool Delete(Guid id)
         {
-            var marc = context.Products.Find(id);
-            if(marc == null) 
+            var entity = context.Marcs.Find(id);
+            if(entity==null)
             {
                 return false;
             }
-            var ProductGroups = context.ProductGroups.Where(pg=>pg.Product25Id==id||pg.Product50Id==id||pg.Product75Id==id);
-            context.ProductGroups.RemoveRange(ProductGroups);
+            var products = productRepository.GetByFilter(e=>e.MarcId==id);
+            products.ForEach(e=>productRepository.Delete(e.Id));
+            context.Marcs.Remove(entity);
             context.SaveChanges();
             return true;
         }

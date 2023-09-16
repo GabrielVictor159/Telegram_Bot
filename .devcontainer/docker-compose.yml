@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  telegram.bot.webmvc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    extends:
+      file: ../src/docker-compose.override.yml
+      service: telegram.bot.webmvc
+
+  telegram.bot.db:
+    extends:
+      file: ../src/docker-compose.override.yml
+      service: telegram.bot.db
+
+networks:
+  telegram-bot:
+
+volumes:
+  postgres-data:
+  shared-images:
+  static-files:

@@ -31,6 +31,10 @@ namespace Telegram.BOT.Domain.Validator.Products
                 .WithMessage("The Price field is required.")
                 .Must(p=> p>0)
                 .WithMessage("The Price field must be greater than 0.");
+            RuleFor(p=>p.MarcId)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("The MarcId field is required.");
         }
     }
 }

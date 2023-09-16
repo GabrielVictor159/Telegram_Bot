@@ -10,14 +10,15 @@ namespace Telegram.BOT.Domain.Products
     {
         public Guid Id {get; private set;}
         public string Name {get; private set;} = "";
-        public Category? Category {get; private set;}
-        public List<Product> products {get; private set;} = new();
-        public Marc(Guid Id, string Name, List<Product>? products = null, Category? category = null)
+        public Category? Category {get; set;}
+        public Guid CategoryId {get; private set;}
+        public List<Product> products {get; set;} = new();
+        public Marc(Guid Id, string Name, Guid CategoryId)
         {
             this.Id = Id;
             this.Name = Name;
             this.products = products ?? new List<Product>();
-            this.Category = category;
+            this.CategoryId = CategoryId;
             Validate(this, new MarcValidator());
         }
     }

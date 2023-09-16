@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,17 +36,15 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
         }
         public Domain.Products.Groups? GetOne(Guid id)
         {
-            var entity = context.Groups.Find(id);
-            if(entity != null) 
-            {
-                return mapper.Map<Domain.Products.Groups>(entity);
-            }
-            return null;
+             var entity = context.Groups.Where(e=>e.Id==id)
+             .Include(p=>p.Group)
+             .First();
+            return mapper.Map<Domain.Products.Groups>(entity);
         }
         public List<Domain.Products.Groups> GetByFilter(Expression<Func<Domain.Products.Groups, bool>> expression)
         {
             var predicate = mapper.Map<Expression<Func<Groups, bool>>>(expression);
-            return mapper.Map<List<Domain.Products.Groups>>(context.Groups.Where(predicate).ToList());
+            return mapper.Map<List<Domain.Products.Groups>>(context.Groups.Where(predicate).Include(p=>p.Group).ToList());
         }
         public bool Remove(Guid id)
         {
@@ -54,8 +53,8 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
             {
                 return false;
             }
-            var productGroup = context.ProductGroups.Where(pg => pg.GroupId == id).ToList();
-            context.ProductGroups.RemoveRange(productGroup);
+            var productGroup = context.productGroups.Where(pg => pg.GroupId == id).ToList();
+            context.productGroups.RemoveRange(productGroup);
             context.Groups.Remove(entity);
             return context.SaveChanges() > 0;
         }

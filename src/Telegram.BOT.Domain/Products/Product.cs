@@ -16,20 +16,21 @@ namespace Telegram.BOT.Domain.Products
         public string Tags { get; private set; }
         public DateTime CreateDate { get; private set; }
         public double Price { get; set; } = 0;
+        public Guid MarcId {get; private set;}
         public Marc? Marc {get; set;}
         public List<ProductGroups> Group75 { get; set; } = new();
         public List<ProductGroups> Group50 { get; set; } = new();
         public List<ProductGroups> Group25 { get; set; } = new();
 
-        public Product(Guid id, string name, string description, string image, string tags, DateTime createDate, double price, Marc? marc = null)
+        public Product(Guid id, string name, string description, string image, string tags, DateTime createDate, double price, Guid MarcId)
         {
             Id = id;
             Name = name;
             Description = description;
             Image = image;
             Tags = tags;
+            this.MarcId = MarcId;
             CreateDate = createDate;
-            Marc = marc;
             Price = price;
             Validate(this, new ProductValidator());
         }

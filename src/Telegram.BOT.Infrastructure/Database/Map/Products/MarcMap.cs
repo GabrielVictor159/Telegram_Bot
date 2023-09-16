@@ -14,12 +14,6 @@ namespace Telegram.BOT.Infrastructure.Database.Map.Products
         {
             builder.ToTable("Marc", "Products");
             builder.HasKey(p => p.Id);
-            builder.HasOne(P=>P.Category)
-                .WithMany(P=>P.marcs)
-                .HasForeignKey(p=>p.IdCategory);
-            builder.HasMany(p=>p.products)
-                .WithOne()
-                .HasForeignKey(p=>p.IdMarc);
         }
     }
 }

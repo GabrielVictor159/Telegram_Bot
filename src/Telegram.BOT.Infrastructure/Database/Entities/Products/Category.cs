@@ -9,6 +9,6 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Products
     {
         public Guid Id {get; set;}
         public string Name {get; set;} = "";
-        public List<Marc> marcs {get; set;} = new();
+        public List<Marc> marcs {get;set;}= new();
     }
 }

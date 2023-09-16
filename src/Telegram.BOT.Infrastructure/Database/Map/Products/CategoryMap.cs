@@ -16,9 +16,6 @@ namespace Telegram.BOT.Infrastructure.Database.Map.Products
         builder.HasKey(p => p.Id);
         builder.Property(p=>p.Name).IsRequired();
         builder.HasIndex(p => p.Name).IsUnique();
-        builder.HasMany(p => p.marcs)
-               .WithOne()
-               .HasForeignKey(pg => pg.IdCategory);
         }
     }
 }

@@ -20,6 +20,9 @@ namespace Telegram.BOT.Domain.Validator.Products
             .WithMessage("The Name field is required.")
             .MinimumLength(5)
             .WithMessage("The Name field must have more than 5 characters.");
+            RuleFor(p=>p.CategoryId)
+            .NotNull().NotEmpty()
+            .WithMessage("The CategoryId field is required.");
         }
         
     }
