@@ -42,9 +42,14 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
         }
         public int Update(Domain.Products.Product product)
         {
-            var entity = context.Products.Find(product.Id);
-            mapper.Map(product,entity);
-            return context.SaveChanges();
+           var existingProduct = context.Products.Find(product.Id);
+
+            if (existingProduct != null)
+            {
+                context.Entry(existingProduct).CurrentValues.SetValues(product);
+                return context.SaveChanges();
+            }
+            return 0; 
         }
         public bool Delete(Guid id)
         {
@@ -53,8 +58,8 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
             {
                 return false;
             }
-            var productGroups = context.productGroups.Where(pg=>pg.Product25Id==id||pg.Product50Id==id||pg.Product75Id==id);
-            context.productGroups.RemoveRange(productGroups);
+            var ProductGroups = context.productGroups.Where(pg=>pg.Product25Id==id||pg.Product50Id==id||pg.Product75Id==id);
+            context.productGroups.RemoveRange(ProductGroups);
             context.SaveChanges();
             return true;
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Telegram.BOT.Application.Interfaces.Repositories;
 
 namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
@@ -36,12 +37,27 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
         public List<Domain.Products.ProductGroups> GetByFilter(Expression<Func<Domain.Products.ProductGroups, bool>> expression)
         {
             var predicate = mapper.Map<Expression<Func<Entities.Products.ProductGroups, bool>>>(expression);
-            return mapper.Map<List<Domain.Products.ProductGroups>>(context.productGroups.Where(predicate).ToList());
+            return mapper.Map<List<Domain.Products.ProductGroups>>
+            (
+                context.productGroups
+                .Where(predicate)
+                .Include(p=>p.Group)
+                .Include(p=>p.Product25)
+                .Include(p=>p.Product50)
+                .Include(p=>p.Product75)
+                .ToList()
+            );
         }
 
         public Domain.Products.ProductGroups GetOne(Guid id)
         {
-            var entity = context.productGroups.Find(id);
+            var entity = context.productGroups.
+            Where(e=>e.Id==id)
+            .Include(p=>p.Group)
+            .Include(p=>p.Product25)
+            .Include(p=>p.Product50)
+            .Include(p=>p.Product75)
+            .First();
             return mapper.Map<Domain.Products.ProductGroups>(entity);
         }
 

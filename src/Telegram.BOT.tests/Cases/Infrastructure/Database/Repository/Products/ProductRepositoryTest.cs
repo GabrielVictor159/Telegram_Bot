@@ -38,6 +38,8 @@ namespace Telegram.BOT.tests.Cases.Infrastructure.Database.Repository.Products
             productRepository.Add(entity);
             var newEntity = ProductBuilder.New().WithId(entity.Id).Build();
             productRepository.Update(newEntity).Should().Be(1);
+            var entityNewAttributes = productRepository.GetByFilter(e=>e.Id==entity.Id).First();
+            entityNewAttributes.CreateDate.Should().NotBe(entity.CreateDate);
         }
         [Fact]
         public void ShouldSucessRemove()

@@ -12,10 +12,23 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "Chats");
+                name: "Products");
 
             migrationBuilder.EnsureSchema(
-                name: "Products");
+                name: "Chats");
+
+            migrationBuilder.CreateTable(
+                name: "Category",
+                schema: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Chat",
@@ -23,7 +36,7 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    CreateDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,7 +50,7 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Tags = table.Column<string>(type: "character varying(1500)", maxLength: 1500, nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,21 +58,23 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Marc",
                 schema: "Products",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    Image = table.Column<string>(type: "text", nullable: true),
-                    Tags = table.Column<string>(type: "text", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Price = table.Column<double>(type: "double precision", nullable: false)
+                    CategoryId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Marc", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Marc_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalSchema: "Products",
+                        principalTable: "Category",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -79,6 +94,32 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                         column: x => x.ChatId,
                         principalSchema: "Chats",
                         principalTable: "Chat",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Product",
+                schema: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Image = table.Column<string>(type: "text", nullable: true),
+                    Tags = table.Column<string>(type: "text", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Price = table.Column<double>(type: "double precision", nullable: false),
+                    MarcId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Product_Marc_MarcId",
+                        column: x => x.MarcId,
+                        principalSchema: "Products",
+                        principalTable: "Marc",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -128,10 +169,29 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Category_Name",
+                schema: "Products",
+                table: "Category",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Marc_CategoryId",
+                schema: "Products",
+                table: "Marc",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Message_ChatId",
                 schema: "Chats",
                 table: "Message",
                 column: "ChatId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_MarcId",
+                schema: "Products",
+                table: "Product",
+                column: "MarcId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductGroups_GroupId",
@@ -179,6 +239,14 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
 
             migrationBuilder.DropTable(
                 name: "Product",
+                schema: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Marc",
+                schema: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Category",
                 schema: "Products");
         }
     }

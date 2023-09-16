@@ -13,6 +13,10 @@ namespace Telegram.BOT.Infrastructure.Database.AutoMapperProfile
         public InfraDomainProfile()
         {
             CreateMap<Order, Domain.Order.Order>().ReverseMap();
+            CreateMap<Marc, Domain.Products.Marc>().ReverseMap();
+            CreateMap<Category,Domain.Products.Category>().ReverseMap();
+            CreateMap<Product, Domain.Products.Product>().ReverseMap();
+            CreateMap<ProductGroups, Domain.Products.ProductGroups>().ReverseMap();
             CreateMap<Groups, Domain.Products.Groups>().ReverseMap();
             CreateMap<ProductGroups, Domain.Products.ProductGroups>()
             .ForMember(dest=>dest.Product25, opt => opt.MapFrom(src=>src.Product25))

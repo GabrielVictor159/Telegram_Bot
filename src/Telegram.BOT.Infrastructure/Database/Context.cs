@@ -19,13 +19,15 @@ namespace Telegram.BOT.Infrastructure.Database
         public DbSet<ProductGroups> productGroups => Set<ProductGroups>();
         public DbSet<Chat> chats => Set<Chat>();
         public DbSet<Message> messages => Set<Message>();
+        public DbSet<Marc> Marcs => Set<Marc>();
+        public DbSet<Category> Categories => Set<Category>();
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (Environment.GetEnvironmentVariable("DBCONN") != null)
                 optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("DBCONN"), options =>
                 {
                     options.EnableRetryOnFailure(2, TimeSpan.FromSeconds(5), new List<string>());
-                    options.MigrationsHistoryTable("_MigrationHistory", "TelegramBot");
+                    options.MigrationsHistoryTable("_MigrationHistory", "Migrations");
                 });
             else
                 optionsBuilder.UseInMemoryDatabase("TelegramBotInMemory");
@@ -38,6 +40,9 @@ namespace Telegram.BOT.Infrastructure.Database
             modelBuilder.ApplyConfiguration(new ProductGroupsMap());
             modelBuilder.ApplyConfiguration(new ChatMap());
             modelBuilder.ApplyConfiguration(new MessageMap());
+            modelBuilder.ApplyConfiguration(new MarcMap());
+            modelBuilder.ApplyConfiguration(new CategoryMap());
+            base.OnModelCreating(modelBuilder);
         }
 
 
