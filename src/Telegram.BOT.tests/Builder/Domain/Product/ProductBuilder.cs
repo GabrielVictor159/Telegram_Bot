@@ -10,6 +10,8 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
     private string image = "dasdasdasdas.png";
     private string tags = "Bonito Barato Caro Teste Promoção produto";
     private DateTime createDate = DateTime.Now;
+    private double price = 50;
+    private Marc? marc = MarcBuilder.New().Build();
     private List<ProductGroups> group75 = new List<ProductGroups>();
     private List<ProductGroups> group50 = new List<ProductGroups>();
     private List<ProductGroups> group25 = new List<ProductGroups>();
@@ -20,13 +22,14 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
         }
     public BOT.Domain.Products.Product Build()
     {
-     BOT.Domain.Products.Product produt = new(id, name, description, image, tags, createDate);
-      produt.Group75.Add(ProductGroupsBuilder.New(produt, _group!).Build());
-      produt.Group50.Add(ProductGroupsBuilder.New(produt, _group!).Build());
-      produt.Group25.Add(ProductGroupsBuilder.New(produt, _group!).Build());
+     BOT.Domain.Products.Product produt = new(id, name, description, image, tags, createDate, price, marc!.Id){Marc = marc, Group25 = group25, Group50 = group50, Group75 = group75};
      return produt;
     }
-
+    public ProductBuilder WithMarc(Marc value)
+    {
+      marc = value;
+      return this;
+    }
     public ProductBuilder WithId(Guid value)
     {
       id = value;
@@ -62,6 +65,11 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
       createDate = value;
       return this;
     }
+    public ProductBuilder WithPrice(double value)
+    {
+      price = value;
+      return this;
+    }
 
     public ProductBuilder WithGroup75(List<ProductGroups> value)
     {
@@ -85,5 +93,6 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
       _group = value;
       return this;
     }
+
   }
 }

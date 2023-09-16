@@ -12,7 +12,7 @@ namespace Telegram.BOT.Domain.Products
         public Guid Id { get; private set; }
         public string Tags { get; private set; }
         public DateTime CreateDate { get; private set; } 
-
+        public List<ProductGroups> Group { get; set; } = new List<ProductGroups>();
         public Groups(string Tags)
         {
             Id = Guid.NewGuid();

@@ -8,7 +8,7 @@ using Telegram.BOT.Infrastructure.Database;
 
 #nullable disable
 
-namespace Telegram.BOT.Infrastructure.Database.Migrations
+namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
 {
     [DbContext(typeof(Context))]
     partial class ContextModelSnapshot : ModelSnapshot
@@ -22,6 +22,58 @@ namespace Telegram.BOT.Infrastructure.Database.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Chat.Chat", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreateDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Chat", "Chats");
+                });
+
+            modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Chat.Message", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ChatId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Messaging")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatId");
+
+                    b.ToTable("Message", "Chats");
+                });
+
+            modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Category", "Products");
+                });
+
             modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.Groups", b =>
                 {
                     b.Property<Guid>("Id")
@@ -29,7 +81,7 @@ namespace Telegram.BOT.Infrastructure.Database.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Tags")
                         .IsRequired()
@@ -41,6 +93,26 @@ namespace Telegram.BOT.Infrastructure.Database.Migrations
                     b.ToTable("Group", "Products");
                 });
 
+            modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.Marc", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Marc", "Products");
+                });
+
             modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -48,25 +120,31 @@ namespace Telegram.BOT.Infrastructure.Database.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<Guid>("MarcId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Tags")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MarcId");
 
                     b.ToTable("Product", "Products");
                 });
@@ -102,10 +180,41 @@ namespace Telegram.BOT.Infrastructure.Database.Migrations
                     b.ToTable("ProductGroups", "Products");
                 });
 
+            modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Chat.Message", b =>
+                {
+                    b.HasOne("Telegram.BOT.Infrastructure.Database.Entities.Chat.Chat", "Chat")
+                        .WithMany()
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+                });
+
+            modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.Marc", b =>
+                {
+                    b.HasOne("Telegram.BOT.Infrastructure.Database.Entities.Products.Category", "Category")
+                        .WithMany("marcs")
+                        .HasForeignKey("CategoryId");
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.Product", b =>
+                {
+                    b.HasOne("Telegram.BOT.Infrastructure.Database.Entities.Products.Marc", "Marc")
+                        .WithMany("products")
+                        .HasForeignKey("MarcId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Marc");
+                });
+
             modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.ProductGroups", b =>
                 {
                     b.HasOne("Telegram.BOT.Infrastructure.Database.Entities.Products.Groups", "Group")
-                        .WithMany()
+                        .WithMany("Group")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -135,6 +244,21 @@ namespace Telegram.BOT.Infrastructure.Database.Migrations
                     b.Navigation("Product50");
 
                     b.Navigation("Product75");
+                });
+
+            modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.Category", b =>
+                {
+                    b.Navigation("marcs");
+                });
+
+            modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.Groups", b =>
+                {
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.Marc", b =>
+                {
+                    b.Navigation("products");
                 });
 
             modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.Product", b =>

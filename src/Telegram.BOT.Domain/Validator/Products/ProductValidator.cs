@@ -26,6 +26,15 @@ namespace Telegram.BOT.Domain.Validator.Products
                 .WithMessage("The Tags field is required.")
                 .Must(tags => !string.IsNullOrWhiteSpace(tags) && tags.Split(new[] { ' ', '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length > 5)
                 .WithMessage("The Tags field must have more than 5 words.");
+            RuleFor(p=>p.Price)
+                .NotNull()
+                .WithMessage("The Price field is required.")
+                .Must(p=> p>0)
+                .WithMessage("The Price field must be greater than 0.");
+            RuleFor(p=>p.MarcId)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("The MarcId field is required.");
         }
     }
 }
