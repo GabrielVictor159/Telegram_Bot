@@ -1,0 +1,42 @@
+﻿<div class="container">
+    <h3>Listar Grupos</h3>
+    <form>
+        <div class="mb-3">
+            <label for="group-tags" class="form-label">Tags:</label>
+            <input type="text" class="form-control" id="group-tags" />
+        </div>
+        <div class="row">
+            <label class="form-label">Periodo de busca:</label>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="product-date-start" class="form-label">De:</label>
+                    <input type="date" class="form-control" id="product-date-start" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="product-date-end" class="form-label">Até:</label>
+                    <input type="date" class="form-control" id="product-date-end" />
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 d-flex justify-content-end">
+            <a asp-action="Create" class="btn btn-success">Criar novo Grupo</a>
+            <input type="submit" class="btn btn-primary ms-2" value="Pesquisar" />
+        </div>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tags</th>
+            <th>Data de Criação</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td colspan="3" align="center">Nenhum registro encontrado</td>
+            </tr>
+    </tbody>
+</table>

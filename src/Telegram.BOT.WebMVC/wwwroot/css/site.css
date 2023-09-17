@@ -16,3 +16,21 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.group-control{
+    overflow: scroll;
+    max-height:110px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: black;
+}
+
+h3 {
+    margin-bottom: 2rem;
+}

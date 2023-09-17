@@ -1,0 +1,77 @@
+﻿@model List<Telegram.BOT.Domain.Products.Product>
+
+<div class="container">
+    <h3>Listar produtos</h3>
+    <form>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="product-name" class="form-label">Nome:</label>
+                    <input type="text" class="form-control" id="product-name" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="product-tag" class="form-label">Tag:</label>
+                    <input type="text" class="form-control" id="product-tag" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <label class="form-label">Periodo de busca:</label>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="product-date-start" class="form-label">De:</label>
+                    <input type="date" class="form-control" id="product-date-start" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="product-date-end" class="form-label">Até:</label>
+                    <input type="date" class="form-control" id="product-date-end" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3">
+                <label for="product-description" class="form-label">Descrição:</label>
+                <input type="text" class="form-control" id="product-description" />
+            </div>
+            <div class="mb-3 d-flex justify-content-end">
+                <a asp-action="Create" class="btn btn-success">Criar novo Produto</a>
+                <input type="submit" class="btn btn-primary ms-2" value="Pesquisar" />
+            </div>
+        </div>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Tags</th>
+            <th>Data de Criação</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model != null) {
+            @foreach(var Product in Model) {    
+                <tr>
+                    <td>@Product.Name</td>
+                    <td>@Product.Description</td>
+                    <td>@Product.Tags</td>
+                    <td>@Product.CreateDate</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@Product.Id" class="btn btn-primary">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@Product.Id" class="btn btn-primary">Excluir</a>
+                    </td>
+                </tr>
+            }
+        } else {
+            <tr>
+                <td colspan="5" align="center">Nenhum registro encontrado</td>
+            </tr>
+        }
+    </tbody>
+</table>
