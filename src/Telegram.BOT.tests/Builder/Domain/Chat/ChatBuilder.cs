@@ -20,7 +20,11 @@ namespace Telegram.BOT.tests.Builder.Domain.Chat
         }
         public BOT.Domain.Chat.Chat Build()
         {
-            return new BOT.Domain.Chat.Chat(Id,CreateDateTime);
+            return new BOT.Domain.Chat.Chat()
+            { 
+            Id = Id,
+            CreateDateTime = CreateDateTime,
+            };
         }
         public ChatBuilder WithId(Guid value)
         {
