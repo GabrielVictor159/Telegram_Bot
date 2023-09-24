@@ -16,12 +16,10 @@ public class GetCategoryUseCase : IGetCategoryRequest
 {
     private readonly GetCategoryHandler getCategoryHandler;
     private readonly ILogRepository logRepository;
-    private readonly IOutputPort<GetCategoryOutput> outputPort;
-    public GetCategoryUseCase(GetCategoryHandler getCategoryHandler, ILogRepository logRepository, IOutputPort<GetCategoryOutput> outputPort)
+    public GetCategoryUseCase(GetCategoryHandler getCategoryHandler, ILogRepository logRepository)
     {
         this.getCategoryHandler = getCategoryHandler;
         this.logRepository = logRepository;
-        this.outputPort = outputPort;
     }
 
     public async Task Execute(GetCategoryRequest request)
@@ -29,12 +27,13 @@ public class GetCategoryUseCase : IGetCategoryRequest
         try
         {
             await getCategoryHandler.ProcessRequest(request);
-            outputPort.Standard(new GetCategoryOutput() { Categories = request.Categories});
+            request.output=new GetCategoryOutput() { Categories = request.Categories};
         }
         catch (Exception ex)
         {
             request.AddLog(LogType.Error, $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}");
-            outputPort.Error(ex.Message ?? "");
+            request.IsError = true;
+            request.ErrorMessage = ex.Message ?? "";
         }
         finally
         {

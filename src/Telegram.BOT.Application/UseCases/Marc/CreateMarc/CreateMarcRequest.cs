@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telegram.BOT.Application.Boundaries.Category;
+using Telegram.BOT.Application.Boundaries.Marc;
 using Telegram.BOT.Domain.Enums;
 using Telegram.BOT.Domain.Logs;
 
 namespace Telegram.BOT.Application.UseCases.Marc.CreateMarc;
 
-public class CreateMarcRequest
+public class CreateMarcRequest : Output<SaveMarcOutput>
 {
     public required Domain.Products.Marc marc { get; init; }
     public List<Log> Logs { get; set; } = new();

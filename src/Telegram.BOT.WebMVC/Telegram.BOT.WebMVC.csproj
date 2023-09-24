@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="UseCases\Category\DeleteCategory\" />
-    <Folder Include="UseCases\Marc\" />
     <Folder Include="UseCases\Products\" />
   </ItemGroup>
 

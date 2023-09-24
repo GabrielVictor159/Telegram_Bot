@@ -17,15 +17,12 @@ public class DeleteCategoryUseCase : IDeleteCategoryRequest
 {
     private readonly DeleteCategoryHandler deleteCategoryHandler;
     private readonly ILogRepository logRepository;
-    private readonly IOutputPort<DeleteMarcOutput> outputPort;
     public DeleteCategoryUseCase
         (DeleteCategoryHandler deleteCategoryHandler, 
-        ILogRepository logRepository, 
-        IOutputPort<DeleteMarcOutput> outputPort)
+        ILogRepository logRepository)
     {
         this.deleteCategoryHandler = deleteCategoryHandler;
         this.logRepository = logRepository;
-        this.outputPort = outputPort;
     }
 
     public async Task Execute(DeleteCategoryRequest request)
@@ -33,12 +30,13 @@ public class DeleteCategoryUseCase : IDeleteCategoryRequest
         try
         {
             await deleteCategoryHandler.ProcessRequest(request);
-            outputPort.Standard(new DeleteMarcOutput() { Message = "Sucess delete category"});
+            request.output=new DeleteCategoryOutput() { Message = "Sucess delete category"};
         }
         catch (Exception ex)
         {
             request.AddLog(LogType.Error, $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}");
-            outputPort.Error(ex.Message ?? "");
+            request.IsError = true;
+            request.ErrorMessage = ex.Message ?? "";
         }
         finally
         {

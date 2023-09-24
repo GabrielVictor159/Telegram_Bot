@@ -9,13 +9,10 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.CreateCategory
 {
     public class CategoryController : Controller
     {
-        private readonly CategoryPresenter presenter;
         private readonly ICreateCategoryRequest createCategoryRequest;
         public CategoryController(
-           CategoryPresenter presenter,
            ICreateCategoryRequest createCategoryRequest)
         {
-            this.presenter = presenter;
             this.createCategoryRequest = createCategoryRequest;
         }
         public IActionResult Create()
@@ -25,11 +22,15 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.CreateCategory
         [HttpPost]
         public IActionResult CreateAction(CreateCategoryRequest request)
         {
-            createCategoryRequest.Execute(
-                new Application.UseCases.Category.CreateCategory.CreateCategoryRequest() { category = new Domain.Products.Category() { Id = Guid.NewGuid(), Name = request.name } });
-            if(presenter.ViewModel is OkObjectResult okObjectResult && okObjectResult.Value is CreateCategoryResponse response)
+            var requestUseCase =
+                new Application.UseCases.Category.CreateCategory.CreateCategoryRequest()
+                {
+                    category = new Domain.Products.Category() { Id = Guid.NewGuid(), Name = request.name }
+                };
+            createCategoryRequest.Execute(requestUseCase);
+            if(!requestUseCase.IsError && requestUseCase.output!=null)
             {
-                return View("Create", "CreateCategory");
+                return View("Index");
             }
             else
             {

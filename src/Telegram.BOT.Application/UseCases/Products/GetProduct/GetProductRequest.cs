@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telegram.BOT.Application.Boundaries.Products;
 using Telegram.BOT.Domain.Enums;
 using Telegram.BOT.Domain.Logs;
 using Telegram.BOT.Domain.Products;
 
 namespace Telegram.BOT.Application.UseCases.Products.GetProduct;
 
-public class GetProductRequest
+public class GetProductRequest : Output<List<ProductOutput>>
 {
     public string Name { get; init; } = "";
     public string Tag { get; init; } = "";

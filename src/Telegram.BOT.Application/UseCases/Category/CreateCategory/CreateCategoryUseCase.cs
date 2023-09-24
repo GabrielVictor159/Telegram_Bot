@@ -17,16 +17,13 @@ public class CreateCategoryUseCase : ICreateCategoryRequest
 {
     private readonly ValidateCategoryHandler validateCategoryHandler;
     private readonly ILogRepository logRepository;
-    private readonly IOutputPort<SaveCategoryOutput> outputPort;
     public CreateCategoryUseCase
         (ValidateCategoryHandler validateCategoryHandler, 
         SaveCategoryHandler saveCategoryHandler,
-        ILogRepository logRepository, 
-        IOutputPort<SaveCategoryOutput> outputPort)
+        ILogRepository logRepository)
     {
         this.validateCategoryHandler = validateCategoryHandler.SetSucessor(saveCategoryHandler);
         this.logRepository = logRepository;
-        this.outputPort = outputPort;
     }
 
     public async Task Execute(CreateCategoryRequest request)
@@ -34,12 +31,13 @@ public class CreateCategoryUseCase : ICreateCategoryRequest
         try
         {
             await validateCategoryHandler.ProcessRequest(request);
-            outputPort.Standard(new SaveCategoryOutput() { Category = request.category});
+            request.output=new SaveCategoryOutput() { Category = request.category};
         }
         catch (Exception ex)
         {
             request.AddLog(LogType.Error, $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}");
-            outputPort.Error(ex.Message ?? "");
+            request.IsError = true;
+            request.ErrorMessage = ex.Message ?? "";
         }
         finally
         {
