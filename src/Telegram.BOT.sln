@@ -10,14 +10,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telegram.BOT.TelegramJob", "Telegram.BOT.TelegramJob\Telegram.BOT.TelegramJob.csproj", "{C05599FD-9DAD-4ECE-8445-E46BF3704E6D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telegram.BOT.tests", "Telegram.BOT.tests\Telegram.BOT.tests.csproj", "{DBF0CA07-F57A-47FC-92ED-6B0F23F45035}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3497DE5A-4975-4AB1-A12F-1EF5D401162E} = {3497DE5A-4975-4AB1-A12F-1EF5D401162E}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telegram.BOT.Application", "Telegram.BOT.Application\Telegram.BOT.Application.csproj", "{79FF689C-7CC3-49DD-9091-18A8CEE5A73F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telegram.BOT.Domain", "Telegram.BOT.Domain\Telegram.BOT.Domain.csproj", "{49A68FB1-6DE8-4F3E-87CF-9B58536D7F1D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telegram.BOT.Infrastructure", "Telegram.BOT.Infrastructure\Telegram.BOT.Infrastructure.csproj", "{CF24E0B1-15B9-4F7A-9F5C-C6435CB102F4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telegram.BOT.WebApi", "Telegram.BOT.WebApi\Telegram.BOT.WebApi.csproj", "{3D718B6F-8389-473D-AF61-74F0E07F8409}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telegram.BOT.WebMVC", "Telegram.BOT.WebMVC\Telegram.BOT.WebMVC.csproj", "{3497DE5A-4975-4AB1-A12F-1EF5D401162E}"
 EndProject
@@ -27,10 +28,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		nginx.conf = nginx.conf
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dockerfiles", "dockerfiles", "{22EDE04F-C131-44E8-84F1-113AAA81A2D2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{E126B487-D10E-4E1E-A44B-848C2CA736FB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "env", "env", "{0F8EA31A-F896-4D6F-9AA8-A556A988D194}"
 	ProjectSection(SolutionItems) = preProject
@@ -82,10 +79,6 @@ Global
 		{CF24E0B1-15B9-4F7A-9F5C-C6435CB102F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF24E0B1-15B9-4F7A-9F5C-C6435CB102F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF24E0B1-15B9-4F7A-9F5C-C6435CB102F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D718B6F-8389-473D-AF61-74F0E07F8409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D718B6F-8389-473D-AF61-74F0E07F8409}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D718B6F-8389-473D-AF61-74F0E07F8409}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D718B6F-8389-473D-AF61-74F0E07F8409}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3497DE5A-4975-4AB1-A12F-1EF5D401162E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3497DE5A-4975-4AB1-A12F-1EF5D401162E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3497DE5A-4975-4AB1-A12F-1EF5D401162E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -101,7 +94,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C05599FD-9DAD-4ECE-8445-E46BF3704E6D} = {4BF1D699-9191-4B00-9BD8-92ACAB314446}
 		{DBF0CA07-F57A-47FC-92ED-6B0F23F45035} = {AEAB0BFA-994A-4049-897B-62339B0E62BA}
-		{E126B487-D10E-4E1E-A44B-848C2CA736FB} = {22EDE04F-C131-44E8-84F1-113AAA81A2D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F04649D-EFAA-4E92-B4DC-510BCFF36186}

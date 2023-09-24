@@ -1,12 +1,14 @@
-﻿<div class="container">
+﻿@using Telegram.BOT.WebMVC.UseCases.Category.GetCategory;
+@model GetCategoryResponse
+<div class="container">
     <h3>Listar Categorias</h3>
-    <form>
+    <form asp-action="Search" method="post">
         <div class="mb-3">
             <label for="category-name" class="form-label">Nome:</label>
-            <input type="text" class="form-control" id="category-name" />
+            <input type="text" class="form-control" id="category-name" name="name" />
         </div>
         <div class="mb-3 d-flex justify-content-end">
-            <a asp-action="Create" class="btn btn-success">Criar nova categoria</a>
+            <a asp-controller="Category" asp-action="Create" class="btn btn-success">Criar nova categoria</a>
             <input type="submit" class="btn btn-primary ms-2" value="Pesquisar" />
         </div>
     </form>
@@ -19,8 +21,24 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td colspan="2" align="center">Nenhum registro encontrado</td>
-        </tr>
+
+        @if (Model== null)
+        {
+            <tr>
+                <td colspan="2" align="center">Nenhum registro encontrado</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.CategoryResponse)
+            {
+                <tr>
+                    <td>@item.Name</td> 
+                    <td>
+          
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>

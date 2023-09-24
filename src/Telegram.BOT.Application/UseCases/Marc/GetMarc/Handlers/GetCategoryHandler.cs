@@ -18,7 +18,11 @@ public class GetMarcHandler : Handler<GetMarcRequest>
     public override async Task ProcessRequest(GetMarcRequest request)
     {
         request.AddLog(LogType.Process, "Executing GetMarcHandler");
-        request.Marcs.AddRange(MarcRepository.GetByFilter(e =>e.Name.ToLower().Contains(request.Name.ToLower()),request.page,request.pageSize));
+        request.Marcs.AddRange(MarcRepository.GetByFilter((e =>
+        e.Name.ToLower().Contains(request.Name.ToLower()) &&
+        request.CategoryId != Guid.Empty ?
+        e.CategoryId == request.CategoryId : true
+        ),request.page,request.pageSize));
         if (sucessor != null)
             await sucessor.ProcessRequest(request);
     }

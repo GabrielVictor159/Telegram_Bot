@@ -22,7 +22,7 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Logs
         }
         public int AddRange(List<Log> logs)
         {
-            context.AddRange(mapper.Map<List<Entities.Logs.Log>>(logs));
+            context.logs.AddRange(mapper.Map<List<Entities.Logs.Log>>(logs));
             return context.SaveChanges();
         }
     }

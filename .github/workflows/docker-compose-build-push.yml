@@ -25,7 +25,7 @@ jobs:
           cd src/
           export DOCKER_REGISTRY="${DOCKER_HUB_USERNAME}/"
           docker-compose -f docker-compose.yml -f docker-compose.override.yml build
-          image_ids=("telegrambotwebapi" "telegrambottelegramjob" "telegrambotwebmvc")  
+          image_ids=( "telegrambottelegramjob" "telegrambotwebmvc")  
           for image_id in "${image_ids[@]}"; do
             image_name_tag="${DOCKER_REGISTRY}${image_id}:latest"
             docker push $image_name_tag
