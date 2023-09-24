@@ -35,8 +35,15 @@ namespace Telegram.BOT.Infrastructure.Modules
             
             if (!string.IsNullOrEmpty(connection))
             {
-                using var context = new Context();                
-                context.Database.Migrate();               
+                try
+                {
+                    using var context = new Context();
+                    context.Database.Migrate();
+                }
+                catch(Exception ex) 
+                {
+                    Console.WriteLine(ex);
+                }
             }
 
         }

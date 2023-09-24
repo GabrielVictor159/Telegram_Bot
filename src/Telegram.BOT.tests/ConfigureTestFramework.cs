@@ -4,10 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Telegram.BOT.Application.Interfaces.Services;
-using Telegram.BOT.Application.UseCases.Order.CreateOrder.Handlers;
 using Telegram.BOT.Infrastructure.Modules;
 using Telegram.BOT.Infrastructure.Service;
-using Telegram.BOT.WebApi.Modules;
+using Telegram.BOT.WebMVC.Modules;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Frameworks.Autofac;
@@ -26,7 +25,7 @@ namespace Telegram.BOT.tests
         {
           builder.RegisterModule(new ApplicationModule());
           builder.RegisterModule(new InfrastructureModule());
-          builder.RegisterModule(new WebapiModule());
+          builder.RegisterModule(new WebMVCModule());
         }
     }
 }

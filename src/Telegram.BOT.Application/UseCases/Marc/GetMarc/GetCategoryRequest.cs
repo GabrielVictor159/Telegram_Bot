@@ -11,6 +11,7 @@ namespace Telegram.BOT.Application.UseCases.Marc.GetMarc;
 public class GetMarcRequest
 {
     public string Name { get; init; } = "";
+    public Guid CategoryId { get; init; }
     public List<Domain.Products.Marc> Marcs { get; set; } = new();
     public List<Log> Logs { get; set; } = new();
     public int page { get; init; } = 1;

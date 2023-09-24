@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Telegram.BOT.Infrastructure.Database.Entities;
 using Telegram.BOT.Infrastructure.Database.Entities.Chat;
+using Telegram.BOT.Infrastructure.Database.Entities.Logs;
 using Telegram.BOT.Infrastructure.Database.Entities.Products;
 
 namespace Telegram.BOT.Infrastructure.Database.AutoMapperProfile
@@ -12,7 +13,7 @@ namespace Telegram.BOT.Infrastructure.Database.AutoMapperProfile
     {
         public InfraDomainProfile()
         {
-            CreateMap<Order, Domain.Order.Order>().ReverseMap();
+            CreateMap<Log, Domain.Logs.Log>().ReverseMap();
             CreateMap<Marc, Domain.Products.Marc>().ReverseMap();
             CreateMap<Category,Domain.Products.Category>().ReverseMap();
             CreateMap<Product, Domain.Products.Product>().ReverseMap();

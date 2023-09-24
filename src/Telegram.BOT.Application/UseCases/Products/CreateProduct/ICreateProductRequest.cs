@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Telegram.BOT.Application.UseCases.Order.CreateOrder;
 
 namespace Telegram.BOT.Application.UseCases.Products.CreateProduct;
 

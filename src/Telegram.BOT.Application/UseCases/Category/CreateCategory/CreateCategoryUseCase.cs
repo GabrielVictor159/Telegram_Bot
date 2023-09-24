@@ -13,7 +13,7 @@ using Telegram.BOT.Application.Boundaries.Category;
 
 namespace Telegram.BOT.Application.UseCases.Category.CreateCategory;
 
-internal class CreateCategoryUseCase : ICreateCategoryRequest
+public class CreateCategoryUseCase : ICreateCategoryRequest
 {
     private readonly ValidateCategoryHandler validateCategoryHandler;
     private readonly ILogRepository logRepository;
