@@ -10,6 +10,7 @@ using Telegram.BOT.Infrastructure.Database.Entities.Products;
 using Telegram.BOT.Infrastructure.Database.Entities.Chat;
 using Telegram.BOT.Infrastructure.Database.Map.Chat;
 using Telegram.BOT.Infrastructure.Database.Entities.Logs;
+using Telegram.BOT.Infrastructure.Database.Map.Log;
 
 namespace Telegram.BOT.Infrastructure.Database
 {
@@ -44,6 +45,7 @@ namespace Telegram.BOT.Infrastructure.Database
             modelBuilder.ApplyConfiguration(new MessageMap());
             modelBuilder.ApplyConfiguration(new MarcMap());
             modelBuilder.ApplyConfiguration(new CategoryMap());
+            modelBuilder.ApplyConfiguration(new LogMap());
             base.OnModelCreating(modelBuilder);
         }
 

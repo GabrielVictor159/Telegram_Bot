@@ -24,6 +24,5 @@
     <ProjectReference Include="..\Telegram.BOT.Infrastructure\Telegram.BOT.Infrastructure.csproj" />
     <ProjectReference Include="..\Telegram.BOT.Application\Telegram.BOT.Application.csproj" />
     <ProjectReference Include="..\Telegram.BOT.Domain\Telegram.BOT.Domain.csproj" />
-    <ProjectReference Include="..\Telegram.BOT.WebApi\Telegram.BOT.WebApi.csproj" />
   </ItemGroup>
 </Project>
