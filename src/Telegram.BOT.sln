@@ -10,6 +10,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telegram.BOT.TelegramJob", "Telegram.BOT.TelegramJob\Telegram.BOT.TelegramJob.csproj", "{C05599FD-9DAD-4ECE-8445-E46BF3704E6D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telegram.BOT.tests", "Telegram.BOT.tests\Telegram.BOT.tests.csproj", "{DBF0CA07-F57A-47FC-92ED-6B0F23F45035}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3497DE5A-4975-4AB1-A12F-1EF5D401162E} = {3497DE5A-4975-4AB1-A12F-1EF5D401162E}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telegram.BOT.Application", "Telegram.BOT.Application\Telegram.BOT.Application.csproj", "{79FF689C-7CC3-49DD-9091-18A8CEE5A73F}"
 EndProject

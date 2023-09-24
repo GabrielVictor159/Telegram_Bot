@@ -6,6 +6,7 @@ using Autofac;
 using Telegram.BOT.Application.Interfaces.Services;
 using Telegram.BOT.Infrastructure.Modules;
 using Telegram.BOT.Infrastructure.Service;
+using Telegram.BOT.WebMVC.Modules;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Frameworks.Autofac;
@@ -24,6 +25,7 @@ namespace Telegram.BOT.tests
         {
           builder.RegisterModule(new ApplicationModule());
           builder.RegisterModule(new InfrastructureModule());
+          builder.RegisterModule(new WebMVCModule());
         }
     }
 }
