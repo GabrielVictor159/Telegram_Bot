@@ -7,32 +7,24 @@ using Telegram.BOT.Domain.Validator.Products;
 
 namespace Telegram.BOT.Domain.Products
 {
-    public class Product : Entity
+    public class Product : Entity<Product, ProductValidator>
     {
-        public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-        public string Image { get; private set; }
-        public string Tags { get; private set; }
-        public DateTime CreateDate { get; private set; }
+        public required Guid Id { get; init; }
+        public required string Name { get; init; }
+        public required string Description { get; init; }
+        public required string Image { get; init; }
+        public required string Tags { get; init; }
+        public required DateTime CreateDate { get; init; }
         public double Price { get; set; } = 0;
-        public Guid MarcId {get; private set;}
+        public required Guid MarcId {get; init;}
         public Marc? Marc {get; set;}
         public List<ProductGroups> Group75 { get; set; } = new();
         public List<ProductGroups> Group50 { get; set; } = new();
         public List<ProductGroups> Group25 { get; set; } = new();
 
-        public Product(Guid id, string name, string description, string image, string tags, DateTime createDate, double price, Guid MarcId)
+        public Product()
+            : base(new ProductValidator())
         {
-            Id = id;
-            Name = name;
-            Description = description;
-            Image = image;
-            Tags = tags;
-            this.MarcId = MarcId;
-            CreateDate = createDate;
-            Price = price;
-            Validate(this, new ProductValidator());
         }
     }
 }

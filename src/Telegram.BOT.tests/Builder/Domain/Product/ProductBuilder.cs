@@ -22,7 +22,21 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
         }
     public BOT.Domain.Products.Product Build()
     {
-     BOT.Domain.Products.Product produt = new(id, name, description, image, tags, createDate, price, marc!.Id){Marc = marc, Group25 = group25, Group50 = group50, Group75 = group75};
+     BOT.Domain.Products.Product produt = new()
+     {
+         Id = id,
+         Name = name,
+         Description = description,
+         Image = image,
+         Tags = tags,
+         CreateDate = createDate,
+         Price = price,
+         MarcId = marc!.Id,
+         Marc = marc,
+         Group25 = group25,
+         Group50 = group50,
+         Group75 = group75
+     };
      return produt;
     }
     public ProductBuilder WithMarc(Marc value)

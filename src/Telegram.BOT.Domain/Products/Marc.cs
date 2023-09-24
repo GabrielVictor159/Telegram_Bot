@@ -6,20 +6,16 @@ using Telegram.BOT.Domain.Validator.Products;
 
 namespace Telegram.BOT.Domain.Products
 {
-    public class Marc : Entity
+    public class Marc : Entity <Marc, MarcValidator>
     {
-        public Guid Id {get; private set;}
-        public string Name {get; private set;} = "";
+        public required Guid Id {get; init;}
+        public required string Name {get; init; } = "";
         public Category? Category {get; set;}
-        public Guid CategoryId {get; private set;}
+        public required Guid CategoryId {get; init; }
         public List<Product> products {get; set;} = new();
-        public Marc(Guid Id, string Name, Guid CategoryId)
+        public Marc()
+            : base(new MarcValidator())
         {
-            this.Id = Id;
-            this.Name = Name;
-            this.products = products ?? new List<Product>();
-            this.CategoryId = CategoryId;
-            Validate(this, new MarcValidator());
         }
     }
 }

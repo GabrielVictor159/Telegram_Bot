@@ -6,20 +6,15 @@ using Telegram.BOT.Domain.Validator.Order;
 
 namespace Telegram.BOT.Domain.Order
 {
-    public class Order : Entity
+    public class Order : Entity <Order, OrderValidator>
     {
-        public Guid Id { get; protected set; }
-        public DateTime OrderDate { get; private set; }
-        public decimal TotalOrder { get; private set; }
+        public Guid Id { get; init; }
+        public DateTime OrderDate { get; init; }
+        public decimal TotalOrder { get; init; }
 
-        public Order(Guid id, DateTime orderDate, decimal totalOrder)
+        public Order()
+            : base(new OrderValidator())
         {
-            Id = id;
-            OrderDate = orderDate;
-            TotalOrder = totalOrder;
-            Validate(this, new OrderValidator());
         }
-        public static Order New(Guid id, DateTime orderDate, decimal totalOrder)
-            => new(id, orderDate, totalOrder);
     }
 }

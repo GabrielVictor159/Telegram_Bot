@@ -14,7 +14,8 @@ namespace Telegram.BOT.tests.Cases.Domain.Chat
         public void ShouldChatBeValid()
         {
             var chat = ChatBuilder.New().Build();
-            chat.IsValid.Should().BeTrue();
+            var teste = chat.IsValid;
+            teste.Should().BeTrue();
         }
         [Fact]
         public void ShouldFailIfIdIsEmpty()
