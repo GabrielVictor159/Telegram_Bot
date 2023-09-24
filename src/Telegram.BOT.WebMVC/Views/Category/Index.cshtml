@@ -1,0 +1,26 @@
+﻿<div class="container">
+    <h3>Listar Categorias</h3>
+    <form>
+        <div class="mb-3">
+            <label for="category-name" class="form-label">Nome:</label>
+            <input type="text" class="form-control" id="category-name" />
+        </div>
+        <div class="mb-3 d-flex justify-content-end">
+            <a asp-action="Create" class="btn btn-success">Criar nova categoria</a>
+            <input type="submit" class="btn btn-primary ms-2" value="Pesquisar" />
+        </div>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2" align="center">Nenhum registro encontrado</td>
+        </tr>
+    </tbody>
+</table>

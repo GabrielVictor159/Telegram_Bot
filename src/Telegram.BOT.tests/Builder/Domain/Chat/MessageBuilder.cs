@@ -18,7 +18,13 @@ namespace Telegram.BOT.tests.Builder.Domain.Chat
         }
         public BOT.Domain.Chat.Message Build()
         {
-            return new BOT.Domain.Chat.Message(Id, Messaging, Chat!.Id);
+            return new BOT.Domain.Chat.Message()
+            { 
+            Id = Id,
+            Messaging = Messaging,
+            Chat = Chat,
+            ChatId = Chat!.Id,
+            };
         }
         public MessageBuilder WithId(Guid value)
         {

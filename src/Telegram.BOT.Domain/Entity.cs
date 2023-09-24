@@ -2,22 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 
 namespace Telegram.BOT.Domain
 {
-    public abstract class Entity
+    public abstract class Entity<TModel, TValidator> : ICloneable
+    where TValidator : AbstractValidator<TModel>
     {
-        public bool IsValid { get; private set; }
+        protected TValidator Validator { get; private set; }
         public ValidationResult? ValidationResult { get; private set; }
-
-        public bool Validate<TModel>(TModel model, AbstractValidator<TModel> validator)
+        public bool IsValid
         {
-            ValidationResult = validator.Validate(model);
+            get
+            {
+                ValidationResult = Validator.Validate((TModel)Clone());
+                return ValidationResult.IsValid;
+            }
+            set { }
+        }
+        protected Entity( TValidator validator)
+        {
+            Validator = validator;
+        }
 
-            return IsValid = ValidationResult.IsValid;
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }

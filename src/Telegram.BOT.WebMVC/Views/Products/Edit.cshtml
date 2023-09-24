@@ -1,0 +1,40 @@
+﻿<form>
+    <h3>Editar Produto</h3>
+    <div class="mb-3">
+        <label for="product-name" class="form-label">Nome:</label>
+        <input type="text" class="form-control" id="product-name" />
+    </div>
+    <div class="mb-3">
+        <label for="product-description" class="form-label">Descrição:</label>
+        <textarea class="form-control" id="product-description"></textarea>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <label for="product-tags" class="form-label">Tags:</label>
+                <input type="text" class="form-control" id="product-tags" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label for="product-price" class="form-label">Preço:</label>
+                <input type="number" class="form-control" id="product-price" />
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="product-marc" class="form-label">Marca:</label>
+        <select class="form-control" id="product-marc">
+            @foreach (var marc in Model) {
+                <option>@marc.Name</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="product-image" class="form-label">Imagem:</label>
+        <input type="file" accept="image/jpeg, image/png" class="form-control" id="product-image" />
+    </div>
+    <div class="d-flex justify-content-end">
+        <input type="submit" class="btn btn-success submit-button" id="btn-submit" value="Salvar alterações" />
+    </div>
+</form>

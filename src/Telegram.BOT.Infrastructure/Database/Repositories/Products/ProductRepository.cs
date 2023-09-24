@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Telegram.BOT.Application.Interfaces.Repositories;
 using Telegram.BOT.Infrastructure.Database.Entities.Products;
 using Telegram.BOT.Infrastructure.Database.Map.Products;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
 {
@@ -29,15 +30,17 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
             context.SaveChanges();
             return mapper.Map<Domain.Products.Product>(entity);
         }
-        public List<Domain.Products.Product> GetByFilter(Expression<Func<Domain.Products.Product, bool>> expression)
+        public List<Domain.Products.Product> GetByFilter(Expression<Func<Domain.Products.Product, bool>> expression, int page, int pageSize)
         {
             var predicate = mapper.Map<Expression<Func<Product, bool>>>(expression);
-            var entities = context.Products
+            var query = context.Products
                 .Include(p => p.Group75)
                 .Include(p => p.Group50)
                 .Include(p => p.Group25)
-                .Where(predicate)
-                .ToList();
+                .Where(predicate);
+            var totalItems =  query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+            var entities = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return mapper.Map<List<Domain.Products.Product>>(entities);
         }
         public int Update(Domain.Products.Product product)
