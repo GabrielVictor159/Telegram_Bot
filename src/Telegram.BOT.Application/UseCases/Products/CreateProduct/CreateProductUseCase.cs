@@ -25,7 +25,7 @@ public class CreateProductUseCase : ICreateProductRequest
         CreateProductHandler createProduct,
         CreateProductGroupsHandler createProductGroupsHandler)
     {
-        validateProductHandler.SetSucessor
+        this.validateProductHandler = validateProductHandler.SetSucessor
         (
             saveImageHandler.SetSucessor
             (

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.BOT.Application.Interfaces.Repositories;
+using Telegram.BOT.Domain.Enums;
 using Telegram.BOT.Domain.Products;
 
 namespace Telegram.BOT.Application.UseCases.Products.CreateProduct.Handlers;
@@ -18,6 +19,7 @@ public class CreateProductGroupsHandler : Handler<CreateProductRequest>
 
     public override async Task ProcessRequest(CreateProductRequest request)
     {
+        request.AddLog(LogType.Process, "Executing CreateProductGroupsHandler");
         var productGroups = new List<ProductGroups>() { new ProductGroups() { Group = request.groups100[0], Product75Id = request.Product.Id} };
         request.groups75.ForEach(e=>productGroups.Add(new ProductGroups() { Group = e, Product75Id = request.Product.Id }));
         request.groups50.ForEach(e => productGroups.Add(new ProductGroups() { Group = e, Product50Id = request.Product.Id }));

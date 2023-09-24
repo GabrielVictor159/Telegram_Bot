@@ -10,7 +10,7 @@ namespace Telegram.BOT.Application.Interfaces.Repositories
     public interface IProductRepository
     {
         Domain.Products.Product Add(Domain.Products.Product product);
-        List<Domain.Products.Product> GetByFilter(Expression<Func<Domain.Products.Product, bool>> expression);
+        List<Domain.Products.Product> GetByFilter(Expression<Func<Domain.Products.Product, bool>> expression, int page, int pageSize);
         int Update(Domain.Products.Product product);
         bool Delete(Guid id);
     }

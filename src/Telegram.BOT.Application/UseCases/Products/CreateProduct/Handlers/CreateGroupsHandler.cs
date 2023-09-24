@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.BOT.Application.Interfaces.Repositories;
 using Telegram.BOT.Application.Interfaces.Services;
+using Telegram.BOT.Domain.Enums;
 using Telegram.BOT.Domain.Products;
 
 namespace Telegram.BOT.Application.UseCases.Products.CreateProduct.Handlers;
@@ -23,6 +24,7 @@ public class CreateGroupsHandler : Handler<CreateProductRequest>
 
     public override async Task ProcessRequest(CreateProductRequest request)
     {
+        request.AddLog(LogType.Process, "Executing CreateGroupsHandler");
         var newGroup = new Domain.Products.Groups()
         {
             Id = Guid.NewGuid(),

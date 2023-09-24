@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 using Telegram.BOT.Application.Interfaces.Services;
 using Telegram.BOT.Domain.Enums;
 
-namespace Telegram.BOT.Application.UseCases.Products.CreateProduct.Handlers;
+namespace Telegram.BOT.Application.UseCases.Products.DeleteProduct.Handlers;
 
-public class SaveImageHandler : Handler<CreateProductRequest>
+public class DeleteImageProductHandler : Handler<DeleteProductRequest>
 {
     private readonly IImagesManagementServices imagesManagementServices;
-    public SaveImageHandler(IImagesManagementServices imagesManagementServices)
+    public DeleteImageProductHandler(IImagesManagementServices imagesManagementServices)
     {
         this.imagesManagementServices = imagesManagementServices;
     }
 
-    public override async Task ProcessRequest(CreateProductRequest request)
+    public override async Task ProcessRequest(DeleteProductRequest request)
     {
-        request.AddLog(LogType.Process, "Executing SaveImageHandler");
-        request.Product.Image = imagesManagementServices.SaveImage(request.Image);
+        request.AddLog(LogType.Process, "Executing DeleteImageProductHandler");
+        imagesManagementServices.DeleteImage(request.Product!.Image);
         if (sucessor != null)
         {
             await sucessor.ProcessRequest(request);
