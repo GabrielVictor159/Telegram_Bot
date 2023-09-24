@@ -9,7 +9,12 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
     private DateTime createDate = DateTime.Now;
     public static GroupsBuilder New() { return new GroupsBuilder(); }
     public Groups Build() =>
-      new Groups(id,tags,createDate);
+      new Groups()
+      { 
+      Id = id,
+      Tags = tags,
+      CreateDate = createDate,
+      };
 
     public GroupsBuilder WithId(Guid value)
     {

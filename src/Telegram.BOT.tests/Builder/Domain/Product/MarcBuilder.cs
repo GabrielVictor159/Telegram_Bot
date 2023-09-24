@@ -17,7 +17,13 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
           return new MarcBuilder();
         }
         public Marc Build() =>
-          new Marc(id, name, category!.Id){Category=category,products=products};
+          new Marc()
+          {
+              Id = id,
+              Name = name,
+              CategoryId = category!.Id,
+              Category=category,products=products
+          };
     
         public MarcBuilder WithId(Guid value)
         {

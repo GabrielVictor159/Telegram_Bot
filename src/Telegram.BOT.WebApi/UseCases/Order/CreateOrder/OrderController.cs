@@ -25,7 +25,12 @@ namespace Telegram.BOT.WebApi.UseCases.Order.CreateOrder
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest request)
         {
-            await createOrderUseCase.Execute(new Application.UseCases.Order.CreateOrder.CreateOrderRequest(new Domain.Order.Order(Guid.NewGuid(), request.OrderDate, request.TotalOrder)));
+            await createOrderUseCase.Execute(new Application.UseCases.Order.CreateOrder.CreateOrderRequest(new Domain.Order.Order() 
+            {
+                Id = Guid.NewGuid(),
+                OrderDate = request.OrderDate,
+                TotalOrder = request.TotalOrder
+            }));
             return presenter.ViewModel;
         }
     }

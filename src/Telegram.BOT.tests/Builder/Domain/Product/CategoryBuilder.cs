@@ -16,7 +16,12 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
       return new CategoryBuilder();
     }
     public Category Build() =>
-      new Category(id,name){marcs=marcs};
+      new Category()
+      {
+          Id = id,
+          Name = name,
+          marcs=marcs
+      };
 
     public CategoryBuilder WithId(Guid value)
     {
