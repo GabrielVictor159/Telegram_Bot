@@ -9,6 +9,7 @@ using Telegram.BOT.Infrastructure.Database.Map.Products;
 using Telegram.BOT.Infrastructure.Database.Entities.Products;
 using Telegram.BOT.Infrastructure.Database.Entities.Chat;
 using Telegram.BOT.Infrastructure.Database.Map.Chat;
+using Telegram.BOT.Infrastructure.Database.Entities.Logs;
 
 namespace Telegram.BOT.Infrastructure.Database
 {
@@ -21,6 +22,7 @@ namespace Telegram.BOT.Infrastructure.Database
         public DbSet<Message> messages => Set<Message>();
         public DbSet<Marc> Marcs => Set<Marc>();
         public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Log> logs => Set<Log>();
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (Environment.GetEnvironmentVariable("DBCONN") != null)
