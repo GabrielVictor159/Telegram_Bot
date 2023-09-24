@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.BOT.Application.Interfaces.Repositories;
+using Telegram.BOT.Domain.Enums;
 
 namespace Telegram.BOT.Application.UseCases.Products.CreateProduct.Handlers;
 
@@ -17,6 +18,7 @@ public class CreateProductHandler : Handler<CreateProductRequest>
 
     public override async Task ProcessRequest(CreateProductRequest request)
     {
+        request.AddLog(LogType.Process, "Executing CreateProductHandler");
         productRepository.Add(request.Product);
         if (sucessor != null)
         {

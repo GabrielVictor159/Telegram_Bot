@@ -29,7 +29,7 @@ namespace Telegram.BOT.tests.Cases.Infrastructure.Database.Repository.Products
         {
             var entity = CategoryBuilder.New().Build();
             categoryRepository.Add(entity);
-            categoryRepository.GetByFilter(e=>e.Id==entity.Id).Should().NotBeNull();
+            categoryRepository.GetByFilter(e=>e.Id==entity.Id,1,10).Should().NotBeNull();
         }
         [Fact]
         public void ShouldSucessUpdate()
@@ -38,7 +38,7 @@ namespace Telegram.BOT.tests.Cases.Infrastructure.Database.Repository.Products
             categoryRepository.Add(entity);
             var newEntity = CategoryBuilder.New().WithId(entity.Id).WithName("dasdasasda").Build();
             categoryRepository.Update(newEntity).Should().Be(1);
-            var entityNewAttributes = categoryRepository.GetByFilter(e=>e.Id==entity.Id).First();
+            var entityNewAttributes = categoryRepository.GetByFilter(e=>e.Id==entity.Id,1,10).First();
             entityNewAttributes.Name.Should().NotBe(entity.Name);
         }
         [Fact]

@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Telegram.BOT.Application.Interfaces.Repositories;
 using Telegram.BOT.Infrastructure.Database.Entities.Products;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
 {
@@ -28,13 +29,15 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
             context.SaveChanges();
             return mapper.Map<Domain.Products.Category>(entity);
         }
-        public List<Domain.Products.Category> GetByFilter(Expression<Func<Domain.Products.Category, bool>> expression)
+        public List<Domain.Products.Category> GetByFilter(Expression<Func<Domain.Products.Category, bool>> expression, int page, int pageSize)
         {
             var predicate = mapper.Map<Expression<Func<Category, bool>>>(expression);
-            var entities = context.Categories
-                .Where(predicate)
-                .Include(p=>p.marcs)
-                .ToList();
+            var query = context.Categories
+                .Include(p => p.marcs)
+                .Where(predicate);
+            var totalItems = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+            var entities = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return mapper.Map<List<Domain.Products.Category>>(entities);
         }
         public int Update(Domain.Products.Category category)
@@ -54,7 +57,7 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
             {
                 return false;
             }
-            var marcs = marcRepository.GetByFilter(e=>e.CategoryId==id);
+            var marcs = marcRepository.GetByFilter(e=>e.CategoryId==id,1,int.MaxValue);
             marcs.ForEach(e=>marcRepository.Delete(e.Id));
             context.Categories.Remove(category);
             context.SaveChanges();

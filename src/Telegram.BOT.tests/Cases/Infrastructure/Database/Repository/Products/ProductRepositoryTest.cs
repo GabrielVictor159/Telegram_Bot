@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Telegram.BOT.Application.Interfaces.Repositories;
@@ -29,7 +30,7 @@ namespace Telegram.BOT.tests.Cases.Infrastructure.Database.Repository.Products
         {
             var entity = ProductBuilder.New().Build();
             productRepository.Add(entity);
-            productRepository.GetByFilter(e=>e.Id==entity.Id).Should().NotBeNull();
+            productRepository.GetByFilter((e=>e.Id==entity.Id),1,10).Should().NotBeNull();
         }
         [Fact]
         public void ShouldSucessUpdate()
@@ -38,7 +39,7 @@ namespace Telegram.BOT.tests.Cases.Infrastructure.Database.Repository.Products
             productRepository.Add(entity);
             var newEntity = ProductBuilder.New().WithId(entity.Id).Build();
             productRepository.Update(newEntity).Should().Be(1);
-            var entityNewAttributes = productRepository.GetByFilter(e=>e.Id==entity.Id).First();
+            var entityNewAttributes = productRepository.GetByFilter((e=>e.Id==entity.Id),1,10).First();
             entityNewAttributes.CreateDate.Should().NotBe(entity.CreateDate);
         }
         [Fact]
