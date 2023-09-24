@@ -15,10 +15,8 @@ public class CreateProductUseCase : ICreateProductRequest
 {
     private readonly ValidateProductHandler validateProductHandler;
     private readonly ILogRepository logRepository;
-    private readonly IOutputPort<ProductOutput> outputPort;
     public CreateProductUseCase
         (ILogRepository logRepository,
-        IOutputPort<ProductOutput> outputPort,
         ValidateProductHandler validateProductHandler,
         SaveImageHandler saveImageHandler,
         CreateGroupsHandler createGroupsHandler,
@@ -39,7 +37,6 @@ public class CreateProductUseCase : ICreateProductRequest
             )
         ); 
         this.logRepository = logRepository;
-        this.outputPort = outputPort;
     }
 
     public async Task Execute(CreateProductRequest request)
@@ -47,12 +44,13 @@ public class CreateProductUseCase : ICreateProductRequest
         try
         {
             await validateProductHandler.ProcessRequest(request);
-            outputPort.Standard(new ProductOutput() { product = request.Product});
+            request.output=new ProductOutput() { product = request.Product};
         }
         catch(Exception ex)
         {
             request.AddLog(LogType.Error, $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}");
-            outputPort.Error(ex.Message ?? "");
+            request.IsError = true;
+            request.ErrorMessage = ex.Message ?? "";
         }
         finally 
         {

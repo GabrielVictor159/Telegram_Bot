@@ -19,16 +19,13 @@ internal class CreateMarcUseCase : ICreateMarcRequest
 {
     private readonly ValidateMarcHandler validateMarcHandler;
     private readonly ILogRepository logRepository;
-    private readonly IOutputPort<SaveMarcOutput> outputPort;
     public CreateMarcUseCase
         (ValidateMarcHandler validateMarcHandler, 
         SaveMarcHandler saveMarcHandler,
-        ILogRepository logRepository, 
-        IOutputPort<SaveMarcOutput> outputPort)
+        ILogRepository logRepository)
     {
         this.validateMarcHandler = validateMarcHandler.SetSucessor(saveMarcHandler);
         this.logRepository = logRepository;
-        this.outputPort = outputPort;
     }
 
     public async Task Execute(CreateMarcRequest request)
@@ -36,12 +33,13 @@ internal class CreateMarcUseCase : ICreateMarcRequest
         try
         {
             await validateMarcHandler.ProcessRequest(request);
-            outputPort.Standard(new SaveMarcOutput() { Marc = request.marc});
+            request.output = new SaveMarcOutput() { Marc = request.marc};
         }
         catch (Exception ex)
         {
             request.AddLog(LogType.Error, $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}");
-            outputPort.Error(ex.Message ?? "");
+            request.IsError = true;
+            request.ErrorMessage = ex.Message ?? "";
         }
         finally
         {

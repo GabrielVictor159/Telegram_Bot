@@ -16,12 +16,10 @@ public class GetProductUseCase : IGetProductRequest
 {
     private readonly GetProductsHandler getProductsHandler;
     private readonly ILogRepository logRepository;
-    private readonly IOutputPort<List<Domain.Products.Product>> outputPort;
-    public GetProductUseCase(GetProductsHandler getProductsHandler, ILogRepository logRepository, IOutputPort<List<Domain.Products.Product>> outputPort)
+    public GetProductUseCase(GetProductsHandler getProductsHandler, ILogRepository logRepository)
     {
         this.getProductsHandler = getProductsHandler;
         this.logRepository = logRepository;
-        this.outputPort = outputPort;
     }
 
     public async Task Execute(GetProductRequest request)
@@ -29,12 +27,15 @@ public class GetProductUseCase : IGetProductRequest
         try
         {
             await getProductsHandler.ProcessRequest(request);
-            outputPort.Standard(request.Products);
+            var output = new List<ProductOutput>();
+            request.Products.ForEach(p => output.Add(new ProductOutput() { product= p}));
+            request.output = output;
         }
         catch (Exception ex)
         {
             request.AddLog(LogType.Error, $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}");
-            outputPort.Error(ex.Message ?? "");
+            request.IsError = true;
+            request.ErrorMessage = ex.Message ?? "";
         }
         finally
         {
