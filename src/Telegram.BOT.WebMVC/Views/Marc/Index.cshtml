@@ -1,17 +1,30 @@
-﻿<div class="container">
+﻿@using Telegram.BOT.WebMVC.UseCases.Marc.GetMarc;
+@model GetMarcResponse
+<div class="container">
     <h3>Listar Marcas</h3>
-    <form>
+    <form asp-action="Search" method="post">
         <div class="row">
             <div class="col">
                 <div class="mb-3">
                     <label for="marc-name" class="form-label">Nome:</label>
-                    <input type="text" class="form-control" id="marc-name" />
+                    <input type="text" class="form-control" id="marc-name" name="Name" />
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
                     <label for="marc-category" class="form-label">Categoria:</label>
-                    <select class="form-control" id="marc-category" ></select>
+                    <select class="form-control" id="marc-category" name="CategoryId">
+                        @if (Model != null)
+                        {
+                            @if(Model.Categories!=null)
+                            {
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <option value=@category.id>@category.Name</option>
+                                }
+                            }
+                        }
+                    </select>
                 </div>
             </div>
         </div>

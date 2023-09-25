@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telegram.BOT.Application.Boundaries.Category;
 using Telegram.BOT.Domain.Enums;
 using Telegram.BOT.Domain.Logs;
 
 namespace Telegram.BOT.Application.UseCases.Category.GetCategory;
 
-public class GetCategoryRequest
+public class GetCategoryRequest : Output<GetCategoryOutput>
 {
     public string Name { get; init; } = "";
     public List<Domain.Products.Category> Categories { get; set; } = new();

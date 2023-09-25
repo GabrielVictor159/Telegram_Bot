@@ -16,12 +16,10 @@ public class GetMarcUseCase : IGetMarcRequest
 {
     private readonly GetMarcHandler getMarcHandler;
     private readonly ILogRepository logRepository;
-    private readonly IOutputPort<GetMarcOutput> outputPort;
-    public GetMarcUseCase(GetMarcHandler getMarcHandler, ILogRepository logRepository, IOutputPort<GetMarcOutput> outputPort)
+    public GetMarcUseCase(GetMarcHandler getMarcHandler, ILogRepository logRepository)
     {
         this.getMarcHandler = getMarcHandler;
         this.logRepository = logRepository;
-        this.outputPort = outputPort;
     }
 
     public async Task Execute(GetMarcRequest request)
@@ -29,12 +27,13 @@ public class GetMarcUseCase : IGetMarcRequest
         try
         {
             await getMarcHandler.ProcessRequest(request);
-            outputPort.Standard(new GetMarcOutput() { Marcs = request.Marcs});
+            request.output = new GetMarcOutput() { Marcs = request.Marcs};
         }
         catch (Exception ex)
         {
             request.AddLog(LogType.Error, $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}");
-            outputPort.Error(ex.Message ?? "");
+            request.IsError = true;
+            request.ErrorMessage = ex.Message??"";
         }
         finally
         {

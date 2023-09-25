@@ -16,19 +16,16 @@ public class DeleteProductUseCase : IDeleteProductRequest
 {
     private readonly GetProductHandler getProductHandler;
     private readonly ILogRepository logRepository;
-    private readonly IOutputPort<DeleteProductOutput> outputPort;
     public DeleteProductUseCase
         (GetProductHandler getProductHandler,
         DeleteImageProductHandler deleteImageProductHandler,
         DeleteProductHandler deleteProductHandler,
-        ILogRepository logRepository, 
-        IOutputPort<DeleteProductOutput> outputPort)
+        ILogRepository logRepository)
     {
 
         this.getProductHandler = getProductHandler.SetSucessor
             (deleteImageProductHandler.SetSucessor(deleteProductHandler));
         this.logRepository = logRepository;
-        this.outputPort = outputPort;
     }
 
     public async Task Execute(DeleteProductRequest request)
@@ -36,12 +33,13 @@ public class DeleteProductUseCase : IDeleteProductRequest
         try
         {
             await getProductHandler.ProcessRequest(request);
-            outputPort.Standard(new DeleteProductOutput() { message = "deleted product" });
+            request.output=new DeleteProductOutput() { message = "deleted product" };
         }
         catch (Exception ex)
         {
             request.AddLog(LogType.Error, $"Occurring an error: {ex.Message ?? ex.InnerException?.Message}, stacktrace: {ex.StackTrace}");
-            outputPort.Error(ex.Message ?? "");
+            request.IsError = true;
+            request.ErrorMessage = ex.Message ?? "";
         }
         finally
         {

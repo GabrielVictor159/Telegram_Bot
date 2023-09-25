@@ -10,7 +10,7 @@ using Telegram.BOT.Domain.Products;
 
 namespace Telegram.BOT.Application.UseCases.Products.CreateProduct;
 
-public class CreateProductRequest
+public class CreateProductRequest : Output<ProductOutput>
 {
    public required Domain.Products.Product Product { get; init; }
    public required byte[] Image { get; init; }

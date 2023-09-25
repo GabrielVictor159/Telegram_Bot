@@ -6,27 +6,42 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.GetCategory
 {
     public class CategoryController : Controller
     {
-        private readonly CategoryPresenter presenter;
         private readonly IGetCategoryRequest getCategoryRequest;
         public CategoryController(
-           CategoryPresenter presenter,
            IGetCategoryRequest getCategoryRequest)
         {
-            this.presenter = presenter;
             this.getCategoryRequest = getCategoryRequest;
         }
         public IActionResult Index()
         {
-            return View();
+            var request =
+                 new Application.UseCases.Category.GetCategory.GetCategoryRequest() { Name = "" };
+            getCategoryRequest.Execute(request);
+            if (!request.IsError && request.output!=null)
+            {
+                var items = request.output.Categories
+                .Select(c => new CategoryResponse(c.Id, c.Name))
+                .ToList();
+                return View("Index", new GetCategoryResponse { CategoryResponse = items });
+                
+            }
+            else
+            {
+                return View("Error");
+            }
         }
         [HttpPost]
         public IActionResult Search(GetCategoryRequest request)
         {
-            getCategoryRequest.Execute(
-                new Application.UseCases.Category.GetCategory.GetCategoryRequest() { Name = request.name});
-            if(presenter.ViewModel is OkObjectResult okObjectResult && okObjectResult.Value is GetCategoryResponse response)
+            var requestUseCase =
+                new Application.UseCases.Category.GetCategory.GetCategoryRequest() { Name = request.name };
+            getCategoryRequest.Execute(requestUseCase);
+            if(!requestUseCase.IsError && requestUseCase.output != null)
             {
-                return View("Index", response);
+                var items = requestUseCase.output.Categories
+                .Select(c => new CategoryResponse(c.Id, c.Name))
+                .ToList();
+                return View("Index", new GetCategoryResponse { CategoryResponse = items });
             }
             else
             {
