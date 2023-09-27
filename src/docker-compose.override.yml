@@ -39,7 +39,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
     ports:
-      - "80"
+      - "62235:80"
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
