@@ -15,7 +15,7 @@ using Telegram.BOT.Application.Boundaries.Marc;
 
 namespace Telegram.BOT.Application.UseCases.Marc.CreateMarc;
 
-internal class CreateMarcUseCase : ICreateMarcRequest
+public class CreateMarcUseCase : ICreateMarcRequest
 {
     private readonly ValidateMarcHandler validateMarcHandler;
     private readonly ILogRepository logRepository;

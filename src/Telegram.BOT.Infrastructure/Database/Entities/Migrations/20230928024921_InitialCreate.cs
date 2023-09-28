@@ -149,10 +149,9 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Product75Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Product50Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Product25Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    GroupId = table.Column<Guid>(type: "uuid", nullable: false)
+                    ProductId = table.Column<Guid>(type: "uuid", nullable: false),
+                    GroupId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Percentage = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -165,22 +164,8 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductGroups_Product_Product25Id",
-                        column: x => x.Product25Id,
-                        principalSchema: "Products",
-                        principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductGroups_Product_Product50Id",
-                        column: x => x.Product50Id,
-                        principalSchema: "Products",
-                        principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductGroups_Product_Product75Id",
-                        column: x => x.Product75Id,
+                        name: "FK_ProductGroups_Product_ProductId",
+                        column: x => x.ProductId,
                         principalSchema: "Products",
                         principalTable: "Product",
                         principalColumn: "Id",
@@ -219,22 +204,10 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductGroups_Product25Id",
+                name: "IX_ProductGroups_ProductId",
                 schema: "Products",
                 table: "ProductGroups",
-                column: "Product25Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductGroups_Product50Id",
-                schema: "Products",
-                table: "ProductGroups",
-                column: "Product50Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductGroups_Product75Id",
-                schema: "Products",
-                table: "ProductGroups",
-                column: "Product75Id");
+                column: "ProductId");
         }
 
         /// <inheritdoc />

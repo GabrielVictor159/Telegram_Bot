@@ -20,15 +20,11 @@ namespace Telegram.BOT.Infrastructure.Database.AutoMapperProfile
             CreateMap<ProductGroups, Domain.Products.ProductGroups>().ReverseMap();
             CreateMap<Groups, Domain.Products.Groups>().ReverseMap();
             CreateMap<ProductGroups, Domain.Products.ProductGroups>()
-            .ForMember(dest=>dest.Product25, opt => opt.MapFrom(src=>src.Product25))
-            .ForMember(dest=>dest.Product50, opt => opt.MapFrom(src=>src.Product50))
-            .ForMember(dest=>dest.Product75, opt => opt.MapFrom(src=>src.Product75))
+            .ForMember(dest=>dest.Product, opt => opt.MapFrom(src=>src.Product))
             .ForMember(dest=>dest.Group, opt => opt.MapFrom(src=>src.Group))
             .ReverseMap();
             CreateMap<Product, Domain.Products.Product>()
-            .ForMember(dest=>dest.Group25, opt => opt.MapFrom(src=>src.Group25))
-            .ForMember(dest=>dest.Group50, opt => opt.MapFrom(src=>src.Group50))
-            .ForMember(dest=>dest.Group75, opt => opt.MapFrom(src=>src.Group75))
+            .ForMember(dest=>dest.Groups, opt => opt.MapFrom(src=>src.Groups))
             .ReverseMap();
             CreateMap<Chat, Domain.Chat.Chat>().ReverseMap();
             CreateMap<Message, Domain.Chat.Message>()

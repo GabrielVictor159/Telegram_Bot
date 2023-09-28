@@ -11,6 +11,7 @@ using Telegram.BOT.Infrastructure.Database.Entities.Chat;
 using Telegram.BOT.Infrastructure.Database.Map.Chat;
 using Telegram.BOT.Infrastructure.Database.Entities.Logs;
 using Telegram.BOT.Infrastructure.Database.Map.Log;
+using Telegram.BOT.Infrastructure.Service;
 
 namespace Telegram.BOT.Infrastructure.Database
 {

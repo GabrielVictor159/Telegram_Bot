@@ -19,6 +19,8 @@ namespace Telegram.BOT.tests
         public ConfigureTestFramework(IMessageSink diagnosticMessageSink)
            : base(diagnosticMessageSink)
         {
+            //Environment.SetEnvironmentVariable("DBCONN", "Host=localhost;Port=5548;Database=postgres;User Id=postgres;Password=postgres;");
+            Environment.SetEnvironmentVariable("ImagesPathByServiceInfra", "../../../../Telegram.BOT.tests/TemporaryFiles");
             Environment.SetEnvironmentVariable("DBCONN", null);
         }
         protected override void ConfigureContainer(ContainerBuilder builder)

@@ -183,24 +183,17 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("Product25Id")
-                        .HasColumnType("uuid");
+                    b.Property<double>("Percentage")
+                        .HasColumnType("double precision");
 
-                    b.Property<Guid>("Product50Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("Product75Id")
+                    b.Property<Guid>("ProductId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("Product25Id");
-
-                    b.HasIndex("Product50Id");
-
-                    b.HasIndex("Product75Id");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductGroups", "Products");
                 });
@@ -244,31 +237,15 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Telegram.BOT.Infrastructure.Database.Entities.Products.Product", "Product25")
-                        .WithMany("Group25")
-                        .HasForeignKey("Product25Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Telegram.BOT.Infrastructure.Database.Entities.Products.Product", "Product50")
-                        .WithMany("Group50")
-                        .HasForeignKey("Product50Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Telegram.BOT.Infrastructure.Database.Entities.Products.Product", "Product75")
-                        .WithMany("Group75")
-                        .HasForeignKey("Product75Id")
+                    b.HasOne("Telegram.BOT.Infrastructure.Database.Entities.Products.Product", "Product")
+                        .WithMany("Groups")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Group");
 
-                    b.Navigation("Product25");
-
-                    b.Navigation("Product50");
-
-                    b.Navigation("Product75");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.Category", b =>
@@ -288,11 +265,7 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
 
             modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Products.Product", b =>
                 {
-                    b.Navigation("Group25");
-
-                    b.Navigation("Group50");
-
-                    b.Navigation("Group75");
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }

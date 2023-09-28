@@ -18,9 +18,7 @@ namespace Telegram.BOT.Domain.Products
         public double Price { get; set; } = 0;
         public required Guid MarcId {get; init;}
         public Marc? Marc {get; set;}
-        public List<ProductGroups> Group75 { get; set; } = new();
-        public List<ProductGroups> Group50 { get; set; } = new();
-        public List<ProductGroups> Group25 { get; set; } = new();
+        public List<ProductGroups> Groups { get; set; } = new();
 
         public Product()
             : base(new ProductValidator())

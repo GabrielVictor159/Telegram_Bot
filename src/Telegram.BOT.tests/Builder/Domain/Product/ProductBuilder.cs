@@ -12,9 +12,7 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
     private DateTime createDate = DateTime.Now;
     private double price = 50;
     private Marc? marc = MarcBuilder.New().Build();
-    private List<ProductGroups> group75 = new List<ProductGroups>();
-    private List<ProductGroups> group50 = new List<ProductGroups>();
-    private List<ProductGroups> group25 = new List<ProductGroups>();
+    private List<ProductGroups> groups = new List<ProductGroups>();
     private Groups? _group = GroupsBuilder.New().Build();
         public static ProductBuilder New()
         { 
@@ -33,9 +31,7 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
          Price = price,
          MarcId = marc!.Id,
          Marc = marc,
-         Group25 = group25,
-         Group50 = group50,
-         Group75 = group75
+         Groups = groups
      };
      return produt;
     }
@@ -85,21 +81,9 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
       return this;
     }
 
-    public ProductBuilder WithGroup75(List<ProductGroups> value)
+    public ProductBuilder WithGroups(List<ProductGroups> value)
     {
-      group75 = value;
-      return this;
-    }
-
-    public ProductBuilder WithGroup50(List<ProductGroups> value)
-    {
-      group50 = value;
-      return this;
-    }
-
-    public ProductBuilder WithGroup25(List<ProductGroups> value)
-    {
-      group25 = value;
+      groups = value;
       return this;
     }
     public ProductBuilder WithGroup(Groups value)
