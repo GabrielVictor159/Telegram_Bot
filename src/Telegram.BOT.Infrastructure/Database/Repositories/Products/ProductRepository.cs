@@ -34,9 +34,7 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
         {
             var predicate = mapper.Map<Expression<Func<Product, bool>>>(expression);
             var query = context.Products
-                .Include(p => p.Group75)
-                .Include(p => p.Group50)
-                .Include(p => p.Group25)
+                .Include(p => p.Groups)
                 .Where(predicate);
             var totalItems =  query.Count();
             var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
@@ -61,7 +59,7 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
             {
                 return false;
             }
-            var ProductGroups = context.productGroups.Where(pg=>pg.Product25Id==id||pg.Product50Id==id||pg.Product75Id==id);
+            var ProductGroups = context.productGroups.Where(pg=>pg.ProductId==id);
             context.productGroups.RemoveRange(ProductGroups);
             context.SaveChanges();
             return true;

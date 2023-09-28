@@ -13,6 +13,7 @@ namespace Telegram.BOT.Application.Interfaces.Repositories
         List<Domain.Products.Groups> AddRange(List<Domain.Products.Groups> groups);
         Domain.Products.Groups? GetOne(Guid id);
         List<Domain.Products.Groups> GetByFilter(Expression<Func<Domain.Products.Groups, bool>> expression);
+        List<Domain.Products.Groups> GetByLeveinsthein(string s1, double percentagem);
         bool Remove(Guid id);
 
     }
