@@ -42,9 +42,7 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
                 context.productGroups
                 .Where(predicate)
                 .Include(p=>p.Group)
-                .Include(p=>p.Product25)
-                .Include(p=>p.Product50)
-                .Include(p=>p.Product75)
+                .Include(p=>p.Product)
                 .ToList()
             );
         }
@@ -54,9 +52,7 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
             var entity = context.productGroups.
             Where(e=>e.Id==id)
             .Include(p=>p.Group)
-            .Include(p=>p.Product25)
-            .Include(p=>p.Product50)
-            .Include(p=>p.Product75)
+            .Include(p=>p.Product)
             .First();
             return mapper.Map<Domain.Products.ProductGroups>(entity);
         }

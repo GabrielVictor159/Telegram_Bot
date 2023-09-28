@@ -7,9 +7,9 @@ using Telegram.BOT.Application.Interfaces.Services;
 
 namespace Telegram.BOT.Infrastructure.Service
 {
-    public class ProbabilityOperations : IProbabilityOperations
+    public static class ProbabilityOperations
     {
-        public int CalculateLevenshteinDistance(string s1, string s2)
+        public static int CalculateLevenshteinDistance(string s1, string s2)
         {
             int[,] dp = new int[s1.Length + 1, s2.Length + 1];
         
@@ -36,7 +36,7 @@ namespace Telegram.BOT.Infrastructure.Service
             return dp[s1.Length, s2.Length];
         }
 
-        public double CalculateNormalizedLevenshteinDistance(string s1, string s2)
+        public static double CalculateNormalizedLevenshteinDistance(string s1, string s2)
         {
             int distance = CalculateLevenshteinDistance(s1, s2);
             int maxLength = Math.Max(s1.Length, s2.Length);
@@ -46,7 +46,7 @@ namespace Telegram.BOT.Infrastructure.Service
                 return 0.0; 
             }
         
-            return (double)distance / maxLength;
+            return (1-((double)distance / maxLength));
         }
     }
 }

@@ -17,8 +17,6 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Products
         public double Price { get; set; } = 0;
         public virtual Marc? Marc {get; set;}
         public Guid MarcId {get;set;}
-        public List<ProductGroups> Group75 { get; set; } = new List<ProductGroups>();
-        public List<ProductGroups> Group50 { get; set; } = new List<ProductGroups>();
-        public List<ProductGroups> Group25 { get; set; } = new List<ProductGroups>();
+        public List<ProductGroups> Groups { get; set; } = new List<ProductGroups>();
     }
 }

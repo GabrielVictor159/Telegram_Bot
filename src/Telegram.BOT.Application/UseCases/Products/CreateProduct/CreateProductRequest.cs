@@ -16,10 +16,6 @@ public class CreateProductRequest : Output<ProductOutput>
    public required byte[] Image { get; init; }
    public ProductOutput? ProductOutput { get; set; }
    public List<Log> Logs { get; set; } = new();
-   public List<Groups> groups100 { get; set; } = new();
-   public List<Groups> groups75 { get; set; } = new();
-   public List<Groups> groups50 { get; set; } = new();
-   public List<Groups> groups25 { get; set; } = new ();
     public void AddLog(LogType type, string message)
            => Logs.Add(Log.AddLog(type, message, "Create Product"));
 }

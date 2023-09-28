@@ -19,7 +19,6 @@ public class CreateProductUseCase : ICreateProductRequest
         (ILogRepository logRepository,
         ValidateProductHandler validateProductHandler,
         SaveImageHandler saveImageHandler,
-        CreateGroupsHandler createGroupsHandler,
         CreateProductHandler createProduct,
         CreateProductGroupsHandler createProductGroupsHandler)
     {
@@ -27,13 +26,10 @@ public class CreateProductUseCase : ICreateProductRequest
         (
             saveImageHandler.SetSucessor
             (
-                createGroupsHandler.SetSucessor
-                (
                     createProduct.SetSucessor
                     (
                         createProductGroupsHandler
                     )
-                )
             )
         ); 
         this.logRepository = logRepository;
