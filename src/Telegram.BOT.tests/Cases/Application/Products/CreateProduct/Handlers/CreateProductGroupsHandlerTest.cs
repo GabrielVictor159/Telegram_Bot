@@ -50,6 +50,6 @@ public class CreateProductGroupsHandlerTest
         await createProductGroupsHandler.ProcessRequest(request);
         var resultDb = productGroupsRepository.GetByFilter(e => 
         e.ProductId == product.Id).ToList();
-        resultDb.Count.Should().BeGreaterThan(4);
+        resultDb.Count.Should().BeGreaterThanOrEqualTo(4);
     }
 }

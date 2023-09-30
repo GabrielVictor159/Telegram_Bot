@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.BOT.Application.Interfaces.Services;
 
-namespace Telegram.BOT.Application.Backgorund.ManagementImages.Handlers;
+namespace Telegram.BOT.Application.Background.ManagementImages.Handlers;
 
 public class RemoveImageHandler
 {

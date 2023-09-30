@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Telegram.BOT.Application.Backgorund.ManagementImages.Handlers;
+using Telegram.BOT.Application.Background.ManagementImages.Handlers;
 using Telegram.BOT.Application.Interfaces.Repositories;
 using Telegram.BOT.Application.Interfaces.Services;
 using Telegram.BOT.Domain.Chat;
 using Telegram.BOT.Domain.Enums;
 using Telegram.BOT.Domain.Logs;
 
-namespace Telegram.BOT.Application.Backgorund.ManagementImages;
+namespace Telegram.BOT.Application.Background.ManagementImages;
 
 public class RemoveImagesNotUseCase : BackgroundService
 {
@@ -21,7 +21,7 @@ public class RemoveImagesNotUseCase : BackgroundService
     private readonly FindImagesNotUseHandler findImagesNotUseHandler;
 
     public RemoveImagesNotUseCase
-        (ILogRepository logRepository, 
+        (ILogRepository logRepository,
         RemoveImageHandler removeImageHandler,
         FindImagesNotUseHandler findImagesNotUseHandler)
     {
@@ -36,14 +36,14 @@ public class RemoveImagesNotUseCase : BackgroundService
         try
         {
             var list = findImagesNotUseHandler.Process();
-            list.ForEach(l => 
+            list.ForEach(l =>
             {
                 (bool sucess, string message) = removeImageHandler.Process(l);
-                if(sucess)
+                if (sucess)
                 {
                     logs.Add(
                         Log.AddLog
-                        (LogType.Information, 
+                        (LogType.Information,
                         $"Image: ${Environment.GetEnvironmentVariable("ImagesPathByServiceInfra")}/${l} Remove",
                         "RemoveImagesNotUseCase"));
                 }
