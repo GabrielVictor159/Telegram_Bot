@@ -19,7 +19,11 @@ public class DeleteImageProductHandler : Handler<DeleteProductRequest>
     public override async Task ProcessRequest(DeleteProductRequest request)
     {
         request.AddLog(LogType.Process, "Executing DeleteImageProductHandler");
-        imagesManagementServices.DeleteImage(request.Product!.Image);
+        var result = imagesManagementServices.DeleteImage(request.Product!.Image);
+        if(result == false)
+        {
+            request.AddLog(LogType.Error, $"Image: ${request.Product.Image} not found");
+        }
         if (sucessor != null)
         {
             await sucessor.ProcessRequest(request);
