@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Telegram.BOT.Infrastructure\Telegram.BOT.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Job\" />
+  </ItemGroup>
+
 </Project>
