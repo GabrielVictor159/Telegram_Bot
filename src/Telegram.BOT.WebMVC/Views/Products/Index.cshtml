@@ -5,13 +5,15 @@
     <form>
         <div class="row">
             <div class="col">
-                <app-input id="product-name" labelText="Nome:" name=""></app-input>
-                
+                <div class="mb-3">
+                    <label for="product-name" class="form-label">Nome:</label>
+                    <input type="text" class="form-control" id="product-name" name="productName"/>
+                </div>
             </div>
             <div class="col">
                 <div class="mb-3">
                     <label for="product-tag" class="form-label">Tag:</label>
-                    <input type="text" class="form-control" id="product-tag" />
+                    <input type="text" class="form-control" id="product-tag" name="productTag"/>
                 </div>
             </div>
         </div>
@@ -20,20 +22,20 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="product-date-start" class="form-label">De:</label>
-                    <input type="date" class="form-control" id="product-date-start" />
+                    <input type="date" class="form-control" id="product-date-start" name="filterStartDate"/>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
                     <label for="product-date-end" class="form-label">Até:</label>
-                    <input type="date" class="form-control" id="product-date-end" />
+                    <input type="date" class="form-control" id="product-date-end" name="filterEndDate" />
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="mb-3">
                 <label for="product-description" class="form-label">Descrição:</label>
-                <input type="text" class="form-control" id="product-description" />
+                <input type="text" class="form-control" id="product-description" name="productDescription" />
             </div>
             <div class="mb-3 d-flex justify-content-end">
                 <a asp-action="Create" class="btn btn-success">Criar novo Produto</a>
