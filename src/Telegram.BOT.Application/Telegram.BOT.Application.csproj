@@ -8,8 +8,14 @@
     <ProjectReference Include="..\Telegram.BOT.Domain\Telegram.BOT.Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.5.2" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
     <PackageReference Include="FluentValidator" Version="2.0.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="VariableWarden" Version="2.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UseCases\Ambient\EnvVariables\GetEnv\" />
+    <Folder Include="UseCases\Ambient\EnvVariables\RemoveEnv\" />
+    <Folder Include="UseCases\Ambient\EnvVariables\UpdateEnv\" />
   </ItemGroup>
 </Project>
