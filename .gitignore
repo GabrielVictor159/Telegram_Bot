@@ -359,4 +359,3 @@ MigrationBackup/
 FodyWeavers.xsd
 *.bak
 src/Telegram.BOT.tests/TemporaryFiles/*.png
-src/Telegram.BOT.WebMVC/appData/
