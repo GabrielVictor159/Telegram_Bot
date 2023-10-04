@@ -1,19 +1,16 @@
-class Form {
-    element
+class FormValidator {
+    formRoot
+    allInputGroups
+    numericInputGroups
     constructor(form) {
-        this.element = form
-        this.element.addEventListener("submit", (event) => {
-            if (this.hasEmpty() | !this.isNumeric() | !this.isEquals()) {
-                event.preventDefault()
-                this.addRealTimeContentValidation()
-            }
-        })
+        this.formRoot = form
+        this.allInputGroups = this.getValidableInputs()
+        this.numericInputGroups = this.getValidableInputs().filter(element => element.classList.contains("numeric"))
     }
 
     hasEmpty() {
-        let groups = this.getValidableInputs()
         let result = false
-        groups.forEach((group) => {
+        this.allInputGroups.forEach((group) => {
             let input = group.querySelector("input, textarea, select")
             if (input.value == "") {
                 this.invalidate(group, "Campo obrigatório")
@@ -23,43 +20,22 @@ class Form {
         return result
     }
 
-    isNumeric() {
-        let groups = this.getValidableInputs().filter(element => element.classList.contains("numeric"))
-
-        let result = true
-        groups.forEach((group) => {
+    hasInvalidNumbers() {
+        let result = false
+        if (this.numericInputGroups)
+        this.numericInputGroups.forEach((group) => {
             let input = group.querySelector("input, textarea, select")
 
             if (isNaN(input.value) && input.value != "") {
                 this.invalidate(group, "Campo deve conter apenas numeros.")
-                result = false
+                result = true
             }
         })
         return result
     }
 
-    isEquals() {
-        let groups = this.getValidableInputs().filter(element => element.classList.contains("equal"))
-        let values = groups.map(element => element.querySelector("input, textarea, select").value)
-        let result = true
-
-        let filtered = values.filter((element, index, arr) => {
-            return arr.indexOf(element) == index
-        })
-
-        if (filtered.lenght != 1) {
-            result = false
-            groups.forEach(group => {
-                this.invalidate(group, "Os campos devem ser iguais.")
-            })
-        }
-        debugger
-        return result
-    }
-
     addRealTimeContentValidation() {
-        let groups = this.getValidableInputs()
-        groups.forEach(group => {
+        this.allInputGroups.forEach(group => {
             let input = group.querySelector("input, textarea, select")
 
             input.addEventListener("input", (event) => {
@@ -76,7 +52,7 @@ class Form {
     }
 
     getValidableInputs() {
-        return Array.from(this.element.querySelectorAll("div")).filter(element => {
+        return Array.from(this.formRoot.querySelectorAll("div")).filter(element => {
             return element.querySelector(".invalid-feedback") != null
         })
     }
