@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Telegram.BOT.Application.Backgrund.ManagementGroups.Handlers;
 using Telegram.BOT.Application.Interfaces.Repositories;
 using Telegram.BOT.Domain.Enums;
 using Telegram.BOT.Domain.Logs;
+using Telegram.BOT.Services.Jobs.ManagementGroups.Handlers;
 
-namespace Telegram.BOT.Application.Backgrund.ManagementGroups;
+namespace Telegram.BOT.Services.Jobs.ManagementGroups;
 
 public class RemoveGroupsNotUseCase : BackgroundService
 {
@@ -33,7 +33,7 @@ public class RemoveGroupsNotUseCase : BackgroundService
         try
         {
             var list = findGroupsNotUseHandler.Process();
-            (bool sucessRequest, string messageRequest) = removeGroupsHandler.Process(list);
+            (bool sucessRequest, string messageRequest) = removeGroupsHandler.Process(list); 
             if (!sucessRequest)
             {
                 logs.Add(

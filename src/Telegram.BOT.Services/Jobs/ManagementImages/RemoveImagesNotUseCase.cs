@@ -5,14 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Telegram.BOT.Application.Background.ManagementImages.Handlers;
 using Telegram.BOT.Application.Interfaces.Repositories;
-using Telegram.BOT.Application.Interfaces.Services;
-using Telegram.BOT.Domain.Chat;
 using Telegram.BOT.Domain.Enums;
 using Telegram.BOT.Domain.Logs;
+using Telegram.BOT.Services.Jobs.ManagementImages.Handlers;
 
-namespace Telegram.BOT.Application.Background.ManagementImages;
+namespace Telegram.BOT.Services.Jobs.ManagementImages;
 
 public class RemoveImagesNotUseCase : BackgroundService
 {

@@ -12,6 +12,11 @@ services:
       - env/databases.env
     networks:
       - telegram-bot
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - static-files:/app/wwwroot/
+    depends_on:
+      - telegram.bot.db
 
   telegram.bot.db:
     image: postgres:latest
@@ -26,6 +31,22 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
+
+  telegram.bot.services:
+    image: ${DOCKER_REGISTRY-}telegrambotservices
+    build:
+      context: .
+      dockerfile: Telegram.BOT.Services/Dockerfile
+    env_file:
+      - env/common.env
+      - env/databases.env
+    networks:
+      - telegram-bot
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - static-files:/app/wwwroot/
+    depends_on:
+      - telegram.bot.db
 
   telegram.bot.webmvc:
     image: ${DOCKER_REGISTRY}telegrambotwebmvc
@@ -47,6 +68,8 @@ services:
       - static-files:/app/wwwroot/
     networks:
       - telegram-bot
+    depends_on:
+      - telegram.bot.db
 
   telegram.bot.nginx:
     image: nginx

@@ -18,6 +18,10 @@ namespace Telegram.BOT.Domain.Validator.Chat
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("The CreateDateTime field is required.");
+            RuleFor(p => p.IdTelegram)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("The IdTelegram field is required");
         }
     }
 }

@@ -18,14 +18,22 @@ public class GetProductsHandler : Handler<GetProductRequest>
     public override async Task ProcessRequest(GetProductRequest request)
     {
         request.AddLog(LogType.Process, "Executing GetProductsHandler");
-        request.Products.AddRange(productRepository.GetByFilter(
-            (e =>
-            e.Name.ToLower().Contains(request.Name.ToLower()) &&
-            e.Tags.ToLower().Contains(request.Tag.ToLower()) &&
-            e.CreateDate >= request.DeDate &&
-            e.CreateDate <= request.AteDate &&
-            e.Description.ToLower().Contains(request.Description.ToLower())
-            ), request.page, request.pageSize));
+        if (request.expression == null)
+        {
+            request.Products.AddRange(productRepository.GetByFilter(
+                (e =>
+                e.Name.ToLower().Contains(request.Name.ToLower()) &&
+                e.Tags.ToLower().Contains(request.Tag.ToLower()) &&
+                e.CreateDate >= request.DeDate &&
+                e.CreateDate <= request.AteDate &&
+                e.Description.ToLower().Contains(request.Description.ToLower())
+                ), request.page, request.pageSize));
+        }
+        else 
+        {
+            request.Products.AddRange(productRepository.GetByFilter(
+                (request.expression), request.page, request.pageSize));
+        }
         if (sucessor != null)
         {
             await sucessor.ProcessRequest(request);

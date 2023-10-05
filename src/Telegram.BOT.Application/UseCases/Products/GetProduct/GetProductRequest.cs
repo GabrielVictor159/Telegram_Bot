@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.BOT.Application.Boundaries.Products;
@@ -21,6 +22,7 @@ public class GetProductRequest : Output<List<ProductOutput>>
     public List<Product> Products { get; set; } = new();
     public int page { get; init; } = 1;
     public int pageSize { get; init; } = 10;
+    public Expression<Func<Domain.Products.Product, bool>>? expression { get; init; }
     public void AddLog(LogType type, string message)
            => Logs.Add(Log.AddLog(type, message, "Get Products"));
 }

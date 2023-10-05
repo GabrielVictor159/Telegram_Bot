@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.BOT.Application.Interfaces.Repositories;
 
-namespace Telegram.BOT.Application.Background.ManagementImages.Handlers;
+namespace Telegram.BOT.Services.Jobs.ManagementImages.Handlers;
 
 public class FindImagesNotUseHandler
 {

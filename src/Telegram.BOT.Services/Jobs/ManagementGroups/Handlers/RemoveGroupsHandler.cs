@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Telegram.BOT.Application.Interfaces.Repositories;
 using Telegram.BOT.Domain.Products;
 
-namespace Telegram.BOT.Application.Backgrund.ManagementGroups.Handlers;
+namespace Telegram.BOT.Services.Jobs.ManagementGroups.Handlers;
 
 public class RemoveGroupsHandler
 {
