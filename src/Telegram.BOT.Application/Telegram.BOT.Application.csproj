@@ -13,8 +13,4 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
     <PackageReference Include="VariableWarden" Version="2.3.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UseCases\Ambient\EnvVariables\RemoveEnv\" />
-    <Folder Include="UseCases\Ambient\EnvVariables\UpdateEnv\" />
-  </ItemGroup>
 </Project>
