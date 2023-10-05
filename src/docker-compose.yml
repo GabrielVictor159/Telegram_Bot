@@ -17,7 +17,15 @@ services:
   telegram.bot.db:
     image: postgres:latest
     restart: always
+
+  telegram.bot.services:
+    image: ${DOCKER_REGISTRY-}telegrambotservices
+    build:
+      context: .
+      dockerfile: Telegram.BOT.Services/Dockerfile
+
 networks:
   telegram-bot:
+
 
 

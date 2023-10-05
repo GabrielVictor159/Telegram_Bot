@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
+using ManagementServices.variables.Application.Interfaces;
+using ManagementServices.variables.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Telegram.BOT.Application.Interfaces.Repositories;
 using Telegram.BOT.Infrastructure.Database;
 
 namespace Telegram.BOT.Infrastructure.Modules
@@ -17,7 +20,7 @@ namespace Telegram.BOT.Infrastructure.Modules
         {
             builder.RegisterAssemblyTypes(typeof(InfrastructureException).Assembly)
             .AsImplementedInterfaces().AsSelf().InstancePerLifetimeScope();
-
+            builder.RegisterType<EnvVariableRepository<Context>>().As<IEnvVariableRepository>().InstancePerLifetimeScope();
             Mapper(builder);
             DataAccess(builder);
             base.Load(builder);

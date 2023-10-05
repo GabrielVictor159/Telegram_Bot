@@ -17,10 +17,24 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.7")
+                .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("ManagementServices.variables.Infrastructure.Database.Entities.EnvVariable", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("EnvVariable", "ManagementServices");
+                });
 
             modelBuilder.Entity("Telegram.BOT.Infrastructure.Database.Entities.Chat.Chat", b =>
                 {
@@ -30,6 +44,22 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
 
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("IdTelegram")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -48,6 +78,9 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                     b.Property<string>("Messaging")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("NumberMessage")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
