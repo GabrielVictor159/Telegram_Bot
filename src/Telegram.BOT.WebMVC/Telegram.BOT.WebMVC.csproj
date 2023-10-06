@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.11" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
@@ -20,11 +21,6 @@
     <ProjectReference Include="..\Telegram.BOT.Application\Telegram.BOT.Application.csproj" />
     <ProjectReference Include="..\Telegram.BOT.Domain\Telegram.BOT.Domain.csproj" />
     <ProjectReference Include="..\Telegram.BOT.Infrastructure\Telegram.BOT.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UseCases\Category\DeleteCategory\" />
-    <Folder Include="UseCases\Products\" />
   </ItemGroup>
 
 </Project>
