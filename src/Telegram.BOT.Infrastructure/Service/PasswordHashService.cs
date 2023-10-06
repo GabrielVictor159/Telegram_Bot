@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Telegram.BOT.Application.Interfaces.Services;
 
 namespace Telegram.BOT.Infrastructure.Service {
-    internal class PasswordHashService : IPasswordHashService {
+    public class PasswordHashService : IPasswordHashService {
         public string Hash(string password) {
             var passHasher = new PasswordHasher();
             var hashedPassword = passHasher.HashPassword(password);

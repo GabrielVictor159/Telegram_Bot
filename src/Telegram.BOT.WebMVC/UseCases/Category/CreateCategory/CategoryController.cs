@@ -19,7 +19,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.CreateCategory
         {
             return View();
         }
-        [HttpPost]
+        [HttpPost]  
         public IActionResult CreateAction(CreateCategoryRequest request)
         {
             var requestUseCase =
