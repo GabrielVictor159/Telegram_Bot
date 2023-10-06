@@ -10,11 +10,11 @@ namespace Telegram.BOT.WebMVC.UseCases.Marc.DeleteMarc {
             this.deleteMarcRequest = deleteMarcRequest;
         }
 
-        public IActionResult Delete(DeleteMarcRequest request) {
-            var deleteRequest = new Application.UseCases.Marc.DeleteMarc.DeleteMarcRequest() { Id = request.Id };
+        public IActionResult Delete(string itemid) {
+            var deleteRequest = new Application.UseCases.Marc.DeleteMarc.DeleteMarcRequest() { Id = Guid.Parse(itemid) };
             deleteMarcRequest.Execute(deleteRequest);
             if(!deleteRequest.IsError && deleteRequest.output != null) {
-                return LocalRedirect("/Category");
+                return LocalRedirect("/Marc");
             } else {
                 return View("Error");
             }

@@ -10,8 +10,9 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.DeleteCategory {
             this.deleteCategoryRequest = deleteCategoryRequest;
         }
 
-        public IActionResult Delete(DeleteCategoryRequest request) {
-            var deleteRequest = new Application.UseCases.Category.DeleteCategory.DeleteCategoryRequest() { Id = request.Id };
+        public IActionResult Delete(string itemid) {
+            var deleteRequest = new Application.UseCases.Category.DeleteCategory.DeleteCategoryRequest() { Id = Guid.Parse(itemid) };
+            
             deleteCategoryRequest.Execute(deleteRequest);
             if(!deleteRequest.IsError && deleteRequest.output != null) {
                 return LocalRedirect("/Category");

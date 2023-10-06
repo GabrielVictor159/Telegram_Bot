@@ -15,7 +15,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.GetCategory
         public IActionResult Index()
         {
             var request =
-                 new Application.UseCases.Category.GetCategory.GetCategoryRequest() { Name = "" };
+                 new Application.UseCases.Category.GetCategory.GetCategoryRequest();
             getCategoryRequest.Execute(request);
             if (!request.IsError && request.output!=null)
             {
