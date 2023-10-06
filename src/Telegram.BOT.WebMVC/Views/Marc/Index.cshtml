@@ -14,6 +14,7 @@
                 <div class="mb-3">
                     <label for="marc-category" class="form-label">Categoria:</label>
                     <select class="form-control" id="marc-category" name="CategoryId">
+                        <option></option>
                         @if (Model != null)
                         {
                             @if(Model.Categories!=null)
@@ -43,8 +44,30 @@
         </tr>
     </thead>
     <tbody>
+
+        @if (Model.Marcs.Count == 0) {
             <tr>
                 <td colspan="3" align="center">Nenhum registro encontrado</td>
             </tr>
+        } else {
+            @foreach (var item in Model.Marcs) {
+                <tr>
+                    <td class="w-50">@item.Name</td>
+                    <td class="w-50">@item.Category.Name</td>
+                    <td class="d-flex">
+                        <a class="btn btn-danger delete-button icon-centered me-1" asp-action="Delete" asp-route-itemid="@item.Id" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </a>
+                        <a class="btn btn-primary edit-button icon-centered me-1" asp-action="Edit" asp-route-itemid="@item.Id">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>

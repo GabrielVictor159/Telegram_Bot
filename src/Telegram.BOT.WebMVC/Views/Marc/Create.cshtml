@@ -1,16 +1,26 @@
-﻿<form>
+﻿@using Telegram.BOT.WebMVC.UseCases.Category.GetCategory;
+@using Telegram.BOT.WebMVC.UseCases.Marc.CreateMarc;
+@model CreateMarcRequest
+<form asp-action="CreateAction" class="validate" method="post">
     <h3>Criar Marca</h3>
     <div class="row">
         <div class="col">
             <div class="mb-3">
                 <label for="marc-name" class="form-label">Nome:</label>
-                <input type="text" class="form-control" id="marc-name" />
+                <input type="text" class="form-control" id="marc-name" asp-for="Name"/>
+                <span class="invalid-feedback"></span>
             </div>
         </div>
         <div class="col">
             <div class="mb-3">
                 <label for="marc-category" class="form-label">Categoria:</label>
-                <select class="form-control" id="marc-category"></select>
+                <select class="form-control" id="marc-category" asp-for="CategoryId">
+                    <option></option>
+                    @foreach(var item in (List<CategoryResponse>)ViewData["items"]) {
+                        <option value="@item.id">@item.Name</option>
+                    }
+                </select>
+                <span class="invalid-feedback"></span>
             </div>
         </div>
     </div>

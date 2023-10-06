@@ -48,6 +48,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Marc.GetMarc
             {
                 var itemsMarc = requestMarc.output.Marcs
                 .Select(c => new MarcResponse(c.Id, c.Name, c.Category!, c.CategoryId))
+                .Where(c => c.Name.Contains(request.Name, StringComparison.OrdinalIgnoreCase) && c.CategoryId  == request.CategoryId)
                 .ToList();
                 return View("Index", new GetMarcResponse() { Categories = categories, Marcs = itemsMarc });
             }
