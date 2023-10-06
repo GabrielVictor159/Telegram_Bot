@@ -1,4 +1,7 @@
 ﻿const validableForms = Array.from(document.getElementsByClassName("validate"))
+const deleteConfirmationModal = document.getElementById("modalDeleteConfirmation")
+const deleteButtons = Array.from(document.getElementsByClassName("delete-button"))
+const confirmationButton = document.getElementById("deleteConfirmation")
 if (validableForms != null) {
     validableForms.forEach(form => {
         let formValidator = new FormValidator(form);
@@ -18,4 +21,12 @@ if (validableForms != null) {
     })
 }
 
+deleteButtons.forEach(button => {
+    button.addEventListener("click", event => {
+        confirmationButton.href = button.href
+    })
+})
 
+function deleteItem(link){
+    window.location.href = link
+}

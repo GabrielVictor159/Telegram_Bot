@@ -1,4 +1,5 @@
-﻿@model List<Telegram.BOT.Domain.Products.Product>
+﻿@using Telegram.BOT.WebMVC.UseCases.Products.GetProducts;
+@model GetProductResponse
 
 <div class="container">
     <h3>Listar produtos</h3>
@@ -49,22 +50,33 @@
         <tr>
             <th>Nome</th>
             <th>Descrição</th>
+            <th>Marca</th>
             <th>Tags</th>
             <th>Data de Criação</th>
+            <th>Preço</th>
             <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-        @if(Model != null) {
-            @foreach(var Product in Model) {    
+        @if(Model.Products.Count == 0) {
+            @foreach(var Product in Model.Products) {    
                 <tr>
-                    <td>@Product.Name</td>
-                    <td>@Product.Description</td>
-                    <td>@Product.Tags</td>
+                    <td>@Product.name</td>
+                    <td>@Product.description</td>
+                    <td>@Product.Marc</td>
+                    <td>@Product.tags</td>
                     <td>@Product.CreateDate</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@Product.Id" class="btn btn-primary">Editar</a>
-                        <a asp-action="Delete" asp-route-id="@Product.Id" class="btn btn-primary">Excluir</a>
+                        <a class="btn btn-danger delete-button icon-centered me-1" asp-action="Delete" asp-route-itemid="@Product.id" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </a>
+                        <a class="btn btn-primary edit-button icon-centered me-1" asp-action="Edit" asp-route-itemid="@Product.id">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </a>
                     </td>
                 </tr>
             }

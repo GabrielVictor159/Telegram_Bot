@@ -30,7 +30,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.CreateCategory
             createCategoryRequest.Execute(requestUseCase);
             if(!requestUseCase.IsError && requestUseCase.output!=null)
             {
-                return View("Index");
+                return LocalRedirect("/Category");
             }
             else
             {

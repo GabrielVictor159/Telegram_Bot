@@ -1,29 +1,30 @@
-﻿@model IEnumerable<Telegram.BOT.Domain.Products.Marc>
+﻿@using Telegram.BOT.WebMVC.UseCases.Products.CreateProducts;
+@model CreateProductRequest
 
-<form class="validate">
+<form asp-action="CreateAction" method="post" class="validate">
     <h3>Criar Produto</h3>
     <div class="mb-3">
         <label for="product-name" class="form-label">Nome:</label>
-        <input type="text" class="form-control" id="product-name" />
+        <input type="text" class="form-control" id="product-name" asp-for="Name"/>
         <span class="invalid-feedback"></span>
     </div>
     <div class="mb-3">
         <label for="product-description" class="form-label">Descrição:</label>
-        <textarea class="form-control" id="product-description"></textarea>
+        <textarea class="form-control" id="product-description" asp-for="Description"></textarea>
         <span class="invalid-feedback"></span>
     </div>
     <div class="row">
         <div class="col">
             <div class="mb-3">
                 <label for="product-tags" class="form-label">Tags:</label>
-                <input type="text" class="form-control" id="product-tags" />
+                <input type="text" class="form-control" id="product-tags" asp-for="Tags"/>
                 <span class="invalid-feedback"></span>
             </div>
         </div>
         <div class="col">
             <div class="mb-3 numeric">
-                <label for="product-price" class="form-label">Preço:</label>
-                <input type="text" class="form-control" id="product-price" />
+                <label for="product-price" class="form-label numeric">Preço:</label>
+                <input type="text" class="form-control" id="product-price" asp-for="Price"/>
                 <span class="invalid-feedback"></span>
             </div>
         </div>
@@ -31,15 +32,17 @@
     <div class="mb-3">
         <label for="product-marc" class="form-label">Marca:</label>
         <select class="form-control" id="product-marc">
-            @foreach(var marc in Model) {
-                <option>@marc.Name</option>
+            <option></option>
+            @foreach(var marc in (List<Telegram.BOT.Domain.Products.Marc>)ViewData["itens"]) {
+                <option value="@marc.Id">@marc.Name</option>
             }
+            
         </select>
         <span class="invalid-feedback"></span>
     </div>
     <div class="mb-3">
         <label for="product-image" class="form-label">Imagem:</label>
-        <input type="file" accept="image/jpeg, image/png" class="form-control" id="product-image" />
+        <input type="file" accept="image/jpeg, image/png" class="form-control" id="product-image" asp-for="Image"/>
         <span class="invalid-feedback"></span>
     </div>
     <div class="d-flex justify-content-end">
