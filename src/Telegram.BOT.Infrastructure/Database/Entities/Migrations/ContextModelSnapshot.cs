@@ -45,6 +45,22 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("IdTelegram")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Chat", "Chats");
@@ -62,6 +78,9 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                     b.Property<string>("Messaging")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("NumberMessage")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

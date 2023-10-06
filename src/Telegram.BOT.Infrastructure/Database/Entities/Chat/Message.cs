@@ -9,7 +9,8 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Chat
     {
         public Guid Id { get; set; }
         public string Messaging {get; set;} = "";
+        public int NumberMessage { get; init; }
         public Guid ChatId {get;set;}
-        public virtual required Chat Chat {get;set;}
+        public virtual Chat? Chat {get;set;}
     }
 }
