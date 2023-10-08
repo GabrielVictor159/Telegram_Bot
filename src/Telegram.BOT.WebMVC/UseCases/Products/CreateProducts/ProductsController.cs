@@ -19,7 +19,8 @@ namespace Telegram.BOT.WebMVC.UseCases.Products.CreateProducts
             this.getMarcRequest = getMarcRequest;
         }
 
-        public IActionResult Create() {
+        public IActionResult Create() 
+        {
             var requestMarcs = new Application.UseCases.Marc.GetMarc.GetMarcRequest();
             getMarcRequest.Execute(requestMarcs);
             if(!requestMarcs.IsError && requestMarcs.output != null) {
@@ -31,7 +32,8 @@ namespace Telegram.BOT.WebMVC.UseCases.Products.CreateProducts
         }
 
         [HttpPost]
-        public IActionResult CreateAction(CreateProductRequest request) {
+        public IActionResult CreateAction(CreateProductRequest request) 
+        {
             var createRequest = new Application.UseCases.Products.CreateProduct.CreateProductRequest() {
                 Product = new Product() {
                     Id = Guid.NewGuid(),

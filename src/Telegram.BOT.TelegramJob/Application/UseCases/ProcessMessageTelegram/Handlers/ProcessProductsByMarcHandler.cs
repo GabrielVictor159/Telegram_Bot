@@ -56,7 +56,7 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
                     {
                         await request.client.SendPhotoAsync(
                                                chatId: request.id,
-                                               photo: InputFile.FromUri($"{linkSystem}/Images/{product.Image}"),
+                                               photo: InputFile.FromUri($"{linkSystem}/{product.Image}"),
                                                caption: 
                                                $"<h>{product.Name}</h>"+
                                                $"<p>Preço: R$ {product.Price}</p>"+

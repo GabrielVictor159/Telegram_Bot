@@ -49,11 +49,13 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
         }
         public List<Domain.Products.Groups> GetByLeveinsthein(string s1, double percentagem)
         {
-            return mapper.Map<List<Domain.Products.Groups>>
-            (
-                context.Groups
-                .Where(e => ProbabilityOperations.CalculateNormalizedLevenshteinDistance(e.Tags,s1)>=percentagem)
+            var groupsList = context.Groups
                 .Include(p => p.Group)
+                .ToList();
+
+            return mapper.Map<List<Domain.Products.Groups>>(
+                groupsList
+                .Where(e => ProbabilityOperations.CalculateNormalizedLevenshteinDistance(e.Tags, s1) >= percentagem)
                 .ToList()
             );
         }
