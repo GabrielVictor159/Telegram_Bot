@@ -33,7 +33,12 @@ app.Use(async (context, next) =>
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin();
+    options.AllowAnyMethod();
+    options.AllowAnyHeader();
+});
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllerRoute(
@@ -41,7 +46,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
 var logger = loggerFactory.CreateLogger<Program>();
-
 logger.LogInformation(MessageLogs.GabrielSymbol());
 
 app.Run();

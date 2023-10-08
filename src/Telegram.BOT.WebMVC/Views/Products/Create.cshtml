@@ -24,7 +24,7 @@
         <div class="col">
             <div class="mb-3 numeric">
                 <label for="product-price" class="form-label numeric">Preço:</label>
-                <input type="text" class="form-control" id="product-price" asp-for="Price"/>
+                <input type="number" step="0.01" class="form-control" id="product-price" asp-for="Price" />
                 <span class="invalid-feedback"></span>
             </div>
         </div>

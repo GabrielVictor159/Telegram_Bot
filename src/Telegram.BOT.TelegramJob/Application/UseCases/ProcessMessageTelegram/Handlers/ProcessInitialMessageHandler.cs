@@ -15,6 +15,21 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
 #pragma warning disable 4014
     public class ProcessInitialMessageHandler : Handler<ProcessMessageTelegramRequest>
     {
+        private readonly ProcessMenuCategoryHandler processMenuCategoryHandler;
+        public ProcessInitialMessageHandler
+            (ProcessMenuCategoryHandler processMenuCategoryHandler,
+            ProcessMenuMarcHandler processMenuMarcHandler,
+            ProcessProductsByMarcHandler processProductsByMarcHandler)
+        {
+            processMenuCategoryHandler.SetSucessor
+                (
+                    processMenuMarcHandler.SetSucessor
+                    (
+                        processProductsByMarcHandler.SetSucessor(this)
+                    )
+                );
+            this.processMenuCategoryHandler= processMenuCategoryHandler;
+        }
         public override async Task ProcessRequest(ProcessMessageTelegramRequest request)
         {
            if(request.chat==null)
@@ -29,19 +44,19 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
                 },
                 cancellationToken: new CancellationToken());
                 
-                await Task.Delay(TimeSpan.FromSeconds(10));
+                await Task.Delay(TimeSpan.FromSeconds(7));
 
                 Bot.Types.Poll poll = await request.client.StopPollAsync(
                 chatId: pollMessage.Chat.Id,
                 messageId: pollMessage.MessageId,
                 cancellationToken: new CancellationToken());
                 Console.WriteLine(JsonConvert.SerializeObject(poll));
-                Bot.Types.PollOption[] selectOption = poll.Options.Where(e => e.VoterCount == 1).ToArray();
+                Bot.Types.PollOption[] selectOption = poll.Options.Where(e => e.VoterCount > 0).ToArray();
                 if(selectOption.Length > 0) 
                 {
                     if (selectOption[0].Text.Equals("Menu")) 
                     {
-
+                        await processMenuCategoryHandler.ProcessRequest(request);
                     }
                     else
                     {

@@ -4,6 +4,7 @@ using Telegram.BOT.Application.UseCases.Category.CreateCategory;
 using Telegram.BOT.Application.UseCases.Marc.GetMarc;
 using Telegram.BOT.Application.UseCases.Products.CreateProduct;
 using Telegram.BOT.Domain.Products;
+using Telegram.BOT.WebMVC.Helpers;
 
 namespace Telegram.BOT.WebMVC.UseCases.Products.CreateProducts
 {
@@ -33,7 +34,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Products.CreateProducts
         public IActionResult CreateAction(CreateProductRequest request) {
             var createRequest = new Application.UseCases.Products.CreateProduct.CreateProductRequest() {
                 Product = new Product() {
-                    Id = new Guid(),
+                    Id = Guid.NewGuid(),
                     Tags = request.Tags,
                     Name = request.Name,
                     Price = request.Price,
@@ -41,7 +42,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Products.CreateProducts
                     MarcId = request.MarcId,
                     CreateDate = DateTime.Now
                 },
-                Image = new byte[0]
+                Image = RequestExtensions.ConvertIFormFileToByteArray(request.Image)
             };
 
             createProductRequest.Execute(createRequest);
