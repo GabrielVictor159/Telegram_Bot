@@ -5,7 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "telegram.bot.webmvc": "StartDebugging",
-        "telegram.bot.services": "StartDebugging"
+        "telegram.bot.services": "StartDebugging",
+        "webapplication1": "StartDebugging"
       }
     }
   }

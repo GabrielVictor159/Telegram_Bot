@@ -10,6 +10,6 @@ namespace Telegram.BOT.TelegramJob.Interfaces
 {
     public interface IMessageHelpers
     {
-        Task ExecuteLoopPagination(int timer, ITelegramBotClient client, int page, long idChat, string message, ProcessMessageTelegramRequest request, bool loopOriginal);
+        Task<bool> ExecuteLoopPagination(int timer, ITelegramBotClient client, long idChat, string message);
     }
 }

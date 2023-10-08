@@ -9,7 +9,7 @@ using Telegram.Bot.Types.Enums;
 using Telegram.BOT.Application.UseCases;
 using Telegram.BOT.Application.UseCases.Category.GetCategory;
 
-namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers
+namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers.MenuFlux
 {
     public class ProcessMenuCategoryHandler : Handler<ProcessMessageTelegramRequest>
     {
@@ -23,7 +23,7 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
         public override async Task ProcessRequest(ProcessMessageTelegramRequest request)
         {
             Console.WriteLine("ProcessMenuCategoryHandler");
-            var requestCategories = new GetCategoryRequest() { pageSize = int.MaxValue};
+            var requestCategories = new GetCategoryRequest() { pageSize = int.MaxValue };
             await getCategoryRequest.Execute(requestCategories);
             string[] options = requestCategories.Categories.Select(e => e.Name).ToArray();
             if (options.Length > 1)
@@ -53,8 +53,8 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
                     }
                 }
             }
-            else if(options.Length == 1)
-            { 
+            else if (options.Length == 1)
+            {
                 request.idCategory = requestCategories.Categories[0].Id;
             }
             else
@@ -66,7 +66,7 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
                         cancellationToken: new CancellationToken());
                 return;
             }
-            if(sucessor != null) 
+            if (sucessor != null)
             {
                 await sucessor.ProcessRequest(request);
             }

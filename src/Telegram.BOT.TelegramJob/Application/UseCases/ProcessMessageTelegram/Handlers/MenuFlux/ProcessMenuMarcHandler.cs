@@ -9,7 +9,7 @@ using Telegram.Bot.Types.Enums;
 using Telegram.BOT.Application.UseCases;
 using Telegram.BOT.Application.UseCases.Marc.GetMarc;
 
-namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers
+namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers.MenuFlux
 {
     public class ProcessMenuMarcHandler : Handler<ProcessMessageTelegramRequest>
     {
@@ -51,7 +51,7 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
                     }
                 }
             }
-            else if(options.Length ==1)
+            else if (options.Length == 1)
             {
                 request.idMarc = requestMarcs.Marcs[0].Id;
             }

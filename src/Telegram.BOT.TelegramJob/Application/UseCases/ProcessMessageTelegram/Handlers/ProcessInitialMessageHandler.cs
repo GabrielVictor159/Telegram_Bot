@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.BOT.Application.UseCases;
+using Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers.MenuFlux;
 using Telegram.Bots.Types;
 
 namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers

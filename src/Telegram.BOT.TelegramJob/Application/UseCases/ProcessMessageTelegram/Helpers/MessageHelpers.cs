@@ -1,15 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Telegram.Bot;
-using Telegram.Bot.Types.ReplyMarkups;
-using Telegram.Bot.Types;
-using Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers;
-using Telegram.Bots.Http;
 using Telegram.Bot.Types.Enums;
 using Telegram.BOT.TelegramJob.Interfaces;
 
@@ -18,7 +8,7 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
     public class MessageHelpers : IMessageHelpers
     {
 
-        public async Task ExecuteLoopPagination(int timer, ITelegramBotClient client, int page, long idChat, string message, ProcessMessageTelegramRequest request, bool loopOriginal)
+        public async Task<bool> ExecuteLoopPagination(int timer, ITelegramBotClient client, long idChat, string message)
         {
             int repeat = 0;
             bool loop = true;
@@ -32,12 +22,12 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
                     text: "Infelizmente tivemos que finalizar a nossa interação",
                     parseMode: ParseMode.MarkdownV2,
                     cancellationToken: new CancellationToken());
-                    loopOriginal = false;
-                    return;
+                    return false;
                 }
+
                 Bot.Types.Message pollMessage = await client.SendPollAsync(
                chatId: idChat,
-               question:message,
+               question: message,
                options: new[]
                {
                     "Sim",
@@ -58,19 +48,19 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
                 {
                     if (selectOption[0].Text.Equals("Sim"))
                     {
-                        page = page + 1;
                         loop = false;
+                        return true;
                     }
                     if (selectOption[0].Text.Equals("Não quero voltar para o menu principal"))
                     {
                         loop = false;
-                        loopOriginal = false;
+                        return false;
                     }
                 }
                 repeat++;
                 await Task.Delay(TimeSpan.FromSeconds(timer));
-                timer = timer * 2;
             }
+            return false;
         }
     }
 }
