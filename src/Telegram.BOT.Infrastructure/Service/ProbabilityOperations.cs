@@ -38,15 +38,19 @@ namespace Telegram.BOT.Infrastructure.Service
 
         public static double CalculateNormalizedLevenshteinDistance(string s1, string s2)
         {
-            int distance = CalculateLevenshteinDistance(s1, s2);
-            int maxLength = Math.Max(s1.Length, s2.Length);
-        
+            char[] sortedChars1 = s1.ToCharArray().OrderBy(c => c).ToArray();
+            char[] sortedChars2 = s2.ToCharArray().OrderBy(c => c).ToArray();
+            string sortedString1 = new string(sortedChars1);
+            string sortedString2 = new string(sortedChars2);
+            int distance = CalculateLevenshteinDistance(sortedString1, sortedString2);
+            int maxLength = Math.Max(sortedString1.Length, sortedString2.Length);
+
             if (maxLength == 0)
             {
-                return 0.0; 
+                return 0.0;
             }
-        
-            return (1-((double)distance / maxLength));
+
+            return (1 - ((double)distance / maxLength));
         }
     }
 }

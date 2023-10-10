@@ -1,7 +1,7 @@
 ﻿@using Telegram.BOT.WebMVC.UseCases.Products.CreateProducts;
 @model CreateProductRequest
 
-<form asp-action="CreateAction" method="post" class="validate">
+<form asp-action="CreateAction" method="post" class="validate" enctype="multipart/form-data">
     <h3>Criar Produto</h3>
     <div class="mb-3">
         <label for="product-name" class="form-label">Nome:</label>
@@ -24,14 +24,14 @@
         <div class="col">
             <div class="mb-3 numeric">
                 <label for="product-price" class="form-label numeric">Preço:</label>
-                <input type="text" class="form-control" id="product-price" asp-for="Price"/>
+                <input type="number" step="0.01" class="form-control" id="product-price" asp-for="Price" />
                 <span class="invalid-feedback"></span>
             </div>
         </div>
     </div>
     <div class="mb-3">
         <label for="product-marc" class="form-label">Marca:</label>
-        <select class="form-control" id="product-marc">
+        <select class="form-control" id="product-marc" asp-for="MarcId">
             <option></option>
             @foreach(var marc in (List<Telegram.BOT.Domain.Products.Marc>)ViewData["itens"]) {
                 <option value="@marc.Id">@marc.Name</option>
