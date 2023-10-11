@@ -15,6 +15,6 @@
     <PackageReference Include="VariableWarden" Version="2.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UseCases\Message\CreateMessage\Handlers\" />
+    <Folder Include="UseCases\Products\GetByLeveinstheim\Handlers\" />
   </ItemGroup>
 </Project>
