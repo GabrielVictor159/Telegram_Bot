@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using Telegram.BOT.Domain.Enums;
 
 namespace Telegram.BOT.tests.Builder.Domain.Chat
 {
@@ -10,6 +11,7 @@ namespace Telegram.BOT.tests.Builder.Domain.Chat
     {
         public Guid Id { get; private set; } = Guid.NewGuid();
         public string Messaging {get; private set;} = "Message Test";
+        public MessageRules Rule { get; private set; } = MessageRules.USER;
         public int numberMessage { get; private set; } = 5;
         public BOT.Domain.Chat.Chat? Chat {get;  set;} = ChatBuilder.New().Build();
 
@@ -26,6 +28,7 @@ namespace Telegram.BOT.tests.Builder.Domain.Chat
             NumberMessage = numberMessage,
             Chat = Chat,
             ChatId = Chat!.Id,
+            Rule = Rule,
             };
         }
         public MessageBuilder WithId(Guid value)
@@ -46,6 +49,11 @@ namespace Telegram.BOT.tests.Builder.Domain.Chat
         public MessageBuilder WithNumberMessage(int value) 
         {
             numberMessage = value;
+            return this;
+        }
+        public MessageBuilder WithRule(MessageRules value)
+        {
+            Rule=value;
             return this;
         }
     }
