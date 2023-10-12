@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 using Telegram.BOT.Application.Interfaces.Repositories;
 using Telegram.BOT.Domain.Enums;
 using Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers;
+using Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers.MenuFlux;
 
 namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram
 {
     public class ProcessMessageTelegramUseCase : IProcessMessageTelegramRequest
     {
-        private readonly ProcessInitialMessageHandler processInitialMessage;
+        private readonly InitialSearchChatHandler initialSearchChatHandler;
         private readonly ILogRepository logRepository;
 
         public ProcessMessageTelegramUseCase
-            (ProcessInitialMessageHandler processInitialMessage, 
+            (InitialSearchChatHandler initialSearchChatHandler, 
             ILogRepository logRepository)
         {
-            this.processInitialMessage = processInitialMessage;
+            this.initialSearchChatHandler = initialSearchChatHandler;
             this.logRepository = logRepository;
         }
 
@@ -26,7 +27,8 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram
         {
            try
             {
-                await processInitialMessage.ProcessRequest(request);
+                await initialSearchChatHandler.ProcessRequest(request);
+                Console.WriteLine("ProcessMessageTelegramUseCase");
             }
             catch (Exception ex)
             {
