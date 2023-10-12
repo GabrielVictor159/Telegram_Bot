@@ -53,12 +53,17 @@ namespace Telegram.BOT.Infrastructure.Database.Repositories.Products
                 .Include(p => p.Group)
                 .ToList();
 
-            return mapper.Map<List<Domain.Products.Groups>>(
-                groupsList
+            var filteredGroups = groupsList
                 .Where(e => ProbabilityOperations.CalculateNormalizedLevenshteinDistance(e.Tags, s1) >= percentagem)
-                .ToList()
-            );
+                .ToList();
+
+            var sortedGroups = filteredGroups
+                .OrderByDescending(e => ProbabilityOperations.CalculateNormalizedLevenshteinDistance(e.Tags, s1))
+                .ToList();
+
+            return mapper.Map<List<Domain.Products.Groups>>(sortedGroups);
         }
+
         public bool Remove(Guid id)
         {
             var entity = context.Groups.Find(id);
