@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Telegram.BOT.Application.UseCases.Marc.DeleteMarc;
 
 namespace Telegram.BOT.WebMVC.UseCases.Marc.DeleteMarc {
@@ -16,7 +17,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Marc.DeleteMarc {
             if(!deleteRequest.IsError && deleteRequest.output != null) {
                 return LocalRedirect("/Marc");
             } else {
-                return View("Error");
+                return View("Error", (deleteRequest.ErrorMessage, "Index"));
             }
         }
     }
