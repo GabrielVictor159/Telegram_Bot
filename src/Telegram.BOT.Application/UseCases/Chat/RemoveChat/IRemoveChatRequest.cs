@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Telegram.BOT.Application.UseCases.Chat.RemoveChat
 {
-    internal interface IRemoveChatRequest
+    public interface IRemoveChatRequest 
     {
+        void Execute(RemoveChatRequest request);
     }
 }

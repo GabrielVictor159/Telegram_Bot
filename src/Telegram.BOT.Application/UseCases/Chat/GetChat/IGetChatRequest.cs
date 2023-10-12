@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Telegram.BOT.Application.UseCases.Chat.GetChat
 {
-    internal interface IGetChatRequest
+    public interface IGetChatRequest
     {
+        void Execute(GetChatRequest request);
     }
 }
