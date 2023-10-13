@@ -9,6 +9,7 @@ using Telegram.BOT.Application.UseCases;
 using Telegram.BOT.Domain.Chat;
 using Telegram.BOT.Domain.Enums;
 using Telegram.BOT.Domain.Logs;
+using Telegram.BOT.Domain.Products;
 
 namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram
 {
@@ -23,9 +24,9 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram
         public Update? update { get; set; }
         public BOT.Domain.Chat.Chat? chat { get; set; }
         public List<BOT.Domain.Chat.Message>? messages { get; set; }
+        public List<Category> Categories { get; set; }
+        public List<Marc> Marcs { get; set; }   
         public string MessageInitialMenu { get; set; } = "";
-        public Guid idCategory { get; set; }
-        public Guid idMarc { get; set; }
         public List<Log> Logs { get; set; } = new();
         public void AddLog(LogType type, string message)
                => Logs.Add(Log.AddLog(type, message, "Process Message Telegram"));

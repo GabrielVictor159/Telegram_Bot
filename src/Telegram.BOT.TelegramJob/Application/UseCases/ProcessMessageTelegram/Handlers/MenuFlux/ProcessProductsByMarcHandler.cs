@@ -21,56 +21,65 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
 
         public override async Task ProcessRequest(ProcessMessageTelegramRequest request)
         {
-            bool loop = true;
-            int page = 1;
-            while (loop)
+            var marcNames = request.Marcs.Select(e => e.Name).ToList();
+            if (marcNames.Contains(request.text!))
             {
-                var getProductsRequest = new GetProductRequest() { expression = e => e.MarcId == request.idMarc, page = page, pageSize = 3 };
-                await getProductRequest.Execute(getProductsRequest);
-                if (getProductsRequest.Products.Count == 0)
+                var category = request.Marcs.Where(e => e.Name.ToLower().Equals(request.text!.ToLower())).FirstOrDefault();
+                if (category != null)
                 {
-                    await request.client.SendTextMessageAsync(
-                    chatId: request.id,
-                    text: "Infelizmente ainda não temos produtos",
-                    parseMode: ParseMode.MarkdownV2,
-                    cancellationToken: new CancellationToken());
-                    return;
-                }
-                foreach (var product in getProductsRequest.Products)
-                {
-                    string pathFile = Path.Combine(Environment.GetEnvironmentVariable("ImagesPathByServiceInfra")!, product.Image);
-                    if (System.IO.File.Exists(pathFile))
+                    bool loop = true;
+                    int page = 1;
+                    while (loop)
                     {
-                        using (var stream = System.IO.File.OpenRead(pathFile))
+                        var getProductsRequest = new GetProductRequest() { expression = e => e.MarcId == category.Id, page = page, pageSize = 3 };
+                        await getProductRequest.Execute(getProductsRequest);
+                        if (getProductsRequest.Products.Count == 0)
                         {
-                            Message message = await request.client.SendPhotoAsync(
-                                           chatId: request.id,
-                                           photo: InputFile.FromStream(stream),
-                                           caption:
-                                           $"Nome: {product.Name} \n" +
-                                           $"Preço: R$ {product.Price} \n" +
-                                           $"Descrição: {product.Description} \n"
-                                           ,
-                                           parseMode: ParseMode.Markdown,
-                                           cancellationToken: new CancellationToken());
+                            await request.client.SendTextMessageAsync(
+                            chatId: request.id,
+                            text: "Infelizmente ainda não temos produtos",
+                            parseMode: ParseMode.MarkdownV2,
+                            cancellationToken: new CancellationToken());
+                            return;
                         }
+                        foreach (var product in getProductsRequest.Products)
+                        {
+                            string pathFile = Path.Combine(Environment.GetEnvironmentVariable("ImagesPathByServiceInfra")!, product.Image);
+                            if (System.IO.File.Exists(pathFile))
+                            {
+                                using (var stream = System.IO.File.OpenRead(pathFile))
+                                {
+                                    Message message = await request.client.SendPhotoAsync(
+                                                   chatId: request.id,
+                                                   photo: InputFile.FromStream(stream),
+                                                   caption:
+                                                   $"Nome: {product.Name} \n" +
+                                                   $"Preço: R$ {product.Price} \n" +
+                                                   $"Descrição: {product.Description} \n"
+                                                   ,
+                                                   parseMode: ParseMode.Markdown,
+                                                   cancellationToken: new CancellationToken());
+                                }
+                            }
+                        }
+                        await Task.Delay(TimeSpan.FromSeconds(7));
+                        bool flowContinue = await messageHelpers.ExecuteLoopPagination(7, request.client, request.id, "Gostaria de ver mais produtos ?");
+                        if (flowContinue)
+                        {
+                            page++;
+                        }
+                        else
+                        {
+                            loop = false;
+                        }
+
+                    }
+
+                    if (sucessor != null)
+                    {
+                        await sucessor.ProcessRequest(request);
                     }
                 }
-                await Task.Delay(TimeSpan.FromSeconds(7));
-                bool flowContinue = await messageHelpers.ExecuteLoopPagination(7, request.client, request.id, "Gostaria de ver mais produtos ?");
-                if (flowContinue)
-                {
-                    page++;
-                }
-                else
-                {
-                    loop = false;
-                }
-            }
-
-            if (sucessor != null)
-            {
-                await sucessor.ProcessRequest(request);
             }
         }
     }

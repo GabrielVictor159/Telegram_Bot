@@ -14,7 +14,4 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
     <PackageReference Include="VariableWarden" Version="2.3.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UseCases\Products\GetByLeveinstheim\Handlers\" />
-  </ItemGroup>
 </Project>

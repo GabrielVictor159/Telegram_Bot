@@ -22,4 +22,9 @@
     <ProjectReference Include="..\Telegram.BOT.Infrastructure\Telegram.BOT.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\UseCases\ProcessMessageTelegram\Handlers\ChatFlux\" />
+    <Folder Include="Application\UseCases\ProcessMessageTelegram\References\Images\" />
+  </ItemGroup>
+
 </Project>

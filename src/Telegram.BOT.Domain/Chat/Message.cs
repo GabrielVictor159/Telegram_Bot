@@ -13,7 +13,7 @@ public class Message : Entity<Message,MessageValidator>
     public required string Messaging {get; init;} = "";
     public required MessageRules Rule { get; init; }
     public required Guid ChatId {get; init;}
-    public required int NumberMessage { get; init;}
+    public required int NumberMessage { get; set;}
     public Chat? Chat {get;  set;}
 
     public Message()
