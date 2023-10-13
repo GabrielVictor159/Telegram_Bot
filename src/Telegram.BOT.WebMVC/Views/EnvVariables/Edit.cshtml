@@ -1,5 +1,24 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using ManagementServices.variables.Domain.Models;
+@model EnvVariable
+<h3>Editar variavel de ambiente</h3>
+<form class="validate" asp-action="EditAction" method="post">
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <label for="env-key" class="form-label">Chave:</label>
+                <input type="text" class="form-control" id="env-key" asp-for="Key" disabled />
+                <input type="hidden" asp-for="Key" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label for="env-value" class="form-label">Valor:</label>
+                <input type="text" class="form-control" id="env-value" asp-for="Value" />
+                <span class="invalid-feedback"></span>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end">
+        <input type="submit" class="btn btn-success" id="btn-submit" value="Salvar" />
+    </div>
+</form>
