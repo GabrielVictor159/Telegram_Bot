@@ -11,26 +11,43 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MandalaHookahBot</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a asp-controller="Products" asp-action="Index" class="nav-link active">Produtos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-controller="Category" asp-action="Index" class="nav-link active">Categorias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-controller="Marc" asp-action="Index" class="nav-link active">Marcas</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        @if (User.Claims.Count() != 0) {
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MandalaHookahBot</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a asp-controller="Products" asp-action="Index" class="nav-link active">Produtos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Category" asp-action="Index" class="nav-link active">Categorias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Marc" asp-action="Index" class="nav-link active">Marcas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="EnvVariables" asp-action="Index" class="nav-link active">Variaveis de Ambiente</a>
+                        </li>
+                        
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Administrador
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        }
+        
     </header>
     <div class="container">
         <main role="main" class="pb-3">

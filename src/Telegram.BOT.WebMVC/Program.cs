@@ -1,7 +1,5 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.FileProviders;
 using Telegram.BOT.Domain.Logs;
@@ -10,14 +8,14 @@ using Telegram.BOT.WebMVC.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddAppAuthorization();
 builder.Services.AddFilters();
 // Add services to the container.
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>((d, builder) => builder.AddAutofacRegistration());
 
 var app = builder.Build();
-
+app.Services.SetDefaultUserPassword();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
