@@ -3,18 +3,18 @@
 
 <div class="container">
     <h3>Listar produtos</h3>
-    <form>
+    <form asp-action="Search">
         <div class="row">
             <div class="col">
                 <div class="mb-3">
                     <label for="product-name" class="form-label">Nome:</label>
-                    <input type="text" class="form-control" id="product-name" name="productName"/>
+                    <input type="text" class="form-control" id="product-name" name="Name"/>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
                     <label for="product-tag" class="form-label">Tag:</label>
-                    <input type="text" class="form-control" id="product-tag" name="productTag"/>
+                    <input type="text" class="form-control" id="product-tag" name="Tags"/>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="row">
             <div class="mb-3">
                 <label for="product-description" class="form-label">Descrição:</label>
-                <input type="text" class="form-control" id="product-description" name="productDescription" />
+                <input type="text" class="form-control" id="product-description" name="Description" />
             </div>
             <div class="mb-3 d-flex justify-content-end">
                 <a asp-action="Create" class="btn btn-success">Criar novo Produto</a>
@@ -59,6 +59,10 @@
     </thead>
     <tbody>
         @if(Model.Products.Count == 0) {
+            <tr>
+                <td colspan="7" align="center">Nenhum registro encontrado</td>
+            </tr>
+        } else {
             @foreach(var Product in Model.Products) {    
                 <tr>
                     <td>@Product.name</td>
@@ -66,24 +70,16 @@
                     <td>@Product.Marc</td>
                     <td>@Product.tags</td>
                     <td>@Product.CreateDate</td>
-                    <td>
+                    <td>@Product.price</td>
+                    <td class="d-flex">
                         <a class="btn btn-danger delete-button icon-centered me-1" asp-action="Delete" asp-route-itemid="@Product.id" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
                             <span class="material-symbols-outlined">
                                 delete
                             </span>
                         </a>
-                        <a class="btn btn-primary edit-button icon-centered me-1" asp-action="Edit" asp-route-itemid="@Product.id">
-                            <span class="material-symbols-outlined">
-                                edit
-                            </span>
-                        </a>
                     </td>
                 </tr>
             }
-        } else {
-            <tr>
-                <td colspan="5" align="center">Nenhum registro encontrado</td>
-            </tr>
         }
     </tbody>
 </table>
