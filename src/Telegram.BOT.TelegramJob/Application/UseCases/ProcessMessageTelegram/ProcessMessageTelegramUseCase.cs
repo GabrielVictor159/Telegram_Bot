@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.BOT.Application.Interfaces.Repositories;
+using Telegram.BOT.Application.Interfaces.Services;
 using Telegram.BOT.Domain.Enums;
 using Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers;
 using Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers.MenuFlux;
@@ -14,13 +15,16 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram
     {
         private readonly InitialSearchChatHandler initialSearchChatHandler;
         private readonly ILogRepository logRepository;
+        private readonly INotificationService notificationService;
 
         public ProcessMessageTelegramUseCase
             (InitialSearchChatHandler initialSearchChatHandler, 
-            ILogRepository logRepository)
+            ILogRepository logRepository,
+            INotificationService notificationService)
         {
             this.initialSearchChatHandler = initialSearchChatHandler;
             this.logRepository = logRepository;
+            this.notificationService = notificationService;
         }
 
         public async Task Execute(ProcessMessageTelegramRequest request)
@@ -28,6 +32,10 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram
            try
             {
                 await initialSearchChatHandler.ProcessRequest(request);
+                if (notificationService.HasNotifications)
+                {
+                    notificationService.Notifications.ForEach(e => { request.AddLog(LogType.Process, e.Message); });
+                }
                 Console.WriteLine("ProcessMessageTelegramUseCase");
             }
             catch (Exception ex)
@@ -38,6 +46,7 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram
             {
                 logRepository.AddRange(request.Logs);
             }
+            
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram
         public string? userDescription { get; set; }
         public Update? update { get; set; }
         public BOT.Domain.Chat.Chat? chat { get; set; }
-        public List<BOT.Domain.Chat.Message>? messages { get; set; }
+        public List<BOT.Domain.Chat.Message> messages { get; set; } = new();
         public List<Category> Categories { get; set; }
         public List<Marc> Marcs { get; set; }
         public List<BOT.Domain.Products.Product> ProductsSearchLeveinstheim { get; set; } = new();

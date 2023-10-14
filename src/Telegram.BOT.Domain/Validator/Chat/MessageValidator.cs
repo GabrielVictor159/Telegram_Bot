@@ -24,11 +24,9 @@ namespace Telegram.BOT.Domain.Validator.Chat
                 .NotNull()
                 .WithMessage("The ChatId field is required.");
             RuleFor(p => p.NumberMessage)
-                .NotEmpty()
                 .NotNull()
                 .WithMessage("The NumberMessage field is required.");
             RuleFor(p => p.Rule)
-                .NotEmpty()
                 .NotNull()
                 .WithMessage("The Rule field is required.");
         }

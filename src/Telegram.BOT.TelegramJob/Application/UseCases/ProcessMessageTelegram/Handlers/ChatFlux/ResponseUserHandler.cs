@@ -16,7 +16,7 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
         {
             await request.client.SendTextMessageAsync(
                            chatId: request.id,
-                           text: request.responseChat,
+                           text: EscapeSpecialCharacters(request.responseChat),
                            parseMode: ParseMode.MarkdownV2,
                            cancellationToken: new CancellationToken());
 
@@ -44,6 +44,28 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
             {
                 await sucessor.ProcessRequest(request); 
             }
+        }
+        public static string EscapeSpecialCharacters(string input)
+        {
+            StringBuilder escapedText = new StringBuilder();
+
+            foreach (char c in input)
+            {
+                if (IsSpecialCharacter(c))
+                {
+                    escapedText.Append('\\');
+                }
+                escapedText.Append(c);
+            }
+
+            return escapedText.ToString();
+        }
+
+        private static bool IsSpecialCharacter(char c)
+        {
+            string specialCharacters = "!@#$%^&*()_+-=[]{}|;:'\",.<>?/\\ ";
+
+            return specialCharacters.Contains(c);
         }
     }
 }

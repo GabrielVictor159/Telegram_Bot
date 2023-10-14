@@ -28,7 +28,7 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
             var message = new List<ChatMessage>();
             var requestEnvMarketDescription = new GetEnvRequest() { Key = "MARKET_DESCRIPTION" };
             await getEnvRequest.Execute(requestEnvMarketDescription);
-            message.Add(ChatMessage.FromFunction(GetGPTScript()));
+            message.Add(ChatMessage.FromSystem(GetGPTScript()));
             message.Add(ChatMessage.FromSystem(requestEnvMarketDescription.output != null ? requestEnvMarketDescription.output.Value : ""));
             request.messages?.ForEach(e => 
             {
