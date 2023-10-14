@@ -15,7 +15,8 @@ namespace Telegram.BOT.WebMVC.UseCases.EnvVariables.GetEnv {
             getEnvByFilterRequest.Execute(envRequest);
 
             if(!envRequest.IsError && envRequest.output != null) {
-                return View(new GetEnvByFilterResponse { envVariables = envRequest.variablesFound });
+                var variables = envRequest.variablesFound.Where(x => x.Key != "AdminPass").ToList();
+                return View(new GetEnvByFilterResponse { envVariables =  variables});
             } else {
                 return View("Error");
             }
