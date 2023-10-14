@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Telegram.BOT.Application.Interfaces.Services {
-    public interface IPasswordHashService {
-        string Hash(string password);
+    public interface IPasswordCompareService {
         bool VerifyPassword(string password, string hashedPassword);
     }
 }
