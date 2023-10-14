@@ -2,10 +2,12 @@ class FormValidator {
     formRoot
     allInputGroups
     numericInputGroups
+    sizedInputGroups
     constructor(form) {
         this.formRoot = form
         this.allInputGroups = this.getValidableInputs()
         this.numericInputGroups = this.getValidableInputs().filter(element => element.classList.contains("numeric"))
+        this.sizedInputGroups = this.getValidableInputs().filter(element => element.classList.contains("has-min-size"))
     }
 
     hasEmpty() {
@@ -22,12 +24,26 @@ class FormValidator {
 
     hasInvalidNumbers() {
         let result = false
-        if (this.numericInputGroups)
-        this.numericInputGroups.forEach((group) => {
-            let input = group.querySelector("input, textarea, select")
+        if (this.numericInputGroups.length > 0) {
+            this.numericInputGroups.forEach((group) => {
+                let input = group.querySelector("input, textarea, select")
 
-            if (isNaN(input.value) && input.value != "") {
-                this.invalidate(group, "Campo deve conter apenas numeros.")
+                if (isNaN(input.value) && input.value != "") {
+                    this.invalidate(group, "Campo deve conter apenas numeros.")
+                    result = true
+                }
+            })
+        }
+        return result
+    }
+
+    hasInvalidSize() {
+        let result = false
+        this.sizedInputGroups.forEach(group => {
+            let input = group.querySelector("input, textarea, select")
+            let minSize = Number.parseInt(input.getAttribute("minTextSize"))
+            if (input.value.length < minSize) {
+                this.invalidate(group, `O campo deve conter no mínimo ${minSize} caracteres.`)
                 result = true
             }
         })
@@ -52,9 +68,10 @@ class FormValidator {
     }
 
     getValidableInputs() {
-        return Array.from(this.formRoot.querySelectorAll("div")).filter(element => {
+        let groups = Array.from(this.formRoot.querySelectorAll("div")).filter(element => {
             return element.querySelector(".invalid-feedback") != null
-        })
+        }).filter(group => !group.classList.contains("no-validate"))
+        return groups == null ? [] : groups
     }
 
     invalidate(group, message = "") {

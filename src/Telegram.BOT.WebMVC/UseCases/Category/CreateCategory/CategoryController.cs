@@ -34,7 +34,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.CreateCategory
             }
             else
             {
-                return View("Error");
+                return View("Error", (requestUseCase.ErrorMessage, nameof(Create)));
             }
            
         }

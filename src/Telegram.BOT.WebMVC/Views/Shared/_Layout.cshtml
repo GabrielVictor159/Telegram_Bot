@@ -18,6 +18,17 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a asp-controller="Products" asp-action="Index" class="nav-link active">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Category" asp-action="Index" class="nav-link active">Categorias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Marc" asp-action="Index" class="nav-link active">Marcas</a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
@@ -36,7 +47,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <a href="#" class="btn btn-danger" onclick="deleteItem()" id="deleteConfirmation">Deletar</a>
+                            <a href="#" class="btn btn-danger" id="deleteConfirmation">Deletar</a>
                         </div>
                     </div>
                 </div>

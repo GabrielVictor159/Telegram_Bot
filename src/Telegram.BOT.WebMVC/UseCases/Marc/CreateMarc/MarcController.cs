@@ -30,7 +30,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Marc.CreateMarc
                 return View();
 
             } else {
-                return View("Error");
+                return View("Error", (request.ErrorMessage, "Index"));
             }
         }
 
@@ -48,7 +48,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Marc.CreateMarc
             if (!createRequest.IsError && createRequest.output != null) {
                 return LocalRedirect("/Marc");
             } else {
-                return View("Error");
+                return View("Error", (createRequest.ErrorMessage, nameof(Create)));
             }
         }
     }

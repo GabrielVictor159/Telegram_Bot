@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Telegram.BOT.Application.UseCases.Category.DeleteCategory;
 
 namespace Telegram.BOT.WebMVC.UseCases.Category.DeleteCategory {
@@ -10,13 +11,14 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.DeleteCategory {
             this.deleteCategoryRequest = deleteCategoryRequest;
         }
 
-        public IActionResult Delete(DeleteCategoryRequest request) {
-            var deleteRequest = new Application.UseCases.Category.DeleteCategory.DeleteCategoryRequest() { Id = request.Id };
+        public IActionResult Delete(string itemid) {
+            var deleteRequest = new Application.UseCases.Category.DeleteCategory.DeleteCategoryRequest() { Id = Guid.Parse(itemid) };
+            
             deleteCategoryRequest.Execute(deleteRequest);
             if(!deleteRequest.IsError && deleteRequest.output != null) {
                 return LocalRedirect("/Category");
             } else {
-                return View("Error");
+                return View("Error", (deleteRequest.ErrorMessage, "Index"));
             }
         }
     }

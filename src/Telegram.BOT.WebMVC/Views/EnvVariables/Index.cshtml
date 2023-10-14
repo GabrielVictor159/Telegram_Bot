@@ -1,0 +1,40 @@
+﻿@using Telegram.BOT.WebMVC.UseCases.EnvVariables.GetEnv;
+@model GetEnvByFilterResponse
+<div>
+    <h3>Listar variaveis de Ambiente</h3>
+    <a asp-action="Create" class="btn btn-success float-end">Criar nova Variavel de Ambiente</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Chave</th>
+            <th>Valor</th>
+            <th>Ações</th>
+    </thead>
+    <tbody>
+        @if(Model.envVariables.Count == 0) {
+            <tr>
+                <td colspan="3" align="center">Nenhum registro encontrado</td>
+            </tr>
+        } else {
+            @foreach(var item in Model.envVariables) {
+                <tr>
+                    <td class="w-50">@item.Key</td>
+                    <td class="w-50">@item.Value</td>
+                    <td class="d-flex">
+                        <a class="btn btn-danger delete-button icon-centered me-1" asp-action="Delete" asp-route-itemid="@item.Key" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </a>
+                        <a class="btn btn-primary edit-button icon-centered me-1" asp-action="Edit" asp-route-itemid="@item.Key">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

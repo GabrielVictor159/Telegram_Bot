@@ -13,6 +13,9 @@ if (validableForms != null) {
             if (formValidator.numericInputGroups.length > 0 && !isInvalid) {
                 isInvalid = formValidator.hasInvalidNumbers()
             }
+            if (formValidator.sizedInputGroups.length > 0 && !isInvalid) {
+                isInvalid = formValidator.hasInvalidSize()
+            }
             if (isInvalid) {
                 event.preventDefault()
                 formValidator.addRealTimeContentValidation()
