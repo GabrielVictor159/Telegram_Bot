@@ -18,6 +18,9 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                 name: "Chats");
 
             migrationBuilder.EnsureSchema(
+                name: "ManagementServices");
+
+            migrationBuilder.EnsureSchema(
                 name: "public");
 
             migrationBuilder.CreateTable(
@@ -39,11 +42,28 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    IdTelegram = table.Column<string>(type: "text", nullable: false),
+                    Username = table.Column<string>(type: "text", nullable: false),
+                    Location = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
                     CreateDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Chat", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EnvVariable",
+                schema: "ManagementServices",
+                columns: table => new
+                {
+                    Key = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EnvVariable", x => x.Key);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,6 +123,8 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Messaging = table.Column<string>(type: "text", nullable: false),
+                    NumberMessage = table.Column<int>(type: "integer", nullable: false),
+                    Rules = table.Column<int>(type: "integer", nullable: false),
                     ChatId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -213,6 +235,10 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "EnvVariable",
+                schema: "ManagementServices");
+
             migrationBuilder.DropTable(
                 name: "Logs",
                 schema: "public");

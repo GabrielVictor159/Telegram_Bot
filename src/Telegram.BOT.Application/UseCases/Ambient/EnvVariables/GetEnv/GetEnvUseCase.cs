@@ -25,7 +25,10 @@ public class GetEnvUseCase : IGetEnvRequest
         try
         {
             await getEnvVariableHandler.ProcessRequest(request);
-            request.output = new() { Key = request.EnvVariable!.Key, Value = request.EnvVariable.Value };
+            if (request.EnvVariable != null)
+            {
+                request.output = new() { Key = request.EnvVariable.Key, Value = request.EnvVariable.Value };
+            }
         }
         catch (Exception ex)
         {

@@ -25,7 +25,9 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram
         public BOT.Domain.Chat.Chat? chat { get; set; }
         public List<BOT.Domain.Chat.Message>? messages { get; set; }
         public List<Category> Categories { get; set; }
-        public List<Marc> Marcs { get; set; }   
+        public List<Marc> Marcs { get; set; }
+        public List<BOT.Domain.Products.Product> ProductsSearchLeveinstheim { get; set; } = new();
+        public string responseChat { get; set; } = "";
         public string MessageInitialMenu { get; set; } = "";
         public List<Log> Logs { get; set; } = new();
         public void AddLog(LogType type, string message)

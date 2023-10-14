@@ -9,6 +9,7 @@ namespace Telegram.BOT.Domain.Enums
     public enum MessageRules
     {
         SYSTEM,
-        USER
+        USER,
+        ASSISTANT
     }
 }

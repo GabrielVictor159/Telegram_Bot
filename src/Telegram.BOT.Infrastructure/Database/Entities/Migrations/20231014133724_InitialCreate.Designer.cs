@@ -12,8 +12,8 @@ using Telegram.BOT.Infrastructure.Database;
 namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231011081052_AddRulesForMessage")]
-    partial class AddRulesForMessage
+    [Migration("20231014133724_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
