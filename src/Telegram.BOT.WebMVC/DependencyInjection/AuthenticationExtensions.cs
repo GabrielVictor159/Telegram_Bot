@@ -8,22 +8,18 @@ namespace Telegram.BOT.WebMVC.DependencyInjection {
     public static class AuthenticationExtensions {
         public static void AddAppAuthorization(this IServiceCollection services) {
             services.AddAuthentication(options => {
-                options.RequireAuthenticatedSignIn = false;
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer()
-                .AddCookie(options => {
-                    options.LoginPath = "/User/Login";
-                    options.LogoutPath = "/User/Logout";
-                });
+            }).AddCookie(options => {
+                options.LoginPath = "/User/Login";
+                options.LogoutPath = "/User/Logout";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                options.AccessDeniedPath = "/User/Forbidden";
+            });
 
             services.AddAuthorization(options => {
-                var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(CookieAuthenticationDefaults.AuthenticationScheme);
-
-                defaultAuthorizationPolicyBuilder =
-                    defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
-
-                options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
             });
         }
 

@@ -29,15 +29,19 @@ namespace Telegram.BOT.WebMVC.UseCases.User.Login
         public async Task<IActionResult> Login(string password)
         {
             var getPassRequest = new Application.UseCases.Ambient.EnvVariables.GetEnv.GetEnvRequest() { Key = "AdminPass" };
-            getEnvRequest.Execute(getPassRequest);
+            await getEnvRequest.Execute(getPassRequest);
 
             if(!getPassRequest.IsError && getPassRequest.output != null) {
                 string hashedPassword = getPassRequest.output.Value;
                 if(passwordCompareService.VerifyPassword(password, hashedPassword)) {
-                    var authProperties = new AuthenticationProperties() { ExpiresUtc = new DateTimeOffset(DateTime.Now.AddMinutes(30))};
-
-                    var claimIdentity = new ClaimsIdentity(new List<Claim>());
-                    claimIdentity.AddClaim(new Claim(ClaimTypes.Role, "Administrador"));
+                    var authProperties = new AuthenticationProperties() { 
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
+                        IsPersistent = false
+                    };
+                    var claims = new List<Claim> {
+                        new Claim(ClaimTypes.Role, "Administrador")
+                    };
+                    var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity), authProperties);
                     return LocalRedirect("/");
