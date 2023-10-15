@@ -18,11 +18,14 @@ public class CreateCategoryUseCase : ICreateCategoryRequest
     private readonly ValidateCategoryHandler validateCategoryHandler;
     private readonly ILogRepository logRepository;
     public CreateCategoryUseCase
-        (ValidateCategoryHandler validateCategoryHandler, 
+        (ValidateCategoryHandler validateCategoryHandler,
+        VerifyNameDisponibilityHandler verifyNameDisponibilityHandler,
         SaveCategoryHandler saveCategoryHandler,
         ILogRepository logRepository)
     {
-        this.validateCategoryHandler = validateCategoryHandler.SetSucessor(saveCategoryHandler);
+        this.validateCategoryHandler = validateCategoryHandler.SetSucessor
+            (verifyNameDisponibilityHandler.SetSucessor
+            (saveCategoryHandler));
         this.logRepository = logRepository;
     }
 
