@@ -82,6 +82,9 @@ namespace Telegram.BOT.Infrastructure.Database.Entities.Migrations
                     b.Property<int>("NumberMessage")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Rules")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ChatId");

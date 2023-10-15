@@ -1,3 +1,4 @@
+using Bogus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace Telegram.BOT.tests.Builder.Domain.Product
         private List<BOT.Domain.Products.Product> products = new List<BOT.Domain.Products.Product>();
         public static MarcBuilder New()
         {
-          return new MarcBuilder();
+            var faker = new Faker("pt_BR");
+            return new MarcBuilder() { name = faker.Random.String2(faker.Random.Int(8,20)) };
         }
         public Marc Build() =>
           new Marc()

@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Betalgo.OpenAI" Version="7.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
     <PackageReference Include="Telegram.Bot" Version="19.0.0" />
     <PackageReference Include="Telegram.Bots.Extensions.Polling" Version="5.9.0" />
@@ -20,6 +21,10 @@
     <ProjectReference Include="..\Telegram.BOT.Application\Telegram.BOT.Application.csproj" />
     <ProjectReference Include="..\Telegram.BOT.Domain\Telegram.BOT.Domain.csproj" />
     <ProjectReference Include="..\Telegram.BOT.Infrastructure\Telegram.BOT.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\UseCases\ProcessMessageTelegram\References\Images\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Telegram.BOT.Application.UseCases.Category.GetCategory;
 
@@ -15,7 +16,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.GetCategory
         public IActionResult Index()
         {
             var request =
-                 new Application.UseCases.Category.GetCategory.GetCategoryRequest() { Name = "" };
+                 new Application.UseCases.Category.GetCategory.GetCategoryRequest();
             getCategoryRequest.Execute(request);
             if (!request.IsError && request.output!=null)
             {
@@ -27,7 +28,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.GetCategory
             }
             else
             {
-                return View("Error");
+                return View("Error", (request.ErrorMessage, nameof(Index)));
             }
         }
         [HttpPost]
@@ -45,7 +46,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.GetCategory
             }
             else
             {
-                return View("Error");
+                return View("Error", (requestUseCase.ErrorMessage, nameof(Index)));
             }
            
         }

@@ -19,7 +19,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.CreateCategory
         {
             return View();
         }
-        [HttpPost]
+        [HttpPost]  
         public IActionResult CreateAction(CreateCategoryRequest request)
         {
             var requestUseCase =
@@ -30,11 +30,11 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.CreateCategory
             createCategoryRequest.Execute(requestUseCase);
             if(!requestUseCase.IsError && requestUseCase.output!=null)
             {
-                return View("Index");
+                return LocalRedirect("/Category");
             }
             else
             {
-                return View("Error");
+                return View("Error", (requestUseCase.ErrorMessage, nameof(Create)));
             }
            
         }

@@ -1,5 +1,6 @@
 ﻿@using Telegram.BOT.WebMVC.UseCases.Category.GetCategory;
 @model GetCategoryResponse
+
 <div class="container">
     <h3>Listar Categorias</h3>
     <form asp-action="Search" method="post">
@@ -22,7 +23,7 @@
     </thead>
     <tbody>
 
-        @if (Model== null)
+        @if (Model.CategoryResponse.Count == 0)
         {
             <tr>
                 <td colspan="2" align="center">Nenhum registro encontrado</td>
@@ -33,9 +34,18 @@
             @foreach (var item in Model.CategoryResponse)
             {
                 <tr>
-                    <td>@item.Name</td> 
-                    <td>
-          
+                    <td class="w-100">@item.Name</td>
+                    <td class="d-flex">
+                        <a class="btn btn-danger delete-button icon-centered me-1" asp-action="Delete" asp-route-itemid="@item.id" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </a>
+                        <a class="btn btn-primary edit-button icon-centered me-1" asp-action="Edit" asp-route-itemid="@item.Name">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </a>
                     </td>
                 </tr>
             }

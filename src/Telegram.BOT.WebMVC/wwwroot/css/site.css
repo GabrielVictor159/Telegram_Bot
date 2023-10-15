@@ -34,3 +34,31 @@ a:hover {
 h3 {
     margin-bottom: 2rem;
 }
+
+.login-container {
+    height:90vh;
+}
+
+.login{
+    width: 400px;
+}
+
+.placeholder-center::placeholder{
+    text-align:center;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 40
+}
+
+.icon-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 30px;
+    max-height: 30px;
+}
+
+#deleteConfirmation {
+    color: white;
+}

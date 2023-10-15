@@ -1,0 +1,6 @@
+﻿@model (string, string)
+<div class="container">
+    <h1>Houve um erro ao processar a requisição.</h1>
+    <p>Mensagem de erro: @Model.Item1</p>
+    <a class="btn btn-primary float-end" asp-action="@Model.Item2">Voltar</a>
+</div>

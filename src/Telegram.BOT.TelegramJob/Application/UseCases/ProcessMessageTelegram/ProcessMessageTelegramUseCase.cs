@@ -4,29 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.BOT.Application.Interfaces.Repositories;
+using Telegram.BOT.Application.Interfaces.Services;
 using Telegram.BOT.Domain.Enums;
 using Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers;
+using Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers.MenuFlux;
 
 namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram
 {
     public class ProcessMessageTelegramUseCase : IProcessMessageTelegramRequest
     {
-        private readonly ProcessInitialMessageHandler processInitialMessage;
+        private readonly InitialSearchChatHandler initialSearchChatHandler;
         private readonly ILogRepository logRepository;
+        private readonly INotificationService notificationService;
 
         public ProcessMessageTelegramUseCase
-            (ProcessInitialMessageHandler processInitialMessage, 
-            ILogRepository logRepository)
+            (InitialSearchChatHandler initialSearchChatHandler, 
+            ILogRepository logRepository,
+            INotificationService notificationService)
         {
-            this.processInitialMessage = processInitialMessage;
+            this.initialSearchChatHandler = initialSearchChatHandler;
             this.logRepository = logRepository;
+            this.notificationService = notificationService;
         }
 
         public async Task Execute(ProcessMessageTelegramRequest request)
         {
            try
             {
-                await processInitialMessage.ProcessRequest(request);
+                await initialSearchChatHandler.ProcessRequest(request);
+                if (notificationService.HasNotifications)
+                {
+                    notificationService.Notifications.ForEach(e => { request.AddLog(LogType.Process, e.Message); });
+                }
+                Console.WriteLine("ProcessMessageTelegramUseCase");
             }
             catch (Exception ex)
             {
@@ -36,6 +46,7 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram
             {
                 logRepository.AddRange(request.Logs);
             }
+            
         }
     }
 }

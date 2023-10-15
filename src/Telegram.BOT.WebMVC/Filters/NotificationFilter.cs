@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.BOT.Application.Interfaces.Services;
 using System.Net;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace Telegram.BOT.WebMVC.Filters
 {
@@ -19,12 +21,11 @@ namespace Telegram.BOT.WebMVC.Filters
         {
             if (notifications.HasNotifications)
             {
-                var urlHelper = new UrlHelper(context);
-                var url = urlHelper.Action("ShowNotifications", "Notification", new { notifications = notifications.Notifications });
-                context.Result = new RedirectResult(url!);
+                var serializeObject = JsonConvert.SerializeObject(notifications.Notifications);
+                Environment.SetEnvironmentVariable("Notifications", serializeObject);
+                context.HttpContext.Response.Redirect($"/notification");
                 return;
             }
-
             await next();
         }
     }

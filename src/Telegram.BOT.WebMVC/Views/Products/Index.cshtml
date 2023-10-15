@@ -1,17 +1,20 @@
-﻿@model List<Telegram.BOT.Domain.Products.Product>
+﻿@using Telegram.BOT.WebMVC.UseCases.Products.GetProducts;
+@model GetProductResponse
 
 <div class="container">
     <h3>Listar produtos</h3>
-    <form>
+    <form asp-action="Search">
         <div class="row">
             <div class="col">
-                <app-input id="product-name" labelText="Nome:" name=""></app-input>
-                
+                <div class="mb-3">
+                    <label for="product-name" class="form-label">Nome:</label>
+                    <input type="text" class="form-control" id="product-name" name="Name"/>
+                </div>
             </div>
             <div class="col">
                 <div class="mb-3">
                     <label for="product-tag" class="form-label">Tag:</label>
-                    <input type="text" class="form-control" id="product-tag" />
+                    <input type="text" class="form-control" id="product-tag" name="Tags"/>
                 </div>
             </div>
         </div>
@@ -20,20 +23,20 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="product-date-start" class="form-label">De:</label>
-                    <input type="date" class="form-control" id="product-date-start" />
+                    <input type="date" class="form-control" id="product-date-start" name="filterStartDate"/>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
                     <label for="product-date-end" class="form-label">Até:</label>
-                    <input type="date" class="form-control" id="product-date-end" />
+                    <input type="date" class="form-control" id="product-date-end" name="filterEndDate" />
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="mb-3">
                 <label for="product-description" class="form-label">Descrição:</label>
-                <input type="text" class="form-control" id="product-description" />
+                <input type="text" class="form-control" id="product-description" name="Description" />
             </div>
             <div class="mb-3 d-flex justify-content-end">
                 <a asp-action="Create" class="btn btn-success">Criar novo Produto</a>
@@ -47,29 +50,36 @@
         <tr>
             <th>Nome</th>
             <th>Descrição</th>
+            <th>Marca</th>
             <th>Tags</th>
             <th>Data de Criação</th>
+            <th>Preço</th>
             <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-        @if(Model != null) {
-            @foreach(var Product in Model) {    
+        @if(Model.Products.Count == 0) {
+            <tr>
+                <td colspan="7" align="center">Nenhum registro encontrado</td>
+            </tr>
+        } else {
+            @foreach(var Product in Model.Products) {    
                 <tr>
-                    <td>@Product.Name</td>
-                    <td>@Product.Description</td>
-                    <td>@Product.Tags</td>
+                    <td>@Product.name</td>
+                    <td>@Product.description</td>
+                    <td>@Product.Marc</td>
+                    <td>@Product.tags</td>
                     <td>@Product.CreateDate</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@Product.Id" class="btn btn-primary">Editar</a>
-                        <a asp-action="Delete" asp-route-id="@Product.Id" class="btn btn-primary">Excluir</a>
+                    <td>@Product.price</td>
+                    <td class="d-flex">
+                        <a class="btn btn-danger delete-button icon-centered me-1" asp-action="Delete" asp-route-itemid="@Product.id" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </a>
                     </td>
                 </tr>
             }
-        } else {
-            <tr>
-                <td colspan="5" align="center">Nenhum registro encontrado</td>
-            </tr>
         }
     </tbody>
 </table>

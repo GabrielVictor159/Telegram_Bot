@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Telegram.BOT.Application.UseCases.Category.GetCategory;
 using Telegram.BOT.Application.UseCases.Marc.GetMarc;
 using Telegram.BOT.WebMVC.UseCases.Category.GetCategory;
@@ -36,7 +37,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Marc.GetMarc
             }
             else
             {
-                return View("Error");
+                return View("Error", (requestMarc.ErrorMessage, "Index"));
             }
         }
         [HttpPost]
@@ -48,12 +49,13 @@ namespace Telegram.BOT.WebMVC.UseCases.Marc.GetMarc
             {
                 var itemsMarc = requestMarc.output.Marcs
                 .Select(c => new MarcResponse(c.Id, c.Name, c.Category!, c.CategoryId))
+                .Where(c => c.Name.Contains(request.Name, StringComparison.OrdinalIgnoreCase) && c.CategoryId  == request.CategoryId)
                 .ToList();
                 return View("Index", new GetMarcResponse() { Categories = categories, Marcs = itemsMarc });
             }
             else
             {
-                return View("Error");
+                return View("Error", (requestMarc.ErrorMessage, "Index"));
             }
 
         }

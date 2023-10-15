@@ -58,9 +58,10 @@ services:
       - env/databases.env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "62235:80"
+      - "62235:443"
+      - "62236:80"
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
