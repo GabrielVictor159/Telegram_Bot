@@ -58,9 +58,8 @@ services:
       - env/databases.env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
     ports:
-      - "62235:443"
       - "62236:80"
     volumes:
       - postgres-data:/var/lib/postgresql/data
@@ -71,19 +70,6 @@ services:
       - telegram-bot
     depends_on:
       - telegram.bot.db
-
-  telegram.bot.nginx:
-    image: nginx
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - static-files:/usr/share/nginx/html/
-    ports:
-      - "80:80"
-    environment:
-      - NGINX_HOST=localhost
-      - NGINX_PORT=80
-    networks:
-      - telegram-bot
 
 networks:
   telegram-bot:

@@ -11,7 +11,6 @@ COPY ["Telegram.BOT.WebMVC/Telegram.BOT.WebMVC.csproj", "Telegram.BOT.WebMVC/"]
 COPY ["Telegram.BOT.Application/Telegram.BOT.Application.csproj", "Telegram.BOT.Application/"]
 COPY ["Telegram.BOT.Domain/Telegram.BOT.Domain.csproj", "Telegram.BOT.Domain/"]
 COPY ["Telegram.BOT.Infrastructure/Telegram.BOT.Infrastructure.csproj", "Telegram.BOT.Infrastructure/"]
-RUN dotnet dev-certs https --trust
 RUN dotnet restore "Telegram.BOT.WebMVC/Telegram.BOT.WebMVC.csproj"
 COPY . .
 WORKDIR "/src/Telegram.BOT.WebMVC"
