@@ -1,16 +1,23 @@
-﻿<form>
+﻿@using Telegram.BOT.WebMVC.UseCases.Marc.UpdateMarc;
+@model UpdateMarcRequest
+<form asp-action="EditAction" method="post" class="validate">
     <h3>Editar Marca</h3>
     <div class="row">
         <div class="col">
             <div class="mb-3">
                 <label for="marc-name" class="form-label">Nome:</label>
-                <input type="text" class="form-control" id="marc-name" />
+                <input type="text" class="form-control" id="marc-name" asp-for="marc.Name"/>
+                <input type="hidden" asp-for="marc.Id" />
             </div>
         </div>
         <div class="col">
             <div class="mb-3">
                 <label for="marc-category" class="form-label">Categoria:</label>
-                <select class="form-control" id="marc-category"></select>
+                <select class="form-control" id="marc-category" asp-for="marc.CategoryId">
+                    @foreach(var item in Model.categories) {
+                        <option value="@item.id">@item.Name</option>
+                    }
+                </select>
             </div>
         </div>
     </div>
