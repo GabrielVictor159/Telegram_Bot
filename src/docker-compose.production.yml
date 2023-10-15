@@ -1,5 +1,5 @@
 version: '3.4'
-
+name: telegrambot
 services:
 
   telegram.bot.telegramjob:
