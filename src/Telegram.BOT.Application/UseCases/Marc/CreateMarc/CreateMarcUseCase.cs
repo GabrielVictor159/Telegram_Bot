@@ -8,7 +8,6 @@ using Telegram.BOT.Application.Boundaries;
 using Telegram.BOT.Application.Interfaces.Repositories;
 using Telegram.BOT.Application.UseCases.Products.CreateProduct.Handlers;
 using Telegram.BOT.Domain.Enums;
-using Telegram.BOT.Application.UseCases.Category.CreateCategory.Handlers;
 using Telegram.BOT.Application.Boundaries.Category;
 using Telegram.BOT.Application.UseCases.Marc.CreateMarc.Handlers;
 using Telegram.BOT.Application.Boundaries.Marc;
@@ -20,11 +19,14 @@ public class CreateMarcUseCase : ICreateMarcRequest
     private readonly ValidateMarcHandler validateMarcHandler;
     private readonly ILogRepository logRepository;
     public CreateMarcUseCase
-        (ValidateMarcHandler validateMarcHandler, 
+        (ValidateMarcHandler validateMarcHandler,
+        VerifyNameDisponibilityHandler verifyNameDisponibilityHandler,
         SaveMarcHandler saveMarcHandler,
         ILogRepository logRepository)
     {
-        this.validateMarcHandler = validateMarcHandler.SetSucessor(saveMarcHandler);
+        this.validateMarcHandler = validateMarcHandler.SetSucessor
+            (verifyNameDisponibilityHandler.SetSucessor
+            (saveMarcHandler));
         this.logRepository = logRepository;
     }
 
