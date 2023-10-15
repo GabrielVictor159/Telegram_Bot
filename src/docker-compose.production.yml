@@ -78,17 +78,13 @@ services:
         reservations:
           cpus: '0.20'
           memory: 200M
-    build:
-      context: .
-      dockerfile: Telegram.BOT.WebMVC/Dockerfile
     env_file:
       - env/common.env
       - env/databases.env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
     ports:
-      - "62235:443"
       - "62236:80"
     restart: always
     volumes:
