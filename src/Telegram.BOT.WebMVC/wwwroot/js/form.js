@@ -1,86 +1,98 @@
 class FormValidator {
     formRoot
-    allInputGroups
-    numericInputGroups
-    sizedInputGroups
+    allInputObjects
+    numericInputObjects
+    sizedInputObjects
+    inputObjectsWithWordCount
     constructor(form) {
         this.formRoot = form
-        this.allInputGroups = this.getValidableInputs()
-        this.numericInputGroups = this.getValidableInputs().filter(element => element.classList.contains("numeric"))
-        this.sizedInputGroups = this.getValidableInputs().filter(element => element.classList.contains("has-min-size"))
+        this.allInputObjects = this.getValidableInputs()
+        this.numericInputObjects = this.getValidableInputs().filter(element => element.group.classList.contains("numeric"))
+        this.sizedInputObjects = this.getValidableInputs().filter(element => element.group.classList.contains("has-min-size"))
+        this.inputObjectsWithWordCount = this.getValidableInputs().filter(element => element.group.classList.contains("has-word-count"))
     }
 
     hasEmpty() {
-        let result = false
-        this.allInputGroups.forEach((group) => {
-            let input = group.querySelector("input, textarea, select")
+        this.allInputObjects.forEach((obj) => {
+            let input = obj.group.querySelector("input, textarea, select")
             if (input.value == "") {
-                this.invalidate(group, "Campo obrigatório")
-                result = true
+                this.invalidate(obj, "Campo deve ser preenchido")
             }
         })
-        return result
     }
 
     hasInvalidNumbers() {
-        let result = false
-        if (this.numericInputGroups.length > 0) {
-            this.numericInputGroups.forEach((group) => {
-                let input = group.querySelector("input, textarea, select")
+        if (this.numericInputObjects.length > 0) {
+            this.numericInputObjects.forEach((obj) => {
+                let input = obj.group.querySelector("input, textarea, select")
 
                 if (isNaN(input.value) && input.value != "") {
-                    this.invalidate(group, "Campo deve conter apenas numeros.")
-                    result = true
+                    this.invalidate(obj, "Campo deve conter apenas numeros.")
                 }
             })
         }
-        return result
     }
 
     hasInvalidSize() {
-        let result = false
-        this.sizedInputGroups.forEach(group => {
-            let input = group.querySelector("input, textarea, select")
+        this.sizedInputObjects.forEach(obj => {
+            let input = obj.group.querySelector("input, textarea, select")
             let minSize = Number.parseInt(input.getAttribute("minTextSize"))
             if (input.value.length < minSize) {
-                this.invalidate(group, `O campo deve conter no mínimo ${minSize} caracteres.`)
-                result = true
+                this.invalidate(obj, `O campo deve conter no mínimo ${minSize} caracteres.`)
             }
         })
-        return result
+    }
+
+    hasInvalidWordCount() {
+        this.inputObjectsWithWordCount.forEach(obj => {
+            let input = obj.group.querySelector("input, textarea, select")
+            let minSize = Number.parseInt(input.getAttribute("minWordCount"))
+            if (input.value.split(" ").length < minSize && input.value != "") {
+                this.invalidate(obj, `O campo deve conter no mínimo ${minSize} palavras.`)
+            }
+        })
     }
 
     addRealTimeContentValidation() {
-        this.allInputGroups.forEach(group => {
-            let input = group.querySelector("input, textarea, select")
+        this.allInputObjects.forEach(obj => {
+            let input = obj.group.querySelector("input, textarea, select")
 
             input.addEventListener("input", (event) => {
                 if (input.value == "") {
-                    this.invalidate(group, "Campo obrigatório.")
-                } else if (isNaN(input.value) && group.classList.contains("numeric")) {
-                    this.invalidate(group, "Campo deve conter apenas numeros.")
+                    this.invalidate(obj, "Campo deve ser preenchido.")
+                } else if (isNaN(input.value) && obj.group.classList.contains("numeric")) {
+                    this.invalidate(obj, "Campo deve conter apenas numeros.")
                 }
                 else {
-                    this.validate(group)
+                    this.validate(obj)
                 }
             })
         })
+    }
+
+    isValid() {
+        return this.allInputObjects.filter(element => !element.isValid) == 0 &&
+            this.numericInputObjects.filter(element => !element.isValid) == 0 &&
+            this.sizedInputObjects.filter(element => !element.isValid) == 0 &&
+            this.inputObjectsWithWordCount.filter(element => !element.isValid) == 0
     }
 
     getValidableInputs() {
         let groups = Array.from(this.formRoot.querySelectorAll("div")).filter(element => {
             return element.querySelector(".invalid-feedback") != null
         }).filter(group => !group.classList.contains("no-validate"))
-        return groups == null ? [] : groups
+        return (groups == null) ? [] : groups.map(element => { return { group: element, isValid: true } })
     }
 
-    invalidate(group, message = "") {
-        group.querySelector("input, textarea, select").classList.add("is-invalid")
-        group.querySelector(".invalid-feedback").innerText = message
+    invalidate(obj, message = "") {
+        obj.group.querySelector("input, textarea, select").classList.add("is-invalid")
+        obj.group.querySelector(".invalid-feedback").innerText = message
+        obj.isValid = false
     }
 
-    validate(group) {
-        group.querySelector("input, textarea, select").classList.remove("is-invalid")
+    validate(obj) {
+        obj.group.querySelector("input, textarea, select").classList.remove("is-invalid")
+        obj.isValid = true
     }
 
     validateEmail(input) {

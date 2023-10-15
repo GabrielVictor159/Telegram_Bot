@@ -15,9 +15,9 @@
     </div>
     <div class="row">
         <div class="col">
-            <div class="mb-3">
+            <div class="mb-3 has-word-count">
                 <label for="product-tags" class="form-label">Tags:</label>
-                <input type="text" class="form-control" id="product-tags" asp-for="Tags"/>
+                <input type="text" class="form-control" minWordCount="6" id="product-tags" asp-for="Tags" />
                 <span class="invalid-feedback"></span>
             </div>
         </div>

@@ -5,18 +5,21 @@ const confirmationButton = document.getElementById("deleteConfirmation")
 if (validableForms != null) {
     validableForms.forEach(form => {
         let formValidator = new FormValidator(form);
-        let isInvalid = false
+        let isInvalid = true
         form.addEventListener("submit", event => {
-            if (formValidator.allInputGroups.length > 0) {
-                isInvalid = formValidator.hasEmpty()
+            if (formValidator.allInputObjects.length > 0) {
+                formValidator.hasEmpty()
             }
-            if (formValidator.numericInputGroups.length > 0 && !isInvalid) {
-                isInvalid = formValidator.hasInvalidNumbers()
+            if (formValidator.numericInputObjects.length > 0) {
+                formValidator.hasInvalidNumbers()
             }
-            if (formValidator.sizedInputGroups.length > 0 && !isInvalid) {
-                isInvalid = formValidator.hasInvalidSize()
+            if (formValidator.sizedInputObjects.length > 0) {
+                formValidator.hasInvalidSize()
             }
-            if (isInvalid) {
+            if (formValidator.inputObjectsWithWordCount.length > 0) {
+                formValidator.hasInvalidWordCount();
+            }
+            if (!formValidator.isValid()) {
                 event.preventDefault()
                 formValidator.addRealTimeContentValidation()
             }
