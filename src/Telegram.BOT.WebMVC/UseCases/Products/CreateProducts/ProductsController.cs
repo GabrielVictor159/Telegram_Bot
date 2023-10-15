@@ -51,9 +51,8 @@ namespace Telegram.BOT.WebMVC.UseCases.Products.CreateProducts
             if(!createRequest.IsError && createRequest.output != null) {
                 return LocalRedirect("/Products");
             }else {
-                return View("Error");
+                return View("Error", (createRequest.ErrorMessage, nameof(Create)));
             }
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,6 +1,12 @@
-﻿<div class="container d-flex justify-content-center align-items-center login-container">
+﻿@using Telegram.BOT.WebMVC.UseCases.User.Login;
+@model UserLoginResponse
+
+<div class="container d-flex justify-content-center align-items-center login-container">
     <form asp-action="Login" method="post" class="card login validate">
         <div class="card-body">
+            @if (Model.IsError) {
+                <div class="alert alert-danger d-flex justify-content-center">@Model.ErrorMessage</div>
+            }
             <div class="mb-3 d-flex justify-content-center">
                 <h5 class="card-title ">Login</h5>
             </div>
