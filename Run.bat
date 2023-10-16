@@ -26,11 +26,10 @@
 ::ZQ0/vhVqMQ3MEVWAtB9wSA==
 ::Zg8zqx1/OA3MEVWAtB9wSA==
 ::dhA7pRFwIByZRRnk
-::Zh4grVQjdCyDJGmW+0g1PBRHcCKDP362ArQY7dTP6uaCpV8cWd0dd5vn7rGCJecB60jGWqJj02Jf+A==
+::Zh4grVQjdCyDJGmW+0g1PBRHcCKDP362ArQY7dTP6uaCpV8cWd0dd5vn+Ju6buUL7yU=
 ::YB416Ek+ZG8=
 ::
 ::
 ::978f952a14a936cc963da21a135fa983
 @echo off
-cd src/
-docker-compose -f docker-compose.production.yml up
+ docker-compose -f ./src/docker-compose.production.yml up -d
