@@ -9,6 +9,7 @@ using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 using Telegram.BOT.Application.UseCases;
 using Telegram.BOT.Application.UseCases.Category.GetCategory;
+using Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Helpers;
 
 namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Handlers.MenuFlux
 {
@@ -19,15 +20,17 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
         {
             var categoryNames = request.Categories.Select(e => e.Name).ToList();
             var marcNames = request.Marcs.Select(e => e.Name).ToList();
+
             if (!categoryNames.Contains(request.text!) && !marcNames.Contains(request.text!))
             {
-                var options =new List<KeyboardButton>();
-                categoryNames.ForEach(e => options.Add(new KeyboardButton(e)));
+                var options = MessageHelpers.CreateKeyboardOptions(categoryNames, 3);
+                var replyMarkup = new ReplyKeyboardMarkup(options);
                 Bot.Types.Message pollMessage = await request.client.SendTextMessageAsync(
-                 chatId: request.id,
-                 text: request.MessageInitialMenu == "" ? "Escolha uma das categorias no menu abaixo" : request.MessageInitialMenu,
-                 replyMarkup: new Bot.Types.ReplyMarkups.ReplyKeyboardMarkup(options),
-                 cancellationToken: new CancellationToken());
+                    chatId: request.id,
+                    text: request.MessageInitialMenu == "" ? "Escolha uma das categorias no menu abaixo" : request.MessageInitialMenu,
+                    replyMarkup: replyMarkup,
+                    cancellationToken: new CancellationToken());
+
             }
             else
             {
@@ -37,5 +40,7 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
                 }
             }
         }
+
+
     }
 }

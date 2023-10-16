@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 using Telegram.BOT.TelegramJob.Interfaces;
 
 namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.Helpers
@@ -62,5 +63,30 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
             }
             return false;
         }
+        public static List<List<KeyboardButton>> CreateKeyboardOptions(List<string> items, int itemsPerRow)
+        {
+            var options = new List<List<KeyboardButton>>();
+            var tempOption = new List<KeyboardButton>();
+
+            foreach (var categoryName in items)
+            {
+                if (tempOption.Count < 3)
+                {
+                    tempOption.Add(new KeyboardButton(categoryName));
+                }
+                else
+                {
+                    options.Add(tempOption);
+                    tempOption = new List<KeyboardButton> { new KeyboardButton(categoryName) };
+                }
+            }
+
+            if (tempOption.Count > 0)
+            {
+                options.Add(tempOption);
+            }
+            return options;
+        }
+
     }
 }
