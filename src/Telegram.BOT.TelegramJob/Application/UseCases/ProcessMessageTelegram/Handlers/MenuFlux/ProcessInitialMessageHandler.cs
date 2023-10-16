@@ -66,8 +66,8 @@ namespace Telegram.BOT.TelegramJob.Application.UseCases.ProcessMessageTelegram.H
                     }
                 ),
                 cancellationToken: new CancellationToken());
-                string pathImage1 = "/app/Application/UseCases/ProcessMessageTelegram/References/Images/MenuSelectAndroid.png";
-                string pathImage2 = "/app/Application/UseCases/ProcessMessageTelegram/References/Images/MenuSelectPC.png";
+                string pathImage1 = Environment.GetEnvironmentVariable("ImagesPathByServiceInfra")!+"MenuSelectAndroid.png";
+                string pathImage2 = Environment.GetEnvironmentVariable("ImagesPathByServiceInfra")!+"MenuSelectPC.png";
                 if (System.IO.File.Exists(pathImage1) && System.IO.File.Exists(pathImage2))
                 {
                     using (var stream = System.IO.File.OpenRead(pathImage1))
