@@ -19,7 +19,7 @@ namespace Telegram.BOT.Application.UseCases.Products.GetByLeveinstheim.Handlers
         public override async Task ProcessRequest(GetByLeveinstheimRequest request)
         {
             request.AddLog(Domain.Enums.LogType.Process, "GetGroupsHandler");
-            var entities = groupsRepository.GetByLeveinsthein(request.inputString, 0.25);
+            var entities = groupsRepository.GetByLeveinsthein(request.inputString, 0.70);
             request.Groups = entities;
             if(sucessor!=null)
             {
