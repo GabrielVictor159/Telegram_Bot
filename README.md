@@ -34,3 +34,6 @@ Essa variavél é uma descrição sobre o seu negocio e deve ser preenchida para
 # GPT_TOKEN
 Essa variavél é o token do Chat GPT para que as respostas do seu chat sejam melhor preenchidas.
 
+# PRODUCT_PRECISION_SEARCH
+Essa variavél determina o grau de precisão na busca dos produtos.
+
