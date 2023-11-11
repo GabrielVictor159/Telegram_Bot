@@ -33,3 +33,4 @@
 ::978f952a14a936cc963da21a135fa983
 @echo off
  docker-compose -f ./src/docker-compose.production.yml up -d
+docker cp ./src/Telegram.BOT.WebMVC/wwwroot telegrambot-telegram.bot.webmvc-1:/app/wwwroot/

@@ -31,7 +31,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.UpdateCategory {
             var updateRequest = new Application.UseCases.Category.UpdateCategory.UpdateCategoryRequest() { Category = categoria };
             updateCategoryRequest.Execute(updateRequest);
             if (!updateRequest.IsError && updateRequest.output != null) {
-                return LocalRedirect("/Category");
+                return LocalRedirect($"{Environment.GetEnvironmentVariable("URL_PREFIX") ?? ""}/Category");
             } else {
                 return View("Error", (updateRequest.ErrorMessage, "Index"));
             }

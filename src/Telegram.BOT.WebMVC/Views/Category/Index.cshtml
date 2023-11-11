@@ -1,15 +1,17 @@
 ﻿@using Telegram.BOT.WebMVC.UseCases.Category.GetCategory;
 @model GetCategoryResponse
-
+@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
 <div class="container">
     <h3>Listar Categorias</h3>
-    <form asp-action="Search" method="post">
+    <form action="@urlPrefix/Category/Search" method="post">
         <div class="mb-3">
             <label for="category-name" class="form-label">Nome:</label>
             <input type="text" class="form-control" id="category-name" name="name" />
         </div>
         <div class="mb-3 d-flex justify-content-end">
-            <a asp-controller="Category" asp-action="Create" class="btn btn-success">Criar nova categoria</a>
+            <a href="@urlPrefix/Category/Create" class="btn btn-success">Criar nova categoria</a>
             <input type="submit" class="btn btn-primary ms-2" value="Pesquisar" />
         </div>
     </form>
@@ -36,12 +38,12 @@
                 <tr>
                     <td class="w-100">@item.Name</td>
                     <td class="d-flex">
-                        <a class="btn btn-danger delete-button icon-centered me-1" asp-action="Delete" asp-route-itemid="@item.id" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
+                        <a class="btn btn-danger delete-button icon-centered me-1" href="@urlPrefix/Category/Delete?itemid=@item.id" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
                             <span class="material-symbols-outlined">
                                 delete
                             </span>
                         </a>
-                        <a class="btn btn-primary edit-button icon-centered me-1" asp-action="Edit" asp-route-itemid="@item.Name">
+                        <a class="btn btn-primary edit-button icon-centered me-1" href="@urlPrefix/Category/Edit?itemid=@item.Name">
                             <span class="material-symbols-outlined">
                                 edit
                             </span>

@@ -21,7 +21,7 @@ namespace Telegram.BOT.WebMVC.UseCases.EnvVariables.CreateEnv {
             };
             createEnvRequest.Execute(createRequest);
             if(!createRequest.IsError && createRequest.output != null) {
-                return LocalRedirect("/EnvVariables");
+                return LocalRedirect($"{Environment.GetEnvironmentVariable("URL_PREFIX")??""}/EnvVariables");
             } else {
                 return View("Error", (createRequest.ErrorMessage, "Index"));
             }

@@ -43,13 +43,13 @@ namespace Telegram.BOT.WebMVC.UseCases.Marc.GetMarc
         [HttpPost]
         public IActionResult Search(GetMarcRequest request)
         {
-            var requestMarc = new Application.UseCases.Marc.GetMarc.GetMarcRequest() { Name = request.Name, CategoryId = request.CategoryId};
+            var requestMarc = new Application.UseCases.Marc.GetMarc.GetMarcRequest() { Name = request.Name??"", CategoryId = request.CategoryId};
             getMarcRequest.Execute(requestMarc);
             if (!requestMarc.IsError && requestMarc.output != null)
             {
                 var itemsMarc = requestMarc.output.Marcs
                 .Select(c => new MarcResponse(c.Id, c.Name, c.Category!, c.CategoryId))
-                .Where(c => c.Name.Contains(request.Name, StringComparison.OrdinalIgnoreCase) && c.CategoryId  == request.CategoryId)
+                .Where(c => c.Name.Contains(request.Name??"", StringComparison.OrdinalIgnoreCase) && c.CategoryId  == request.CategoryId)
                 .ToList();
                 return View("Index", new GetMarcResponse() { Categories = categories, Marcs = itemsMarc });
             }

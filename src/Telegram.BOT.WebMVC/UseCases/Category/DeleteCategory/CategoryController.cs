@@ -16,7 +16,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Category.DeleteCategory {
             
             deleteCategoryRequest.Execute(deleteRequest);
             if(!deleteRequest.IsError && deleteRequest.output != null) {
-                return LocalRedirect("/Category");
+                return LocalRedirect($"{Environment.GetEnvironmentVariable("URL_PREFIX") ?? ""}/Category");
             } else {
                 return View("Error", (deleteRequest.ErrorMessage, "Index"));
             }

@@ -41,7 +41,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Marc.UpdateMarc {
             var updateRequest = new Application.UseCases.Marc.UpdateMarc.UpdateMarcRequest() { Marc = marc };
             updateMarcRequest.Execute(updateRequest);
             if (!updateRequest.IsError && updateRequest.output != null) {
-                return LocalRedirect("/Marc");
+                return LocalRedirect($"{Environment.GetEnvironmentVariable("URL_PREFIX") ?? ""}/Marc");
             } else {
                 return View("Error", (updateRequest.ErrorMessage, "Index"));
             }

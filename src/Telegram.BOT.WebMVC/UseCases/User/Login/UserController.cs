@@ -44,7 +44,7 @@ namespace Telegram.BOT.WebMVC.UseCases.User.Login
                     var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity), authProperties);
-                    return LocalRedirect("/");
+                    return LocalRedirect($"{Environment.GetEnvironmentVariable("URL_PREFIX")??""}/");
                 } else {
                     return View(new UserLoginResponse() { IsError = true, ErrorMessage = "Senha incorreta"});
                 }

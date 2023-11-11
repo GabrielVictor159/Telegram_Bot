@@ -23,7 +23,7 @@ namespace Telegram.BOT.WebMVC.Filters
             {
                 var serializeObject = JsonConvert.SerializeObject(notifications.Notifications);
                 Environment.SetEnvironmentVariable("Notifications", serializeObject);
-                context.HttpContext.Response.Redirect($"/notification");
+                context.HttpContext.Response.Redirect($"{Environment.GetEnvironmentVariable("URL_PREFIX")??""}/notification");
                 return;
             }
             await next();

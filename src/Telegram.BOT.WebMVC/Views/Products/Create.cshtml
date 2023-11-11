@@ -1,7 +1,9 @@
 ﻿@using Telegram.BOT.WebMVC.UseCases.Products.CreateProducts;
 @model CreateProductRequest
-
-<form asp-action="CreateAction" method="post" class="validate" enctype="multipart/form-data">
+@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
+<form action="@urlPrefix/Products/CreateAction" method="post" class="validate" enctype="multipart/form-data">
     <h3>Criar Produto</h3>
     <div class="mb-3">
         <label for="product-name" class="form-label">Nome:</label>

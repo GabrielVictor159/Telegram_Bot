@@ -14,7 +14,7 @@ namespace Telegram.BOT.WebMVC.UseCases.EnvVariables.DeleteEnv {
             var deleteRequest = new Application.UseCases.Ambient.EnvVariables.RemoveEnv.RemoveEnvRequest() { Key = itemid };
             removeEnvRequest.Execute(deleteRequest);
             if(!deleteRequest.IsError && deleteRequest != null) {
-                return LocalRedirect("/EnvVariables");
+                return LocalRedirect($"{Environment.GetEnvironmentVariable("URL_PREFIX") ?? ""}/EnvVariables");
             } else {
                 return View("Error", (deleteRequest.ErrorMessage, "Index"));
             }

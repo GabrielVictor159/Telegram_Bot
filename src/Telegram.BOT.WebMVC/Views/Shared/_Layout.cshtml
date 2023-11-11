@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
@@ -14,23 +17,23 @@
         @if (User.Claims.Count() != 0) {
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MandalaHookahBot</a>
+                    <a class="navbar-brand" href="@urlPrefix">MandalaHookahBot</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a asp-controller="Products" asp-action="Index" class="nav-link active">Produtos</a>
+                            <a href="@urlPrefix/Products" class="nav-link active">Produtos</a>
                         </li>
                         <li class="nav-item">
-                            <a asp-controller="Category" asp-action="Index" class="nav-link active">Categorias</a>
+                            <a href="@urlPrefix/Category" class="nav-link active">Categorias</a>
                         </li>
                         <li class="nav-item">
-                            <a asp-controller="Marc" asp-action="Index" class="nav-link active">Marcas</a>
+                            <a href="@urlPrefix/Marc" class="nav-link active">Marcas</a>
                         </li>
                         <li class="nav-item">
-                            <a asp-controller="EnvVariables" asp-action="Index" class="nav-link active">Variaveis de Ambiente</a>
+                            <a href="@urlPrefix/EnvVariables" class="nav-link active">Variaveis de Ambiente</a>
                         </li>
                         
                     </ul>
@@ -40,7 +43,7 @@
                                 Administrador
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a></li>
+                                <li><a class="dropdown-item" href="@urlPrefix/User/Logout">Logout</a></li>
                             </ul>
                         </li>
                     </ul>

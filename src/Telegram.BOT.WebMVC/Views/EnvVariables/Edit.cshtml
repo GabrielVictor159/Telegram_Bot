@@ -1,7 +1,10 @@
 ﻿@using ManagementServices.variables.Domain.Models;
 @model EnvVariable
+@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
 <h3>Editar variavel de ambiente</h3>
-<form class="validate" asp-action="EditAction" method="post">
+<form class="validate" action="@urlPrefix/EnvVariables/EditAction" method="post">
     <div class="row">
         <div class="col">
             <div class="mb-3">

@@ -1,6 +1,9 @@
 ﻿@using Telegram.BOT.WebMVC.UseCases.Marc.UpdateMarc;
 @model UpdateMarcRequest
-<form asp-action="EditAction" method="post" class="validate">
+@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
+<form action="@urlPrefix/Marc/EditAction" method="post" class="validate">
     <h3>Editar Marca</h3>
     <div class="row">
         <div class="col">

@@ -15,7 +15,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Marc.DeleteMarc {
             var deleteRequest = new Application.UseCases.Marc.DeleteMarc.DeleteMarcRequest() { Id = Guid.Parse(itemid) };
             deleteMarcRequest.Execute(deleteRequest);
             if(!deleteRequest.IsError && deleteRequest.output != null) {
-                return LocalRedirect("/Marc");
+                return LocalRedirect($"{Environment.GetEnvironmentVariable("URL_PREFIX") ?? ""}/Marc");
             } else {
                 return View("Error", (deleteRequest.ErrorMessage, "Index"));
             }

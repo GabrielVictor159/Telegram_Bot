@@ -46,7 +46,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Marc.CreateMarc
             };
             createMarcRquest.Execute(createRequest);
             if (!createRequest.IsError && createRequest.output != null) {
-                return LocalRedirect("/Marc");
+                return LocalRedirect($"{Environment.GetEnvironmentVariable("URL_PREFIX")??""}/Marc");
             } else {
                 return View("Error", (createRequest.ErrorMessage, nameof(Create)));
             }

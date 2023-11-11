@@ -49,7 +49,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Products.CreateProducts
 
             createProductRequest.Execute(createRequest);
             if(!createRequest.IsError && createRequest.output != null) {
-                return LocalRedirect("/Products");
+                return LocalRedirect($"{Environment.GetEnvironmentVariable("URL_PREFIX")??""}/Products");
             }else {
                 return View("Error", (createRequest.ErrorMessage, nameof(Create)));
             }

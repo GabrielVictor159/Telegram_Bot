@@ -30,7 +30,7 @@ namespace Telegram.BOT.WebMVC.UseCases.EnvVariables.UpdateEnv {
             var updateRequest = new Application.UseCases.Ambient.EnvVariables.UpdateEnv.UpdateEnvRequest() { variable = variable };
             updateEnvRequest.Execute(updateRequest);
             if (!updateRequest.IsError && updateRequest.output != null) {
-                return LocalRedirect("/EnvVariables");
+                return LocalRedirect($"{Environment.GetEnvironmentVariable("URL_PREFIX") ?? ""}/EnvVariables");
             } else {
                 return View("Error", (updateRequest.ErrorMessage, nameof(Edit)));
             }

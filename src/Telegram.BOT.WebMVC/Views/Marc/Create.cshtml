@@ -1,7 +1,10 @@
 ﻿@using Telegram.BOT.WebMVC.UseCases.Category.GetCategory;
 @using Telegram.BOT.WebMVC.UseCases.Marc.CreateMarc;
 @model CreateMarcRequest
-<form asp-action="CreateAction" class="validate" method="post">
+@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
+<form action="@urlPrefix/Marc/CreateAction" class="validate" method="post">
     <h3>Criar Marca</h3>
     <div class="row">
         <div class="col">

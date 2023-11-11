@@ -19,7 +19,7 @@ namespace Telegram.BOT.WebMVC.UseCases.Products.DeleteProducts
             var deleteRequest = new Application.UseCases.Products.DeleteProduct.DeleteProductRequest(){ Id = Guid.Parse(itemid) };
             deleteProductRequest.Execute(deleteRequest);
             if (!deleteRequest.IsError && deleteRequest.output != null) {
-                return LocalRedirect("/Products");
+                return LocalRedirect($"{Environment.GetEnvironmentVariable("URL_PREFIX")??""}/Products");
             } else {
                 return View("Error", (deleteRequest.ErrorMessage, "Index"));
             }

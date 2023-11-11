@@ -1,3 +1,7 @@
-﻿<h1>403 - Forbidden</h1>
+﻿@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
+
+<h1>403 - Forbidden</h1>
 <p>Você não está autenticado faça login para continuar.</p>
-<a asp-action="Login" class="btn btn-sm btn-primary float-end">Ir para página de Login</a>
+<a action="@urlPrefix/User/Login" class="btn btn-sm btn-primary float-end">Ir para página de Login</a>

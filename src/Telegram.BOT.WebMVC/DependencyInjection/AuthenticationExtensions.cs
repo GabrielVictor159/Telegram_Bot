@@ -7,13 +7,14 @@ using Telegram.BOT.Application.UseCases.Ambient.EnvVariables.CreateEnv;
 namespace Telegram.BOT.WebMVC.DependencyInjection {
     public static class AuthenticationExtensions {
         public static void AddAppAuthorization(this IServiceCollection services) {
+            var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
             services.AddAuthentication(options => {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             }).AddCookie(options => {
-                options.LoginPath = "/User/Login";
-                options.LogoutPath = "/User/Logout";
+                options.LoginPath = $"{urlPrefix}/User/Login";
+                options.LogoutPath = $"{urlPrefix}/User/Logout";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
-                options.AccessDeniedPath = "/User/Forbidden";
+                options.AccessDeniedPath = $"{urlPrefix}/User/Forbidden";
             });
 
             services.AddAuthorization(options => {
@@ -24,7 +25,7 @@ namespace Telegram.BOT.WebMVC.DependencyInjection {
         }
 
         public static void SetDefaultUserPassword(this IServiceProvider serviceProvider) {
-            ICreateEnvRequest createEnvRequest = serviceProvider.GetService<ICreateEnvRequest>();
+            ICreateEnvRequest createEnvRequest = serviceProvider.GetService<ICreateEnvRequest>()!;
 
             var createUserPassRequest = new Application.UseCases.Ambient.EnvVariables.CreateEnv.CreateEnvRequest() {
                 EnvVariable = new ManagementServices.variables.Domain.Models.EnvVariable() {

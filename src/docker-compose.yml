@@ -14,9 +14,6 @@ services:
       context: .
       dockerfile: Telegram.BOT.TelegramJob/Dockerfile
 
-  telegram.bot.db:
-    image: postgres:latest
-    restart: always
 
   telegram.bot.services:
     image: ${DOCKER_REGISTRY-}telegrambotservices
@@ -24,8 +21,6 @@ services:
       context: .
       dockerfile: Telegram.BOT.Services/Dockerfile
 
-networks:
-  telegram-bot:
 
 
 

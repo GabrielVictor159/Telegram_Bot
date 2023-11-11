@@ -1,8 +1,10 @@
 ﻿@using Telegram.BOT.WebMVC.UseCases.EnvVariables.CreateEnv;
 @model CreateEnvRequest
-
+@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
 <h3>Criar variavel de ambiente</h3>
-<form class="validate" asp-action="CreateAction" method="post">
+<form class="validate" action="@urlPrefix/EnvVariables/CreateAction" method="post">
     <div class="row">
         <div class="col">
             <div class="mb-3">

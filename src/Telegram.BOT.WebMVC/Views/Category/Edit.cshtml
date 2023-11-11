@@ -1,6 +1,9 @@
 ﻿@using Telegram.BOT.Domain.Products;
 @model Category
-<form asp-action="EditAction" method="post" class="validate">
+@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
+<form action="@urlPrefix/Category/EditAction" method="post" class="validate">
     <h3>Editar Categoria</h3>
     <div class="mb-3">
         <label for="category-name" class="form-label">Nome:</label>

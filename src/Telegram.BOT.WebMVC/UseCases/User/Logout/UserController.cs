@@ -6,7 +6,7 @@ namespace Telegram.BOT.WebMVC.UseCases.User.Logout {
 
         public async Task<IActionResult> Logout() {
             await HttpContext.SignOutAsync();
-            return LocalRedirect("/User/Login");
+            return LocalRedirect($"{Environment.GetEnvironmentVariable("URL_PREFIX")}/User/Login");
         }
     }
 }

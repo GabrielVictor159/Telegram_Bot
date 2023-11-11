@@ -1,8 +1,11 @@
 ﻿@using Telegram.BOT.WebMVC.UseCases.Marc.GetMarc;
 @model GetMarcResponse
+@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
 <div class="container">
     <h3>Listar Marcas</h3>
-    <form asp-action="Search" method="post">
+    <form action="@urlPrefix/Marc/Search" method="post">
         <div class="row">
             <div class="col">
                 <div class="mb-3">
@@ -30,7 +33,7 @@
             </div>
         </div>
         <div class="mb-3 d-flex justify-content-end">
-            <a asp-action="Create" class="btn btn-success">Criar nova marca</a>
+            <a href="@urlPrefix/Marc/Create" class="btn btn-success">Criar nova marca</a>
             <input type="submit" class="btn btn-primary ms-2" value="Pesquisar" />
         </div>
     </form>
@@ -55,12 +58,12 @@
                     <td class="w-50">@item.Name</td>
                     <td class="w-50">@item.Category.Name</td>
                     <td class="d-flex">
-                        <a class="btn btn-danger delete-button icon-centered me-1" asp-action="Delete" asp-route-itemid="@item.Id" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
+                        <a class="btn btn-danger delete-button icon-centered me-1" href="@urlPrefix/Marc/Delete?itemid=@item.Id" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
                             <span class="material-symbols-outlined">
                                 delete
                             </span>
                         </a>
-                        <a class="btn btn-primary edit-button icon-centered me-1" asp-action="Edit" asp-route-itemid="@item.Name">
+                        <a class="btn btn-primary edit-button icon-centered me-1" href="@urlPrefix/Marc/Edit?itemid=@item.Name">
                             <span class="material-symbols-outlined">
                                 edit
                             </span>

@@ -1,8 +1,11 @@
 ﻿@using Telegram.BOT.WebMVC.UseCases.EnvVariables.GetEnv;
 @model GetEnvByFilterResponse
+@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
 <div>
     <h3>Listar variaveis de Ambiente</h3>
-    <a asp-action="Create" class="btn btn-success float-end">Criar nova Variavel de Ambiente</a>
+    <a href="@urlPrefix/EnvVariables/Create" class="btn btn-success float-end">Criar nova Variavel de Ambiente</a>
 </div>
 <table class="table">
     <thead>
@@ -22,12 +25,12 @@
                     <td class="w-50">@item.Key</td>
                     <td class="w-50">@item.Value</td>
                     <td class="d-flex">
-                        <a class="btn btn-danger delete-button icon-centered me-1" asp-action="Delete" asp-route-itemid="@item.Key" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
+                        <a class="btn btn-danger delete-button icon-centered me-1" href="@urlPrefix/EnvVariables/Delete?itemid=@item.Key" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
                             <span class="material-symbols-outlined">
                                 delete
                             </span>
                         </a>
-                        <a class="btn btn-primary edit-button icon-centered me-1" asp-action="Edit" asp-route-itemid="@item.Key">
+                        <a class="btn btn-primary edit-button icon-centered me-1" href="@urlPrefix/EnvVariables/Edit?itemid=@item.Key">
                             <span class="material-symbols-outlined">
                                 edit
                             </span>

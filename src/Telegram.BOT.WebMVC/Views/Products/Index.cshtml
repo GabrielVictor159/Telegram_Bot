@@ -1,9 +1,11 @@
 ﻿@using Telegram.BOT.WebMVC.UseCases.Products.GetProducts;
 @model GetProductResponse
-
+@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
 <div class="container">
     <h3>Listar produtos</h3>
-    <form asp-action="Search">
+    <form action="@urlPrefix/Products/Search" method="post">
         <div class="row">
             <div class="col">
                 <div class="mb-3">
@@ -39,7 +41,7 @@
                 <input type="text" class="form-control" id="product-description" name="Description" />
             </div>
             <div class="mb-3 d-flex justify-content-end">
-                <a asp-action="Create" class="btn btn-success">Criar novo Produto</a>
+                <a href="@urlPrefix/Products/Create" class="btn btn-success">Criar novo Produto</a>
                 <input type="submit" class="btn btn-primary ms-2" value="Pesquisar" />
             </div>
         </div>
@@ -72,7 +74,7 @@
                     <td>@Product.CreateDate</td>
                     <td>@Product.price</td>
                     <td class="d-flex">
-                        <a class="btn btn-danger delete-button icon-centered me-1" asp-action="Delete" asp-route-itemid="@Product.id" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
+                        <a class="btn btn-danger delete-button icon-centered me-1" href="@urlPrefix/Products/Delete?itemid=@Product.id" data-bs-toggle="modal" data-bs-target="#modalDeleteConfirmation">
                             <span class="material-symbols-outlined">
                                 delete
                             </span>

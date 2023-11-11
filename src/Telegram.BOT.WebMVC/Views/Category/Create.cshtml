@@ -1,6 +1,9 @@
 ﻿@using Telegram.BOT.WebMVC.UseCases.Category.CreateCategory;
 @model CreateCategoryRequest
-<form class="validate" asp-action="CreateAction" method="post">
+@{
+    var urlPrefix = Environment.GetEnvironmentVariable("URL_PREFIX") ?? "";
+}
+<form class="validate" action="@urlPrefix/Category/CreateAction" method="post">
     <h3>Criar Categoria</h3>
     <div class="mb-3">
         <label for="category-name" class="form-label">Nome:</label>

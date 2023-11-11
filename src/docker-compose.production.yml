@@ -10,8 +10,8 @@ services:
           cpus: '0.25'
           memory: 200M
         reservations:
-          cpus: '0.20'
-          memory: 200M
+          cpus: '0.10'
+          memory: 100M
     env_file:
       - env/common.env
       - env/databases.env
@@ -21,30 +21,6 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - static-files:/app/wwwroot/
-    depends_on:
-      - telegram.bot.db
-
-  telegram.bot.db:
-    image: postgres:latest
-    deploy:
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 200M
-        reservations:
-          cpus: '0.20'
-          memory: 200M
-    restart: always
-    ports:
-      - 5548:5432
-    networks:
-      - telegram-bot
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
 
   telegram.bot.services:
     image: gabriel159487/telegrambotservices:latest
@@ -54,8 +30,8 @@ services:
           cpus: '0.25'
           memory: 200M
         reservations:
-          cpus: '0.20'
-          memory: 200M
+          cpus: '0.10'
+          memory: 100M
     env_file:
       - env/common.env
       - env/databases.env
@@ -65,8 +41,6 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - static-files:/app/wwwroot/
-    depends_on:
-      - telegram.bot.db
 
   telegram.bot.webmvc:
     image: gabriel159487/telegrambotwebmvc:latest
@@ -76,14 +50,15 @@ services:
           cpus: '0.25'
           memory: 200M
         reservations:
-          cpus: '0.20'
-          memory: 200M
+          cpus: '0.10'
+          memory: 100M
     env_file:
       - env/common.env
       - env/databases.env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
+      - URL_PREFIX=/mandabot
     ports:
       - "62236:80"
     restart: always
@@ -94,12 +69,19 @@ services:
       - static-files:/app/wwwroot/
     networks:
       - telegram-bot
-    depends_on:
-      - telegram.bot.db
 
 networks:
   telegram-bot:
+    external: true
+    name: system_services_system_services
+
 
 volumes:
   postgres-data:
+    external: true
+    name: system_services_postgres-data
   static-files:
+    external: true
+    name: system_services_static-files
+
+
